@@ -1,0 +1,19 @@
+# Disfluencies / fillers. Never inserted into subtitles from ASR (respects condensation).
+# Multi-word entries are matched as phrases.
+um
+uh
+umm
+uhm
+uh-huh
+er
+erm
+ah
+eh
+hmm
+hm
+mm
+mhm
+mm-hmm
+huh
+you know
+i mean

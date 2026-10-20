@@ -1,0 +1,61 @@
+# Install order (see scripts/setup_env.ps1):
+#   1. torch==2.14.1+cu126   (https://download.pytorch.org/whl/cu126)
+#   2. pip install -r requirements.txt
+#   3. python -m spacy download en_core_web_sm  (evaluation only: ERRANT needs it) ; pip install -e .
+# Versions pinned from the working Windows/CUDA environment (imp.md 7.1).
+# Whisper is the only pretrained model in the default system; the LM, punctuation tagger, corrector,
+# POS tagger and CTC aligner are our own (plain PyTorch/NumPy, trained by experiments/train_*.py).
+# Optional speaker diarization (pyannote.audio, pretrained) is in requirements-diarize.txt.
+
+# ASR (faster-whisper also needs tokenizers + huggingface_hub to load and download Whisper)
+faster-whisper==1.2.1
+ctranslate2==4.8.2
+tokenizers==0.23.2
+huggingface_hub==1.33.0
+
+# numerics / audio
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.9.1
+pandas==3.0.6
+matplotlib==3.11.2
+soundfile==0.14.0
+av==18.1.0
+pyyaml==6.0.3
+tqdm==4.70.1
+requests==2.34.2
+pyarrow==25.0.1
+
+# subtitles
+srt==3.5.3
+webvtt-py==0.5.1
+
+# text processing
+symspellpy==6.10.0
+language-tool-python==3.4.0
+jellyfish==1.2.1
+rapidfuzz==3.14.6
+num2words==0.5.14
+nltk==3.10.3              # Brown corpus for training the POS tagger; GLEU metric
+
+# evaluation (spaCy is only used by ERRANT and by tools/make_refs.py for the reference cue breaks)
+jiwer==4.0.0
+errant==3.0.2
+spacy==3.8.16
+sacrebleu==2.6.0
+whisper-normalizer==0.1.15
+
+# timing baseline (B2)
+ffsubsync==0.5.1
+
+# web app backend (app/backend; the React frontend is in frontend/, built with npm)
+fastapi==0.142.2
+starlette==1.7.0
+uvicorn==0.54.0
+python-multipart==0.0.32
+pydantic==2.13.5
+
+# tests
+pytest==9.1.1
+hypothesis==6.168.4
+httpx==0.28.1

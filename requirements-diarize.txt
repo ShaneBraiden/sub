@@ -1,0 +1,8 @@
+# Optional speaker diarization (README "Speaker diarization"): install after requirements.txt.
+#   .venv\Scripts\python -m pip install -r requirements-diarize.txt
+# pyannote is the one pretrained model besides Whisper; its pipeline (pyannote/speaker-diarization-community-1)
+# is gated on Hugging Face: accept its conditions and set HF_TOKEN before the first run.
+# Installed with every already-installed package pinned (pip ... -c <pip freeze>), so it adds packages
+# without changing torch 2.14.1+cu126 or numpy; it pulls torchaudio 2.11.0 (the last torchaudio release)
+# and torchcodec, which pyannote only needs for file decoding (subfix passes it the in-memory waveform).
+pyannote.audio==4.0.7

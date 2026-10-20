@@ -1,0 +1,163 @@
+# One group of homophones / commonly confused words per line (space separated).
+# Used by tools/corrupt.py (homophone corruption) and as a phonetic prior in fusion.
+their there they're
+to too two
+your you're
+its it's
+whose who's
+then than
+affect effect
+accept except
+allowed aloud
+ate eight
+bare bear
+be bee
+brake break
+buy by bye
+cell sell
+cent scent sent
+complement compliment
+dear deer
+die dye
+fair fare
+flour flower
+for four fore
+hear here
+hole whole
+hour our
+knew new
+know no
+knight night
+knot not
+made maid
+mail male
+meat meet
+one won
+pair pear pare
+passed past
+peace piece
+plain plane
+principal principle
+rain reign rein
+right write rite
+road rode
+role roll
+sea see
+seam seem
+sight site cite
+so sew sow
+some sum
+son sun
+stair stare
+stationary stationery
+steal steel
+tail tale
+threw through
+toe tow
+wait weight
+waist waste
+way weigh
+weak week
+wear where ware
+weather whether
+which witch
+wood would
+air heir
+aisle isle
+ant aunt
+band banned
+base bass
+berry bury
+blew blue
+board bored
+boarder border
+bough bow
+bread bred
+ceiling sealing
+cereal serial
+chews choose
+coarse course
+council counsel
+creak creek
+dew due
+doe dough
+dual duel
+faint feint
+feat feet
+find fined
+flea flee
+flew flu
+foul fowl
+gait gate
+grate great
+groan grown
+guessed guest
+hair hare
+hall haul
+heal heel
+heard herd
+hi high
+him hymn
+hoarse horse
+holy wholly
+idle idol
+in inn
+jeans genes
+lead led
+lessen lesson
+loan lone
+mane main
+manner manor
+marshal martial
+might mite
+mind mined
+missed mist
+morning mourning
+naval navel
+none nun
+oar or ore
+pail pale
+pain pane
+patience patients
+pause paws
+peak peek pique
+pedal peddle
+plum plumb
+pole poll
+pray prey
+presence presents
+profit prophet
+rap wrap
+read reed
+real reel
+ring wring
+rose rows
+rote wrote
+rung wrung
+sale sail
+scene seen
+sole soul
+stake steak
+storey story
+suite sweet
+tea tee
+team teem
+tide tied
+vain vane vein
+wade weighed
+war wore
+we wee
+whine wine
+wail whale
+yoke yolk
+were we're
+are our
+than then
+lose loose
+quite quiet
+advice advise
+breath breathe
+desert dessert
+later latter
+of off
+an and

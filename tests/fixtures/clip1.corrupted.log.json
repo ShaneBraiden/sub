@@ -1,0 +1,104 @@
+{
+ "id": "fixture1",
+ "seed": 1,
+ "rate_scale": 2.0,
+ "n_ref_tokens": 47,
+ "n_src_tokens": 46,
+ "text_errors": [
+  {
+   "type": "spelling",
+   "ref_index": 3,
+   "src_index": 3,
+   "orig": "ravishment",
+   "new": "ravuishment"
+  },
+  {
+   "type": "entity",
+   "ref_index": 8,
+   "src_index": 8,
+   "orig": "Singing,",
+   "new": "Snagging,"
+  },
+  {
+   "type": "drop",
+   "ref_index": 10,
+   "src_index": 10,
+   "orig": "they",
+   "new": null
+  },
+  {
+   "type": "entity",
+   "ref_index": 16,
+   "src_index": 15,
+   "orig": "That",
+   "new": "Theta"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 17,
+   "src_index": 16,
+   "orig": "ever",
+   "new": "ebver"
+  },
+  {
+   "type": "drop",
+   "ref_index": 21,
+   "src_index": 20,
+   "orig": "to",
+   "new": null
+  },
+  {
+   "type": "homophone",
+   "ref_index": 22,
+   "src_index": 20,
+   "orig": "their",
+   "new": "they're"
+  },
+  {
+   "type": "entity",
+   "ref_index": 24,
+   "src_index": 22,
+   "orig": "All",
+   "new": "Ally"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 25,
+   "src_index": 23,
+   "orig": "waters",
+   "new": "watsrs"
+  },
+  {
+   "type": "dup",
+   "ref_index": 30,
+   "src_index": 28,
+   "orig": "limpid",
+   "new": "limpid"
+  },
+  {
+   "type": "homophone",
+   "ref_index": 43,
+   "src_index": 42,
+   "orig": "which",
+   "new": "witch"
+  }
+ ],
+ "punct_mode": "drop_half",
+ "lowercase": true,
+ "timing": {
+  "offset": 1.5,
+  "drift": 1.0,
+  "split_at_cue": null,
+  "split_jump": 0.0,
+  "jitter_sd": 0.3
+ },
+ "merges": [],
+ "counts": {
+  "entity": 3,
+  "asr": 0,
+  "homophone": 2,
+  "spelling": 3,
+  "drop": 2,
+  "dup": 1
+ }
+}

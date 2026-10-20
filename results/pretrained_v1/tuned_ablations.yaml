@@ -1,0 +1,41 @@
+# re-tuned fusion parameters for the single-signal ablations (experiments/tune_fusion.py)
+no_conf:
+  fusion.w_conf: 0.0
+  fusion.w_phon: 1.0
+  fusion.w_lm: 0.3
+  fusion.w_oov: 0.0
+  fusion.tau_sub: -0.95
+  fusion.tau_ins: 0.95
+  fusion.tau_lm_ins: -3.0
+  fusion.del_span_conf: 0.98
+  fusion.tau_lm_del: 3.0
+no_phon:
+  fusion.w_conf: 2.0
+  fusion.w_phon: 0.0
+  fusion.w_lm: 0.1
+  fusion.w_oov: 0.0
+  fusion.tau_sub: 1.35
+  fusion.tau_ins: 0.95
+  fusion.tau_lm_ins: -3.0
+  fusion.del_span_conf: 0.98
+  fusion.tau_lm_del: 3.0
+no_lm:
+  fusion.w_conf: 2.0
+  fusion.w_phon: 0.0
+  fusion.w_lm: 0.0
+  fusion.w_oov: 0.5
+  fusion.tau_sub: 1.45
+  fusion.tau_ins: 0.95
+  fusion.tau_lm_ins: 0.0
+  fusion.del_span_conf: 0.98
+  fusion.tau_lm_del: 0.0
+no_oov:
+  fusion.w_conf: 2.0
+  fusion.w_phon: 0.5
+  fusion.w_lm: 0.1
+  fusion.w_oov: 0.0
+  fusion.tau_sub: 1.75
+  fusion.tau_ins: 0.95
+  fusion.tau_lm_ins: -3.0
+  fusion.del_span_conf: 0.98
+  fusion.tau_lm_del: 3.0

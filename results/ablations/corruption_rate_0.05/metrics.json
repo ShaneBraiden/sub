@@ -1,0 +1,466 @@
+{
+ "noop": {
+  "libri-test-clean": {
+   "n_files": 8,
+   "wer": 0.060085836909871244,
+   "cer": 0.030727913222419866,
+   "sub": 221,
+   "del": 70,
+   "ins": 45,
+   "n_ref_words": 5592,
+   "edit_p": 1.0,
+   "edit_r": 0.0,
+   "edit_f05": 0.0,
+   "edit_tp": 0,
+   "edit_fp": 0,
+   "edit_fn": 331,
+   "overcorrection": 0.0,
+   "punct_._p": 1.0,
+   "punct_._r": 0.19254658385093168,
+   "punct_._f1": 0.3229166666666667,
+   "punct_,_p": 1.0,
+   "punct_,_r": 0.1925287356321839,
+   "punct_,_f1": 0.3228915662650602,
+   "punct_?_p": 1.0,
+   "punct_?_r": 0.2608695652173913,
+   "punct_?_f1": 0.41379310344827586,
+   "punct_macro_f1": 0.3532004454600009,
+   "casing_acc": 0.9232238349885409,
+   "cue_match_rate": 0.7120315581854043,
+   "pair_mean_ms": 3482.6398891966755,
+   "pair_median_ms": 3204.499999999996,
+   "pair_within_100": 0.0110803324099723,
+   "pair_within_250": 0.030470914127423823,
+   "t_mean_ms": 3432.707692307692,
+   "t_median_ms": 3125.0,
+   "t_within_100": 0.008791208791208791,
+   "t_within_250": 0.024175824175824177,
+   "onset_bias_ms": 513.0000000000052,
+   "drift_ms_per_min": 58.46836538333271,
+   "fmt_lines_ok": 0.9082969432314411,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9061135371179039,
+   "fmt_cps20_ok": 0.9759825327510917,
+   "fmt_dur_ok": 0.9323144104803494,
+   "fmt_gap_ok": 0.6733333333333333,
+   "fmt_all_ok": 0.5633187772925764,
+   "n_cues": 458,
+   "rtf": 7.982187816611765e-06,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 0,
+     "total": 76,
+     "recall": 0.0
+    },
+    "drop": {
+     "fixed": 0,
+     "total": 50,
+     "recall": 0.0
+    },
+    "dup": {
+     "fixed": 0,
+     "total": 25,
+     "recall": 0.0
+    },
+    "entity": {
+     "fixed": 0,
+     "total": 28,
+     "recall": 0.0
+    },
+    "homophone": {
+     "fixed": 0,
+     "total": 50,
+     "recall": 0.0
+    },
+    "spelling": {
+     "fixed": 0,
+     "total": 76,
+     "recall": 0.0
+    }
+   }
+  },
+  "ted-test": {
+   "n_files": 11,
+   "wer": 0.0513505379580167,
+   "cer": 0.025121727988284825,
+   "sub": 879,
+   "del": 273,
+   "ins": 213,
+   "n_ref_words": 26582,
+   "edit_p": 1.0,
+   "edit_r": 0.0,
+   "edit_f05": 0.0,
+   "edit_tp": 0,
+   "edit_fp": 0,
+   "edit_fn": 1321,
+   "overcorrection": 0.0,
+   "cue_match_rate": 0.6950425638457687,
+   "pair_mean_ms": 6170.615634005761,
+   "pair_median_ms": 2505.4999999999836,
+   "pair_within_100": 0.03710374639769452,
+   "pair_within_250": 0.08069164265129683,
+   "t_mean_ms": 6135.585606500287,
+   "t_median_ms": 2503.999999999991,
+   "t_within_100": 0.034822983168891465,
+   "t_within_250": 0.0824143934997098,
+   "onset_bias_ms": -705.0000000000125,
+   "drift_ms_per_min": 5.3723716239652575,
+   "fmt_lines_ok": 0.8486078886310905,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.8561484918793504,
+   "fmt_cps20_ok": 0.9704176334106729,
+   "fmt_dur_ok": 0.8932714617169374,
+   "fmt_gap_ok": 0.5359019264448336,
+   "fmt_all_ok": 0.3642691415313225,
+   "n_cues": 1724,
+   "rtf": 4.522426448714184e-05,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 0,
+     "total": 353,
+     "recall": 0.0
+    },
+    "drop": {
+     "fixed": 3,
+     "total": 235,
+     "recall": 0.01276595744680851
+    },
+    "dup": {
+     "fixed": 0,
+     "total": 118,
+     "recall": 0.0
+    },
+    "homophone": {
+     "fixed": 0,
+     "total": 235,
+     "recall": 0.0
+    },
+    "spelling": {
+     "fixed": 0,
+     "total": 353,
+     "recall": 0.0
+    }
+   }
+  },
+  "ALL": {
+   "n_files": 19,
+   "wer": 0.05286877603033505,
+   "cer": 0.02609442891204628,
+   "sub": 1100,
+   "del": 343,
+   "ins": 258,
+   "n_ref_words": 32174,
+   "edit_p": 1.0,
+   "edit_r": 0.0,
+   "edit_f05": 0.0,
+   "edit_tp": 0,
+   "edit_fp": 0,
+   "edit_fn": 1652,
+   "overcorrection": 0.0,
+   "punct_._p": 1.0,
+   "punct_._r": 0.19254658385093168,
+   "punct_._f1": 0.3229166666666667,
+   "punct_,_p": 1.0,
+   "punct_,_r": 0.1925287356321839,
+   "punct_,_f1": 0.3228915662650602,
+   "punct_?_p": 1.0,
+   "punct_?_r": 0.2608695652173913,
+   "punct_?_f1": 0.41379310344827586,
+   "punct_macro_f1": 0.3532004454600009,
+   "casing_acc": 0.9232238349885409,
+   "cue_match_rate": 0.6984824281150159,
+   "pair_mean_ms": 5615.807604345338,
+   "pair_median_ms": 2645.49999999997,
+   "pair_within_100": 0.03173241852487135,
+   "pair_within_250": 0.07032590051457976,
+   "t_mean_ms": 5570.934802571165,
+   "t_median_ms": 2641.999999999996,
+   "t_within_100": 0.02938475665748393,
+   "t_within_250": 0.07024793388429752,
+   "onset_bias_ms": -587.9999999999725,
+   "drift_ms_per_min": 19.88254493208332,
+   "fmt_lines_ok": 0.8611365719523373,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.8666361136571953,
+   "fmt_cps20_ok": 0.9715857011915674,
+   "fmt_dur_ok": 0.9014665444546288,
+   "fmt_gap_ok": 0.5644937586685159,
+   "fmt_all_ok": 0.4060494958753437,
+   "n_cues": 2182,
+   "rtf": 2.954339009955024e-05,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 0,
+     "total": 429,
+     "recall": 0.0
+    },
+    "drop": {
+     "fixed": 3,
+     "total": 285,
+     "recall": 0.010526315789473684
+    },
+    "dup": {
+     "fixed": 0,
+     "total": 143,
+     "recall": 0.0
+    },
+    "entity": {
+     "fixed": 0,
+     "total": 28,
+     "recall": 0.0
+    },
+    "homophone": {
+     "fixed": 0,
+     "total": 285,
+     "recall": 0.0
+    },
+    "spelling": {
+     "fixed": 0,
+     "total": 429,
+     "recall": 0.0
+    }
+   }
+  }
+ },
+ "ours": {
+  "libri-test-clean": {
+   "n_files": 8,
+   "wer": 0.01967095851216023,
+   "cer": 0.009765965609849674,
+   "sub": 74,
+   "del": 12,
+   "ins": 24,
+   "n_ref_words": 5592,
+   "edit_p": 0.7803468208092486,
+   "edit_r": 0.8157099697885196,
+   "edit_f05": 0.7871720116618076,
+   "edit_tp": 270,
+   "edit_fp": 76,
+   "edit_fn": 61,
+   "overcorrection": 0.009931245225362872,
+   "punct_._p": 0.8229508196721311,
+   "punct_._r": 0.7629179331306991,
+   "punct_._f1": 0.7917981072555205,
+   "punct_,_p": 0.6657824933687002,
+   "punct_,_r": 0.7090395480225988,
+   "punct_,_f1": 0.6867305061559508,
+   "punct_?_p": 0.8571428571428571,
+   "punct_?_r": 0.782608695652174,
+   "punct_?_f1": 0.8181818181818182,
+   "punct_macro_f1": 0.7655701438644299,
+   "casing_acc": 0.9732866617538688,
+   "cue_match_rate": 0.6291913214990138,
+   "pair_mean_ms": 104.44200626959233,
+   "pair_median_ms": 32.00000000001069,
+   "pair_within_100": 0.6959247648902821,
+   "pair_within_250": 0.9357366771159875,
+   "t_mean_ms": 23.197211155378344,
+   "t_median_ms": 21.99999999999136,
+   "t_within_100": 0.99800796812749,
+   "t_within_250": 1.0,
+   "onset_bias_ms": -16.999999999995907,
+   "drift_ms_per_min": 2.240027489602228,
+   "w_start_mean_ms": 24.511642230215863,
+   "w_start_median_ms": 18.299999999999983,
+   "w_start_within_50": 0.8966470154753132,
+   "w_start_within_100": 0.9887619749447311,
+   "w_boundary_mean_ms": 49.71221388806335,
+   "w_aligned": 5428,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9761904761904762,
+   "fmt_cps20_ok": 1.0,
+   "fmt_dur_ok": 1.0,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.9761904761904762,
+   "n_cues": 504,
+   "rtf": 0.0626542602047024,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 39,
+     "total": 76,
+     "recall": 0.5131578947368421
+    },
+    "drop": {
+     "fixed": 44,
+     "total": 50,
+     "recall": 0.88
+    },
+    "dup": {
+     "fixed": 19,
+     "total": 25,
+     "recall": 0.76
+    },
+    "entity": {
+     "fixed": 24,
+     "total": 28,
+     "recall": 0.8571428571428571
+    },
+    "homophone": {
+     "fixed": 50,
+     "total": 50,
+     "recall": 1.0
+    },
+    "spelling": {
+     "fixed": 75,
+     "total": 76,
+     "recall": 0.9868421052631579
+    }
+   }
+  },
+  "ted-test": {
+   "n_files": 11,
+   "wer": 0.025054548190504854,
+   "cer": 0.015376166941241077,
+   "sub": 283,
+   "del": 299,
+   "ins": 84,
+   "n_ref_words": 26582,
+   "edit_p": 0.6582687338501292,
+   "edit_r": 0.7713853141559425,
+   "edit_f05": 0.6781578597098363,
+   "edit_tp": 1019,
+   "edit_fp": 529,
+   "edit_fn": 302,
+   "overcorrection": 0.01792361223498948,
+   "cue_match_rate": 0.36354531797696543,
+   "pair_mean_ms": 182.24655647382832,
+   "pair_median_ms": 33.00000000000125,
+   "pair_within_100": 0.6652892561983471,
+   "pair_within_250": 0.7982093663911846,
+   "t_mean_ms": 44.34674063800129,
+   "t_median_ms": 17.00000000005275,
+   "t_within_100": 0.948220064724919,
+   "t_within_250": 0.9731853906611189,
+   "onset_bias_ms": -16.999999999939064,
+   "drift_ms_per_min": 2.7734237331129257,
+   "w_start_mean_ms": 34.7505162172057,
+   "w_start_median_ms": 16.700000000128057,
+   "w_start_within_50": 0.8739482457532942,
+   "w_start_within_100": 0.9625337355135736,
+   "w_boundary_mean_ms": 58.627203921156394,
+   "w_aligned": 25196,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9109367789570835,
+   "fmt_cps20_ok": 0.9972311952007383,
+   "fmt_dur_ok": 0.9995385325334564,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.9109367789570835,
+   "n_cues": 2167,
+   "rtf": 0.05994238367758449,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 131,
+     "total": 353,
+     "recall": 0.37110481586402266
+    },
+    "drop": {
+     "fixed": 213,
+     "total": 235,
+     "recall": 0.9063829787234042
+    },
+    "dup": {
+     "fixed": 112,
+     "total": 118,
+     "recall": 0.9491525423728814
+    },
+    "homophone": {
+     "fixed": 225,
+     "total": 235,
+     "recall": 0.9574468085106383
+    },
+    "spelling": {
+     "fixed": 345,
+     "total": 353,
+     "recall": 0.9773371104815864
+    }
+   }
+  },
+  "ALL": {
+   "n_files": 19,
+   "wer": 0.02411885373282775,
+   "cer": 0.01440276920470087,
+   "sub": 357,
+   "del": 311,
+   "ins": 108,
+   "n_ref_words": 32174,
+   "edit_p": 0.6805702217529039,
+   "edit_r": 0.7802663438256658,
+   "edit_f05": 0.6984178586909406,
+   "edit_tp": 1289,
+   "edit_fp": 605,
+   "edit_fn": 363,
+   "overcorrection": 0.016526442307692308,
+   "punct_._p": 0.8229508196721311,
+   "punct_._r": 0.7629179331306991,
+   "punct_._f1": 0.7917981072555205,
+   "punct_,_p": 0.6657824933687002,
+   "punct_,_r": 0.7090395480225988,
+   "punct_,_f1": 0.6867305061559508,
+   "punct_?_p": 0.8571428571428571,
+   "punct_?_r": 0.782608695652174,
+   "punct_?_f1": 0.8181818181818182,
+   "punct_macro_f1": 0.7655701438644299,
+   "casing_acc": 0.9732866617538688,
+   "cue_match_rate": 0.41733226837060705,
+   "pair_mean_ms": 158.4956937799036,
+   "pair_median_ms": 32.999999999901775,
+   "pair_within_100": 0.6746411483253588,
+   "pair_within_250": 0.8401913875598086,
+   "t_mean_ms": 40.36285178236275,
+   "t_median_ms": 18.000000000000682,
+   "t_within_100": 0.9575984990619137,
+   "t_within_250": 0.9782363977485928,
+   "onset_bias_ms": -16.999999999939064,
+   "drift_ms_per_min": 2.5626330448803016,
+   "w_start_mean_ms": 32.93571057452738,
+   "w_start_median_ms": 16.700000000128057,
+   "w_start_within_50": 0.8779715256008359,
+   "w_start_within_100": 0.9671826018808778,
+   "w_boundary_mean_ms": 57.04705221335763,
+   "w_aligned": 30624,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9232497192062897,
+   "fmt_cps20_ok": 0.9977536503182328,
+   "fmt_dur_ok": 0.9996256083863722,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.9232497192062897,
+   "n_cues": 2671,
+   "rtf": 0.06108422642584467,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 170,
+     "total": 429,
+     "recall": 0.3962703962703963
+    },
+    "drop": {
+     "fixed": 257,
+     "total": 285,
+     "recall": 0.9017543859649123
+    },
+    "dup": {
+     "fixed": 131,
+     "total": 143,
+     "recall": 0.916083916083916
+    },
+    "entity": {
+     "fixed": 24,
+     "total": 28,
+     "recall": 0.8571428571428571
+    },
+    "homophone": {
+     "fixed": 275,
+     "total": 285,
+     "recall": 0.9649122807017544
+    },
+    "spelling": {
+     "fixed": 420,
+     "total": 429,
+     "recall": 0.9790209790209791
+    }
+   }
+  }
+ }
+}

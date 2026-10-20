@@ -1,0 +1,104 @@
+{
+ "id": "fixture3",
+ "seed": 3,
+ "rate_scale": 2.0,
+ "n_ref_tokens": 66,
+ "n_src_tokens": 64,
+ "text_errors": [
+  {
+   "type": "spelling",
+   "ref_index": 1,
+   "src_index": 1,
+   "orig": "this",
+   "new": "thks"
+  },
+  {
+   "type": "dup",
+   "ref_index": 3,
+   "src_index": 3,
+   "orig": "of",
+   "new": "of"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 5,
+   "src_index": 6,
+   "orig": "was",
+   "new": "waw"
+  },
+  {
+   "type": "drop",
+   "ref_index": 10,
+   "src_index": 11,
+   "orig": "in",
+   "new": null
+  },
+  {
+   "type": "drop",
+   "ref_index": 17,
+   "src_index": 17,
+   "orig": "of",
+   "new": null
+  },
+  {
+   "type": "homophone",
+   "ref_index": 26,
+   "src_index": 25,
+   "orig": "whole",
+   "new": "hole"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 43,
+   "src_index": 42,
+   "orig": "upon",
+   "new": "upoh"
+  },
+  {
+   "type": "drop",
+   "ref_index": 48,
+   "src_index": 47,
+   "orig": "being",
+   "new": null
+  },
+  {
+   "type": "homophone",
+   "ref_index": 51,
+   "src_index": 49,
+   "orig": "of",
+   "new": "off"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 61,
+   "src_index": 59,
+   "orig": "way,",
+   "new": "wy,"
+  },
+  {
+   "type": "homophone",
+   "ref_index": 63,
+   "src_index": 61,
+   "orig": "main",
+   "new": "mane"
+  }
+ ],
+ "punct_mode": "drop_half",
+ "lowercase": true,
+ "timing": {
+  "offset": 3.0,
+  "drift": 1.0,
+  "split_at_cue": null,
+  "split_jump": 0.0,
+  "jitter_sd": 0.3
+ },
+ "merges": [],
+ "counts": {
+  "entity": 0,
+  "asr": 0,
+  "homophone": 3,
+  "spelling": 4,
+  "drop": 3,
+  "dup": 1
+ }
+}

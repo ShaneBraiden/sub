@@ -1,0 +1,16 @@
+# written by experiments/tune_fusion.py
+fusion:
+  w_conf: 2.0
+  w_phon: 0.5
+  w_lm: 0.1
+  w_oov: 0.25
+  tau_sub: 1.75
+  tau_ins: 0.95
+  tau_lm_ins: -3.0
+  del_span_conf: 0.98
+  tau_lm_del: 3.0
+punct:
+  strategy_a: fill
+  strategy_b: fill
+gec:
+  max_ratio: 0.15

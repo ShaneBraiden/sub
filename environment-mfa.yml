@@ -1,0 +1,9 @@
+# Montreal Forced Aligner (silver-gold timing references, tools/make_refs.py).
+# conda env create -f environment-mfa.yml
+# conda run -n mfa mfa model download acoustic english_us_arpa
+# conda run -n mfa mfa model download dictionary english_us_arpa
+name: mfa
+channels:
+  - conda-forge
+dependencies:
+  - montreal-forced-aligner=3.4.2

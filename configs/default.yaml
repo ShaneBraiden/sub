@@ -1,0 +1,140 @@
+# Default configuration for the audio-aware subtitle corrector.
+# Every key maps 1:1 onto the dataclasses in src/subfix/config.py.
+# Override from code with cfg.replace(max_cps=20) / cfg.override({"segment.max_cps": 20}),
+# or from the CLI with --set segment.max_cps=20.
+# configs/tuned.yaml (written by experiments/tune_fusion.py) is layered on top when present.
+
+device: auto              # auto | cuda | cpu
+cache_dir: cache          # relative to the repo root
+keep_models_loaded: true  # false = free GPU memory after each stage (slower, smaller footprint)
+
+asr:
+  model: auto             # auto -> large-v3-turbo on cuda, small.en on cpu
+  compute_type: auto      # auto -> int8_float16 on cuda, int8 on cpu
+  beam_size: 5
+  vad_filter: true        # avoids hallucinated text in silence/music
+  language: en
+  # a short punctuated, cased prompt: without it Whisper sometimes emits lowercase text without punctuation
+  initial_prompt: "Hello, and welcome. Today, we will talk about it."
+  use_lexicon_hotwords: true
+
+sync:                     # coarse offset/drift fit (Mode A)
+  enabled: true
+  ngram: 3                # unique exact n-gram matches become anchors
+  min_anchors: 8
+  residual_threshold: 1.0 # RANSAC inlier threshold (s)
+  max_slope_dev: 0.1      # reject fits with |a-1| larger than this
+  piecewise: true         # detect offset jumps (ad cuts / split releases)
+  piecewise_trigger: 0.85 # try piecewise when the RANSAC inlier ratio is below this
+  piecewise_min_anchors: 6
+  piecewise_penalty: 0.3  # minimum SSE reduction (s^2 per anchor) to accept a split
+
+align:                    # graded Needleman-Wunsch (subtitle words vs ASR words)
+  gap: 0.8
+  homophone_cost: 0.3
+  near_miss_max: 0.5      # normalized char distance below which cost = 0.4 + 0.6*d
+  time_window: 3.0        # |t_sub - t_asr| beyond this adds time_penalty (s)
+  time_penalty: 1.0
+  anchor_ngram: 3
+
+fusion:                   # imp.md 4.1 decision rule
+  enabled: true
+  w_conf: 1.0             # Whisper word probability
+  w_phon: 0.5             # metaphone similarity
+  w_lm: 0.3               # LM log-prob difference (clipped)
+  w_oov: 0.5              # subtitle word is out-of-vocabulary
+  w_lex: 1.0              # ASR word is in the domain lexicon
+  tau_sub: 1.0
+  tau_ins: 0.7            # min ASR prob to insert a word missing from the subtitle
+  tau_lm_ins: 0.0         # min LM gain to insert
+  tau_lm_del: 0.0         # min LM gain to delete
+  del_span_conf: 0.9      # mean ASR prob around a deletion candidate
+  lm_context: 5
+  lm_model: models/lm/kn4.npz   # our modified Kneser-Ney 4-gram (experiments/train_lm.py)
+  lm_clip: 5.0
+
+punct:
+  enabled: true
+  model: models/punct    # our BiLSTM tagger (experiments/train_punct.py)
+  strategy_a: fill        # Mode A: keep existing marks, add missing ones
+  strategy_b: replace     # Mode B: re-predict all marks
+  min_conf: 0.0
+  chunk_words: 230
+  overlap: 30             # words of context on each side of a window edge
+
+truecase:
+  enabled: true
+
+spell:
+  symspell: true
+  max_edit_distance: 2
+  min_count: 100000       # min unigram count of a SymSpell suggestion
+  languagetool: true
+  lt_language: en-US
+  lt_categories: [TYPOS, GRAMMAR, CONFUSED_WORDS]
+  lt_rules: [EN_A_VS_AN]  # individual rules allowed outside those categories
+  guard_prob: 0.8         # audio-consistency guard: never change words the ASR heard with p >= this (>1 disables)
+
+gec:
+  enabled: true
+  model: models/corrector  # our Transformer corrector + BPE (experiments/train_corrector.py)
+  max_ratio: 0.25         # reject outputs whose token edit ratio exceeds this
+  batch_size: 16
+  num_beams: 4
+  max_length: 128
+  max_sentence_words: 40
+  guard_prob: 0.8         # audio-consistency guard for GEC edits (>1 disables)
+
+timing:
+  backend: ctc            # ctc (our acoustic model) | whisper | keep
+  model: models/aligner   # our CTC acoustic model (experiments/train_aligner.py)
+  star_penalty: 0.5       # wildcard cost for audio outside the transcript (chunk margins)
+  chunk_max_s: 60.0
+  chunk_margin_s: 1.0
+
+segment:
+  method: dp              # dp | greedy | keep
+  max_chars: 42
+  max_lines: 2
+  max_cps: 17.0           # strict; 20 = lenient (both reported)
+  lenient_cps: 20.0
+  min_dur: 0.833          # 5/6 s
+  max_dur: 7.0
+  min_gap: 0.083          # 2 frames @ 24 fps
+  lead_in: 0.0
+  linger: 0.5             # max extension after the last word when the gap allows
+  max_words: 30
+  cps_count_spaces: false # CPS convention: characters excluding spaces
+  use_pos: true           # POS-aware line/cue breaks
+  pos_model: models/pos/perceptron.json.gz   # our perceptron tagger (experiments/train_pos.py)
+  pause_bonus: 1.0
+  cue_cost: 1.0
+
+diarize:                  # speaker diarization (pyannote.audio) - opt-in, see README "Speaker diarization"
+  enabled: false
+  model: pyannote/speaker-diarization-community-1   # gated on Hugging Face (accept its conditions once), or a local pipeline folder
+  token_env: HF_TOKEN     # environment variable holding the Hugging Face token (never put the token in this file)
+  num_speakers: 0         # exact number of speakers if known (0 = let pyannote estimate it)
+  min_speakers: 0         # bounds for the estimate (0 = no bound)
+  max_speakers: 0
+  max_gap: 1.0            # words in a diarization gap take the nearest speaker turn within this (s)
+  overlap_min: 0.5        # share of a word inside overlapping speech needed to flag it as overlapped
+  smooth_cover: 0.5       # a one-word speaker island covered less than this by its own turns joins its neighbours
+  label: every            # every = label every cue | change = only when the speaker changes | none (dialogue cues get "- ")
+  label_format: "{speaker}: "
+  dialogue: true          # allow a two-speaker cue (one speaker per line) for quick exchanges
+  dialogue_cost: 0.5      # segmenter cost of a two-speaker cue (higher = rarer)
+
+chapters:                 # chapter markers from topic segmentation - the second output (src/subfix/chapters.py)
+  enabled: true           # adds *.chapters.{vtt,txt,json} + *.ffmetadata to the outputs (2+ chapters)
+  method: dp              # dp = Utiyama & Isahara 2001 | tiling = TextTiling (Hearst 1997); dp won on dev (experiments/eval_chapters.py)
+  min_duration: 60.0      # shortest chapter (s)
+  num_chapters: 0         # exact number of chapters (0 = choose automatically)
+  penalty: 6.0            # dp: per-chapter prior multiplier (higher = fewer chapters); tuned on dev (5-6 best, 8 already worse)
+  window_words: 400       # tiling: words in each block either side of a gap (tuned on dev)
+  smoothing: 4            # tiling: moving-average half-width (gaps) (tuned on dev)
+  cutoff: 0.0             # tiling: boundary if depth > mean - cutoff * std (tuned on dev)
+  content_pos: [NOUN, PROPN, VERB, ADJ]   # tuned on dev (nouns only, or nouns+adjectives, are worse)
+  stem: true              # Porter step-1 (inflections)
+  generic_logp: 0.0       # ignore topic words with LM unigram log-prob above this (0 = off; tuned on dev: -7 ties, -8 and below hurt)
+  title_terms: 3          # noun phrases in a chapter title

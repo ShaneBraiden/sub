@@ -1,0 +1,116 @@
+{
+ "id": "fixture2",
+ "seed": 2,
+ "rate_scale": 2.0,
+ "n_ref_tokens": 56,
+ "n_src_tokens": 55,
+ "text_errors": [
+  {
+   "type": "entity",
+   "ref_index": 1,
+   "src_index": 1,
+   "orig": "Frere",
+   "new": "Freer"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 11,
+   "src_index": 11,
+   "orig": "God",
+   "new": "Gox"
+  },
+  {
+   "type": "homophone",
+   "ref_index": 15,
+   "src_index": 15,
+   "orig": "In",
+   "new": "Inn"
+  },
+  {
+   "type": "drop",
+   "ref_index": 16,
+   "src_index": 16,
+   "orig": "the",
+   "new": null
+  },
+  {
+   "type": "drop",
+   "ref_index": 28,
+   "src_index": 27,
+   "orig": "have",
+   "new": null
+  },
+  {
+   "type": "spelling",
+   "ref_index": 33,
+   "src_index": 31,
+   "orig": "the",
+   "new": "th"
+  },
+  {
+   "type": "entity",
+   "ref_index": 36,
+   "src_index": 34,
+   "orig": "Meekin.",
+   "new": "Megan."
+  },
+  {
+   "type": "entity",
+   "ref_index": 41,
+   "src_index": 39,
+   "orig": "Meekin",
+   "new": "Mackinaw"
+  },
+  {
+   "type": "homophone",
+   "ref_index": 47,
+   "src_index": 45,
+   "orig": "wine.",
+   "new": "whine."
+  },
+  {
+   "type": "dup",
+   "ref_index": 49,
+   "src_index": 47,
+   "orig": "you",
+   "new": "you"
+  },
+  {
+   "type": "spelling",
+   "ref_index": 50,
+   "src_index": 49,
+   "orig": "many",
+   "new": "mahny"
+  },
+  {
+   "type": "entity",
+   "ref_index": 52,
+   "src_index": 51,
+   "orig": "Captain",
+   "new": "Capetown"
+  }
+ ],
+ "punct_mode": "strip_all",
+ "lowercase": true,
+ "timing": {
+  "offset": -2.0,
+  "drift": 1.0,
+  "split_at_cue": null,
+  "split_jump": 0.0,
+  "jitter_sd": 0.3
+ },
+ "merges": [
+  [
+   0,
+   2
+  ]
+ ],
+ "counts": {
+  "entity": 4,
+  "asr": 0,
+  "homophone": 2,
+  "spelling": 3,
+  "drop": 2,
+  "dup": 1
+ }
+}

@@ -1,0 +1,66 @@
+# Systems compared in imp.md 6.2. `type`: noop | raw_whisper | ffsubsync | pipeline.
+# `overrides` are dotted keys over configs/default.yaml (+ configs/tuned.yaml).
+# `mode: B` runs the pipeline without the subtitle file (audio only).
+
+systems:
+  noop:
+    type: noop
+    label: "Corrupted input (no-op)"
+  b1_symspell_lt:
+    type: pipeline
+    label: "B1: SymSpell + LanguageTool"
+    overrides:
+      sync.enabled: false
+      fusion.enabled: false
+      punct.enabled: false
+      truecase.enabled: false
+      spell.symspell: true
+      spell.languagetool: true
+      gec.enabled: false
+      timing.backend: keep
+      segment.method: keep
+  b2_ffsubsync:
+    type: ffsubsync
+    label: "B2: ffsubsync only (timing)"
+  b3_raw_whisper:
+    type: raw_whisper
+    label: "B3: Raw Whisper replace"
+  ours:
+    type: pipeline
+    label: "Ours: fusion (own KN LM) + own punct + own corrector + own CTC align + DP seg"
+    overrides: {}
+  modeb_raw:
+    type: raw_whisper
+    mode: B
+    label: "Mode B: raw Whisper"
+  modeb_ours:
+    type: pipeline
+    mode: B
+    label: "Mode B: Ours (own punct + own corrector + own CTC align + DP seg)"
+    overrides: {}
+
+# imp.md 6.3 ablations (each entry = overrides on top of `ours`).
+# Fusion-signal ablations take their re-tuned threshold from configs/tuned_ablations.yaml.
+ablations:
+  fusion_signals:
+    full: {}
+    no_conf: {fusion.w_conf: 0}
+    no_phon: {fusion.w_phon: 0}
+    no_lm: {fusion.w_lm: 0}
+    no_oov: {fusion.w_oov: 0}
+  gec_model:              # our from-scratch Transformer corrector on/off
+    none: {gec.enabled: false}
+    own_transformer: {}
+  asr_size:
+    tiny_en: {asr.model: tiny.en}
+    small_en: {asr.model: small.en}
+    large_v3_turbo: {asr.model: large-v3-turbo}
+  timing_source:
+    whisper_dtw: {timing.backend: whisper}
+    own_ctc: {timing.backend: ctc}
+  segmenter:
+    greedy: {segment.method: greedy}
+    dp: {segment.method: dp}
+  audio_guard:
+    guard_on: {}
+    guard_off: {gec.guard_prob: 1.01, spell.guard_prob: 1.01}

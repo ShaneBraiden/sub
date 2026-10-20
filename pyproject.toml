@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "subfix"
+version = "0.1.0"
+description = "Audio-aware subtitle correction for English (ASR evidence fusion, GEC, forced alignment, re-segmentation)"
+readme = "README.md"
+requires-python = ">=3.10"
+# Runtime dependencies are pinned in requirements.txt (install that first).
+dependencies = []
+
+[project.scripts]
+subfix = "subfix.cli:main"
+
+[tool.setuptools]
+packages = ["subfix", "subfix.textfix", "subfix.utils", "metrics"]
+
+[tool.setuptools.package-dir]
+subfix = "src/subfix"
+metrics = "metrics"

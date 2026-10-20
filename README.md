@@ -627,5 +627,3 @@ and CTC aligner are trained on them), the Brown corpus via NLTK (POS tagger; see
 notes), Whisper (MIT). Evaluation only: Montreal Forced Aligner `english_us_arpa` models, spaCy
 `en_core_web_sm` (MIT), and the AMI Meeting Corpus manual annotations (CC BY 4.0, University of
 Edinburgh; topic boundaries for the chapter-marker evaluation).
-#   s u b  
- 

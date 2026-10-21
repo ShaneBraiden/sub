@@ -380,8 +380,13 @@ def test_chapter_options_map_to_the_config():
     cfg = Config.load()
     d = option_defaults(cfg)
     assert d["chapters"] is True and d["num_chapters"] == 0 and d["min_chapter"] == cfg.chapters.min_duration
-    over = to_overrides(JobOptions(chapters=True, num_chapters=4, min_chapter=90), cfg)
-    assert over == {"chapters.enabled": True, "chapters.num_chapters": 4, "chapters.min_duration": 90.0}
+    assert d["chapter_mode"] == "talk"
+    over = to_overrides(JobOptions(chapters=True, chapter_mode="meeting", num_chapters=4, min_chapter=90), cfg)
+    assert over == {"chapters.enabled": True, "chapters.mode": "meeting", "chapters.num_chapters": 4,
+                    "chapters.min_duration": 90.0}
+    assert cfg.override(over).chapters.mode == "meeting"
+    with pytest.raises(ValueError):
+        JobOptions(chapter_mode="lecture")
     assert cfg.override(over).chapters.num_chapters == 4
     with pytest.raises(ValueError):
         JobOptions(min_chapter=5)

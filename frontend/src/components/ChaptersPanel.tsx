@@ -1,5 +1,5 @@
 import type { Result } from "../api/types";
-import { chapterAt, minChapter } from "../lib/chapters";
+import { chapterAt, chapterMode, minChapter } from "../lib/chapters";
 import { formatClock, formatDuration, plural } from "../lib/format";
 
 interface Props {
@@ -18,6 +18,7 @@ export default function ChaptersPanel({ result, time, onSeek }: Props) {
   const pct = (t: number) => `${(Math.max(0, Math.min(total, t)) / total) * 100}%`;
   const cur = chapterAt(chapters, time);
   const min = minChapter(result.config);
+  const meeting = chapterMode(result.config) === "meeting";
   const single = chapters.length < 2;
 
   return (
@@ -38,6 +39,11 @@ export default function ChaptersPanel({ result, time, onSeek }: Props) {
             {min != null && (
               <span>
                 shortest allowed <b>{formatDuration(min)}</b>
+              </span>
+            )}
+            {meeting && (
+              <span title="Chapter starts also count pauses and words like “okay” and “so” that open a new topic">
+                <b>meeting</b> mode
               </span>
             )}
           </div>

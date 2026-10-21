@@ -13,7 +13,8 @@ have no punctuation, so their sentences are cut at pauses).
 
 Real topic boundaries: the AMI meeting corpus topic annotations (`--stage ami`, after
 `python -I tools/fetch_ami.py`): the shipped settings zero-shot on all 139 annotated meetings, a
-penalty sweep, and settings tuned on the 20 AMI development meetings tested on the 20 unseen ones.
+penalty sweep, settings tuned on the 20 AMI development meetings tested on the 20 unseen ones, and the
+joint tuning of meeting mode (`chapters.mode: meeting`; written to results/chapters/meeting_tuned.json).
 
   python experiments/eval_chapters.py                     # tune on dev, test, ablations, examples (+ AMI)
   python experiments/eval_chapters.py --stage tune|test|examples|ami
@@ -558,12 +559,6 @@ def longest_pauses(D: Document, pauses: np.ndarray, K: int) -> list[int]:
     return chosen[1:-1]
 
 
-def gap_pauses(D: Document) -> np.ndarray:
-    """Silence before every sentence k >= 1: its start minus the latest end of any earlier word (s)."""
-    run_end = np.maximum.accumulate(np.asarray(D.en))
-    return np.asarray([max(0.0, D.st[a] - run_end[a - 1]) for a, _ in D.sents[1:]])
-
-
 def ami_stage(tagger, bg, tuned: dict, workers: int) -> None:
     from scipy.stats import mannwhitneyu
 
@@ -583,7 +578,7 @@ def ami_stage(tagger, bg, tuned: dict, workers: int) -> None:
     for doc in docs:
         D, Dt = prepare(doc, bg, content, generic), prepare(doc, bg, tc, tg)
         K = len(doc.ref) + 1
-        pauses = gap_pauses(D)
+        pauses = D.silence_before()[1:]
         res = {"dp": run(doc, D, main_c), "tiling": run(doc, Dt, tile_c),
                "dp_oracle_k": run(doc, D, replace(main_c, num_chapters=K)),
                "tiling_oracle_k": run(doc, Dt, replace(tile_c, num_chapters=K)),
@@ -658,10 +653,7 @@ def ami_stage(tagger, bg, tuned: dict, workers: int) -> None:
                     "under_30": float(np.mean(np.asarray(lengths) < 30)), "median": float(np.median(lengths))},
         "cues": sorted(cues, key=lambda x: -x[1] / max(x[2], 1e-9))[:10],
     }
-    results["cue_experiment"] = ami_cue_experiment(docs, bg, tuned, workers, tagger)
-    print("AMI cue experiment", results["cue_experiment"]["chosen"],
-          {k: (round(v["wd"], 3), round(v["f1_30"], 3)) for k, v in results["cue_experiment"]["test"].items()},
-          flush=True)
+    results["meeting"] = meeting_eval(docs, bg, tuned, workers, tagger)
     OUT.mkdir(parents=True, exist_ok=True)
     with open(OUT / "ami_per_meeting.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(csv_rows[0]))
@@ -740,16 +732,22 @@ def write_ami_markdown(R: dict, tuned: dict) -> None:
               "| First word of the sentence | share at topic starts | share elsewhere |", "|---|---:|---:|"]
     for w_, a, b in R["cues"]:
         lines.append(f"| {w_} | {a:.1%} | {b:.1%} |")
-    if "cue_experiment" in R:
-        lines += cue_markdown(R["cue_experiment"], T_["pauses_oracle_k"])
+    if "meeting" in R:
+        lines += meeting_markdown(R["meeting"])
     (OUT / "ami.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-# discourse markers that open a new topic (Hirschberg & Litman 1993), fixed before looking at the data
-CUE_WORDS = frozenset({"okay", "ok", "so", "now", "well", "right", "alright", "anyway"})
-PAUSE_CAP = 3.0             # s of silence counted at most
+# ------------------------------------------------------------------ meeting mode (chapters.mode: meeting)
+MEETING_PENALTIES = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 12.0, 16.0, 20.0,
+                     24.0, 32.0, 48.0, 64.0]
+COUNT_TOL = 0.5             # a weight pair competes only if some penalty brings its mean chapter count this close
 W_PAUSE = [0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]      # nats per second of silence before a chapter start
-W_CUE = [0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]      # nats for a chapter start that opens with a discourse marker
+W_CUE = [0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0]        # nats for a chapter start that opens with a discourse marker
+
+
+def meeting_cfg(c, penalty: float, wp: float, wc: float):
+    """Chapters config `c` in meeting mode with these settings (cue words and silence cap from the config)."""
+    return replace(c, mode="meeting", meeting=replace(c.meeting, penalty=penalty, pause_weight=wp, cue_weight=wc))
 
 
 def paired_delta(a: list[dict], b: list[dict], boot: int = 2000, seed: int = 0) -> dict:
@@ -774,103 +772,132 @@ def paired_delta(a: list[dict], b: list[dict], boot: int = 2000, seed: int = 0) 
     return out
 
 
-def cue_features(doc: Doc, D: Document) -> tuple[np.ndarray, np.ndarray]:
-    """Per sentence k (0 for k = 0): silence before it (capped) and whether it opens with a discourse marker."""
-    from subfix import text as stext
-    pause = np.concatenate([[0.0], np.minimum(gap_pauses(D), PAUSE_CAP)])
-    cue = np.asarray([0.0] + [float(stext.norm(doc.words[a].text) in CUE_WORDS) for a, _ in D.sents[1:]])
-    return pause, cue
-
-
-def run_bonus(doc: Doc, D: Document, c, feats, wp: float, wc: float, num: int = 0) -> dict:
-    pause, cue = feats
-    return score(doc, D, D.segment_dp(c.min_duration, c.penalty, num, bonus=wp * pause + wc * cue)[1:-1])
-
-
-def _init_cues(docs, bg, setup):
+def _init_meeting(docs, bg, setup):
     _G["docs"], _G["bg"], _G["setup"] = docs, bg, setup
 
 
-def _cue_doc(k: int) -> dict:
-    """Every (silence weight, cue weight) with the true number of chapters."""
+def _meeting_doc(k: int) -> dict:
+    """Every (penalty, silence weight, cue weight) in meeting mode, through Document.boundaries."""
     doc, bg, (content, generic, c) = _G["docs"][k], _G["bg"], _G["setup"]
     D = prepare(doc, bg, content, generic)
-    feats = cue_features(doc, D)
-    return {(wp, wc): run_bonus(doc, D, c, feats, wp, wc, num=len(doc.ref) + 1) for wp, wc in product(W_PAUSE, W_CUE)}
+    return {(p_, wp, wc): run(doc, D, meeting_cfg(c, p_, wp, wc))
+            for wp, wc in product(W_PAUSE, W_CUE) for p_ in MEETING_PENALTIES}
 
 
-def ami_cue_experiment(docs: list[Doc], bg, tuned: dict, workers: int, tagger) -> dict:
-    """With the true number of chapters (so only where they start counts): does evidence other than the
-    words - silence before a sentence, a discourse marker opening it - move chapter starts onto the real
-    topic changes? Weights chosen on the AMI development meetings (WindowDiff), tested on the unseen ones."""
+def tune_meeting(dev: list[Doc], bg, setup, workers: int) -> tuple[dict, dict]:
+    """Joint tuning on the AMI development meetings. For every (silence, cue) weight pair the penalty
+    is the one whose mean number of chapters comes closest to the true number of topics (the finer
+    count); pairs that no penalty brings within COUNT_TOL of it drop out, and the pair with the lowest
+    WindowDiff at its count wins. Matching the count first keeps the choice honest: on these meetings
+    WindowDiff alone favours few chapters and F1 favours many."""
+    with ProcessPoolExecutor(workers, initializer=_init_meeting, initargs=(dev, bg, setup)) as ex:
+        per_doc = list(ex.map(_meeting_doc, range(len(dev)), chunksize=1))
+    grid = {key: summarize([d[key] for d in per_doc]) for key in per_doc[0]}
+    matched = {}
+    for w in product(W_PAUSE, W_CUE):
+        p_ = min(MEETING_PENALTIES, key=lambda q: (abs(grid[(q, *w)]["k_hyp"] - grid[(q, *w)]["k_ref"]), -q))
+        if abs(grid[(p_, *w)]["k_hyp"] - grid[(p_, *w)]["k_ref"]) <= COUNT_TOL or w == (0.0, 0.0):
+            matched[w] = (p_, grid[(p_, *w)])
+    best = min(matched, key=lambda w: (matched[w][1]["wd"], -matched[w][1]["f1_30"]))
+    tuned = {"penalty": matched[best][0], "pause_weight": best[0], "cue_weight": best[1],
+             "words_penalty": matched[(0.0, 0.0)][0]}
+    info = {"best": matched[best][1], "words": matched[(0.0, 0.0)][1], "docs": len(dev),
+            "competing": len(matched), "pairs_total": len(W_PAUSE) * len(W_CUE),
+            "pairs": [{"pause_weight": w[0], "cue_weight": w[1], "penalty": v[0], **v[1]} for w, v in matched.items()]}
+    return tuned, info
+
+
+MEETING_ROWS = [("single", "One chapter"),
+                ("talk", "Talk mode (shipped default)"),
+                ("talk_count", "Talk mode, penalty for AMI's count"),
+                ("meeting", "**Meeting mode**"),
+                ("silence_true_k", "Longest silences, true number"),
+                ("talk_true_k", "Talk mode, true number of chapters"),
+                ("meeting_true_k", "Meeting mode, true number of chapters")]
+
+
+def meeting_eval(docs: list[Doc], bg, tuned: dict, workers: int, tagger) -> dict:
+    """Tune meeting mode on the 20 AMI development meetings; test on the 20 unseen meetings and on all
+    119 meetings the tuning did not see; check what it costs on the LibriSpeech/TED joins."""
     setup = method_cfg(tuned[tuned["method"]])
-
-    def grid(ds):
-        with ProcessPoolExecutor(workers, initializer=_init_cues, initargs=(ds, bg, setup)) as ex:
-            per_doc = list(ex.map(_cue_doc, range(len(ds)), chunksize=1))
-        return per_doc, {key: summarize([d[key] for d in per_doc]) for key in per_doc[0]}
-
-    _, dev_grid = grid([d for d in docs if d.groups[0] == "dev"])
-
-    def pick(pred):
-        return min((k for k in dev_grid if pred(k)), key=lambda k: (dev_grid[k]["wd"], -dev_grid[k]["f1_30"]))
-    chosen = {"words": (0.0, 0.0), "silence": pick(lambda k: k[1] == 0), "cues": pick(lambda k: k[0] == 0),
-              "both": pick(lambda k: True)}
-    per_test, _ = grid([d for d in docs if d.groups[0] == "test"])
-    out = {"chosen": {k: list(v) for k, v in chosen.items()},
-           "dev": {k: dev_grid[v] for k, v in chosen.items()},
-           "test": {k: summarize([d[v] for d in per_test], boot=1000) for k, v in chosen.items()},
-           "delta": {k: paired_delta([d[chosen[k]] for d in per_test], [d[(0.0, 0.0)] for d in per_test])
-                     for k in ("silence", "cues", "both")}}
-    # the same weights on the LibriSpeech/TED joins, also with the true number of chapters
     content, generic, c = setup
-    joins: dict[str, list[dict]] = {k: [] for k in chosen}
+    mt, info = tune_meeting([d for d in docs if d.groups[0] == "dev"], bg, setup, workers)
+    print("meeting mode tuned on dev:", mt, {k: round(info["best"][k], 3) for k in ("wd", "f1_30", "k_hyp", "k_ref")},
+          flush=True)
+    (OUT / "meeting_tuned.json").write_text(json.dumps(mt, indent=1), encoding="utf-8")
+    meet = meeting_cfg(c, mt["penalty"], mt["pause_weight"], mt["cue_weight"])
+    talk_count = replace(c, penalty=mt["words_penalty"])
+    out = {"tuned": mt, "dev": info, "sets": {}}
+    for name, ds in (("unseen", [d for d in docs if d.groups[0] == "test"]),
+                     ("not_tuned", [d for d in docs if d.groups[0] != "dev"])):
+        rows: dict[str, list[dict]] = {k: [] for k, _ in MEETING_ROWS}
+        for doc in ds:
+            D = prepare(doc, bg, content, generic)
+            K = len(doc.ref) + 1
+            rows["single"].append(score(doc, D, []))
+            rows["talk"].append(run(doc, D, c))
+            rows["talk_count"].append(run(doc, D, talk_count))
+            rows["meeting"].append(run(doc, D, meet))
+            rows["silence_true_k"].append(score(doc, D, longest_pauses(D, D.silence_before()[1:], K)))
+            rows["talk_true_k"].append(run(doc, D, replace(c, num_chapters=K)))
+            rows["meeting_true_k"].append(run(doc, D, replace(meet, num_chapters=K)))
+        out["sets"][name] = {
+            "n": len(ds),
+            "summary": {k: summarize(v, boot=1000 if k in ("talk", "talk_count", "meeting") else 0)
+                        for k, v in rows.items()},
+            "delta": {"count": paired_delta(rows["meeting"], rows["talk_count"]),
+                      "true_k": paired_delta(rows["meeting_true_k"], rows["talk_true_k"])}}
+    j_talk, j_meet = [], []
     for doc in build_docs("test", "modeb", tagger):
         D = prepare(doc, bg, content, generic)
-        feats = cue_features(doc, D)
-        for k, (wp, wc) in chosen.items():
-            joins[k].append(run_bonus(doc, D, c, feats, wp, wc, num=len(doc.ref) + 1))
-    out["joins"] = {k: summarize(v) for k, v in joins.items()}
+        j_talk.append(run(doc, D, c))
+        j_meet.append(run(doc, D, meet))
+    out["joins"] = {"talk": summarize(j_talk), "meeting": summarize(j_meet)}
     return out
 
 
-def cue_markdown(X: dict, silence_only: dict) -> list[str]:
-    head = ("| True number of chapters, DP with | weights (dev) | Pk ↓ | WindowDiff ↓ (95% CI) | F1 @±10 s | F1 @±30 s |\n"
-            "|---|---|---:|---:|---:|---:|")
+def meeting_markdown(X: dict) -> list[str]:
+    head = ("| System | Pk ↓ | WindowDiff ↓ (95% CI) | F1 @±10 s | F1 @±30 s | chapters |\n"
+            "|---|---:|---:|---:|---:|---:|")
 
-    def row(label: str, s: dict, w: str) -> str:
+    def row(label: str, s: dict) -> str:
         ci = f" ({s['wd_ci'][0]:.3f}-{s['wd_ci'][1]:.3f})" if "wd_ci" in s else ""
-        return f"| {label} | {w} | {s['pk']:.3f} | {s['wd']:.3f}{ci} | {s['f1']:.2f} | {s['f1_30']:.2f} |"
+        return (f"| {label} | {s['pk']:.3f} | {s['wd']:.3f}{ci} | {s['f1']:.2f} | {s['f1_30']:.2f} | "
+                f"{s['k_hyp']:.1f} (true {s['k_ref']:.1f}) |")
 
-    def wts(k: str) -> str:
-        wp, wc = X["chosen"][k]
-        return f"silence {wp:g}, cue {wc:g}"
-
-    def delta(k: str) -> str:
-        d = X["delta"][k]
-        return (f"WindowDiff {d['wd'][0]:+.3f} ({d['wd'][1]:+.3f} to {d['wd'][2]:+.3f}), "
-                f"F1 @±30 s {d['f1_30'][0]:+.3f} ({d['f1_30'][1]:+.3f} to {d['f1_30'][2]:+.3f})")
-    J, T_ = X["joins"], X["test"]
-    return [
-        "", "## Experiment: silence and discourse markers in the DP (not shipped)", "",
-        "Each chapter start earns a bonus of `silence weight × silence before the sentence (s, at most "
-        f"{PAUSE_CAP:g})` + `cue weight` if the sentence opens with a discourse marker "
-        f"({', '.join(sorted(CUE_WORDS))}: the classic list, fixed in advance). The number of chapters is fixed "
-        "at the true one, so only placement counts. Weights were chosen on the 20 development meetings "
-        "(WindowDiff) and tested on the 20 unseen meetings:", "", head,
-        row("words only", T_["words"], "–"),
-        row("words + silence", T_["silence"], wts("silence")),
-        row("words + discourse markers", T_["cues"], wts("cues")),
-        row("words + silence + discourse markers", T_["both"], wts("both")),
-        row("silence only (longest silences)", silence_only, "–"), "",
-        "Change against words only (paired bootstrap over the 20 meetings, 95% CI): "
-        f"+ silence: {delta('silence')}; + markers: {delta('cues')}; + both: {delta('both')}.", "",
-        "The same weights on the LibriSpeech/TED joins (Mode B, 200 test documents, true number of chapters "
-        "there too) give WindowDiff " + ", ".join(f"{J[k]['wd']:.3f} ({name})" for k, name in (
-            ("words", "words only"), ("silence", "+ silence"), ("cues", "+ markers"), ("both", "+ both"))) +
-        ". There, every excerpt starts at a random sentence and junction pauses are drawn from ordinary pauses, "
-        "so neither cue carries signal by construction: the change shows what the bonus costs when the cues "
-        "are absent."]
+    def delta(d: dict) -> str:
+        return "; ".join(f"{name} {d[k][0]:+.3f} ({d[k][1]:+.3f} to {d[k][2]:+.3f})"
+                         for k, name in (("wd", "WindowDiff"), ("f1", "F1 @±10 s"), ("f1_30", "F1 @±30 s")))
+    mt, I, J = X["tuned"], X["dev"], X["joins"]
+    lines = [
+        "", "## Meeting mode (`chapters.mode: meeting`)", "",
+        "Meeting mode keeps the DP and adds evidence besides the words: each chapter start earns `pause_weight × "
+        "the silence before it` (s, at most `pause_cap`; nobody speaking) + `cue_weight` if its sentence opens with "
+        "a discourse marker (`cue_words`: okay, ok, so, now, well, right, alright, anyway: the classic list, fixed "
+        "in advance). It has its own penalty, for a finer chapter count.", "",
+        f"**Joint tuning** on the {I['docs']} AMI development meetings: for every pair of weights "
+        f"({len(W_PAUSE)} silence × {len(W_CUE)} cue values) the penalty was set so the number of chapters matches "
+        f"the true number of topics on average (pairs that no penalty brings within ±{COUNT_TOL:g} chapters of it "
+        f"drop out: {I['competing']} of {I['pairs_total']} remain), and the pair with the lowest WindowDiff at that "
+        "count won (matching the count first, because WindowDiff alone favours few chapters here and F1 many). "
+        "Chosen: penalty "
+        f"**{mt['penalty']:g}**, silence weight **{mt['pause_weight']:g}**, cue weight **{mt['cue_weight']:g}** "
+        f"(dev WindowDiff {I['best']['wd']:.3f}, {I['best']['k_hyp']:.1f} chapters for {I['best']['k_ref']:.1f} "
+        f"topics; words only at the same count: penalty {mt['words_penalty']:g}, WindowDiff {I['words']['wd']:.3f}).",
+    ]
+    for name, title in (("unseen", "the 20 unseen meetings (the official test set)"),
+                        ("not_tuned", "all meetings the tuning did not see")):
+        S = X["sets"][name]
+        lines += ["", f"### On {title}: {S['n']} meetings", "", head]
+        lines += [row(label, S["summary"][k]) for k, label in MEETING_ROWS]
+        lines += ["", "Meeting mode minus talk mode at the same count (paired bootstrap over meetings, 95% CI): "
+                  + delta(S["delta"]["count"]) + ".",
+                  "With the true number of chapters (placement only): " + delta(S["delta"]["true_k"]) + "."]
+    lines += ["", "On the LibriSpeech/TED joins (Mode B, 200 test documents) meeting mode gives WindowDiff "
+              f"{J['meeting']['wd']:.3f} and F1 @±10 s {J['meeting']['f1']:.2f}, against {J['talk']['wd']:.3f} and "
+              f"{J['talk']['f1']:.2f} in talk mode ({J['meeting']['k_hyp']:.1f} chapters for {J['meeting']['k_ref']:.1f}): "
+              "meeting mode is for meetings, talk mode stays the default."]
+    return lines
 
 
 # ------------------------------------------------------------------ main

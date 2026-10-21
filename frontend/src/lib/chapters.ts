@@ -28,6 +28,12 @@ export function nextChapterStart(chapters: Chapter[], t: number): number | null 
   return i + 1 < chapters.length ? chapters[i + 1].start : null;
 }
 
+/** The chapter mode the job was run with ("talk" when the configuration does not say). */
+export function chapterMode(config: Record<string, unknown>): "talk" | "meeting" {
+  const c = config.chapters as { mode?: string } | undefined;
+  return c?.mode === "meeting" ? "meeting" : "talk";
+}
+
 /** The shortest chapter length the job was run with (seconds), from its configuration. */
 export function minChapter(config: Record<string, unknown>): number | null {
   const c = config.chapters as { min_duration?: number } | undefined;

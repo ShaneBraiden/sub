@@ -87,6 +87,11 @@ export const SPEAKER_LABEL_STYLE: Record<string, string> = {
   none: "No names (dashes in two-speaker cues)",
 };
 
+export const CHAPTER_MODE_LABEL: Record<string, string> = {
+  talk: "Talk, lecture or audiobook",
+  meeting: "Meeting or discussion",
+};
+
 export const SEGMENTATION_LABEL: Record<string, string> = {
   dp: "Optimal (dynamic programming)",
   greedy: "Simple (greedy)",

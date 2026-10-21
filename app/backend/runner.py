@@ -11,7 +11,7 @@ import threading
 from pathlib import Path
 from typing import Any, Callable
 
-from .schemas import JobOptions, diarization_status, option_defaults, to_overrides
+from .schemas import JobOptions, diarization_status, llm_status, option_defaults, to_overrides
 
 log = logging.getLogger(__name__)
 
@@ -30,6 +30,8 @@ STAGES: list[tuple[str, str]] = [
     ("diarize", "Identifying the speakers"),
     ("segment", "Splitting into subtitle cues"),
     ("chapters", "Finding the chapters"),
+    ("summary", "Writing the summaries"),
+    ("sentiment", "Tracking the sentiment"),
     ("export", "Writing the subtitle files"),
 ]
 STAGE_LABELS = dict(STAGES)
@@ -135,6 +137,8 @@ def build_result(res, cfg) -> dict:
         "edits": res.edits,
         "speakers": getattr(res, "speakers", None),
         "chapters": None if getattr(res, "chapters", None) is None else [ch.to_json() for ch in res.chapters],
+        "summary": None if getattr(res, "summary", None) is None else res.summary.to_json(),
+        "sentiment": None if getattr(res, "sentiment", None) is None else res.sentiment.to_json(),
         "config": res.config,
     })
 
@@ -174,6 +178,10 @@ class PipelineRunner:
     def diarization(self) -> dict:
         """Can speaker diarization run here? (pyannote installed, Hugging Face token found)"""
         return diarization_status(self.base_config().diarize.token_env)
+
+    def llm(self) -> dict:
+        """Can the abstractive (LLM) summaries run here? (Ollama running, model pulled)"""
+        return llm_status(self.base_config())
 
     def run(self, job: dict, media: Path, subs: Path | None, out_dir: Path, progress: Progress) -> dict:
         from subfix.export import write_outputs

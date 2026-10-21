@@ -23,8 +23,17 @@ export interface JobOptions {
   num_speakers?: number;
   speaker_labels?: "every" | "change" | "none";
   chapters?: boolean;
+  /** talk: talks, lectures, audiobooks; meeting: meetings and discussions. */
+  chapter_mode?: "talk" | "meeting";
   num_chapters?: number;
   min_chapter?: number;
+  /** Extractive summaries (our own). */
+  summary?: boolean;
+  /** Also summaries written by the local LLM (Ollama). */
+  llm_summary?: boolean;
+  /** Length of the overview in words. */
+  summary_words?: number;
+  sentiment?: boolean;
   terms?: string;
 }
 
@@ -44,6 +53,10 @@ export interface JobSummary {
   counts: Counts;
   sync_note: string | null;
   chapters?: number;
+  /** One-sentence summary (the LLM's when the job made one). */
+  headline?: string | null;
+  /** Mean sentiment score, -1 (negative) .. +1 (positive). */
+  sentiment?: number | null;
 }
 
 export interface StageEntry {
@@ -95,6 +108,15 @@ export interface OptionsInfo {
   max_upload_mb: number;
   /** Can speaker diarization run on this server (pyannote.audio installed, Hugging Face token found)? */
   diarization?: { installed: boolean; token: boolean };
+  /** Can the LLM summaries run (Ollama running and the model pulled)? */
+  llm?: LlmStatus;
+}
+
+export interface LlmStatus {
+  available: boolean;
+  installed: boolean;
+  model: string | null;
+  error: string | null;
 }
 
 export interface SystemInfo {
@@ -202,6 +224,90 @@ export interface Chapter {
   score: number;
 }
 
+/** A sentence quoted by an extractive summary. */
+export interface SummarySentence {
+  index: number;
+  start: number;
+  end: number;
+  text: string;
+  speaker?: string;
+}
+
+export interface SummaryText {
+  text: string;
+  /** Extractive: the quoted sentences (indices into Summary.sentences), in time order. */
+  sentences?: number[];
+}
+
+export interface SummaryChapter {
+  index: number;
+  start: number;
+  end: number;
+  title: string;
+  text: string;
+  sentences?: number[];
+}
+
+export interface SummaryVersion {
+  headline: SummaryText;
+  overview: SummaryText;
+  chapters: SummaryChapter[];
+}
+
+/** Summaries at three granularities (the third output). */
+export interface Summary {
+  settings: { method: string; headline_words: number; overview_words: number; chapter_words: number };
+  sentences: SummarySentence[];
+  extractive: SummaryVersion & { method: string };
+  abstractive: (SummaryVersion & { model: string; stats?: Record<string, number> }) | null;
+  /** Why there is no LLM summary although one was asked for. */
+  llm_error: string | null;
+}
+
+export type SentimentLabel = "neg" | "neu" | "pos";
+
+export interface SentimentUnit {
+  start: number;
+  end: number;
+  text: string;
+  speaker: string | null;
+  label: SentimentLabel;
+  /** P(positive) - P(negative). */
+  score: number;
+  probs: [number, number, number];
+}
+
+export interface SentimentShare {
+  negative: number;
+  neutral: number;
+  positive: number;
+}
+
+export interface SentimentMoment {
+  kind: "positive" | "negative";
+  time: number;
+  value: number;
+  start: number;
+  end: number;
+  text: string;
+  speaker: string | null;
+  score: number;
+}
+
+/** Sentiment over time (the fourth output). */
+export interface Sentiment {
+  bandwidth: number;
+  duration: number;
+  totals: { units: number; mean: number; share: SentimentShare };
+  times: number[];
+  curve: (number | null)[];
+  speakers: { speaker: string; units: number; words: number; mean: number; share: SentimentShare }[];
+  speaker_curves: Record<string, (number | null)[]>;
+  chapters: { index: number; title: string; start: number; end: number; units: number; mean: number | null }[];
+  moments: SentimentMoment[];
+  units: SentimentUnit[];
+}
+
 export interface Edit {
   stage: string;
   op: string;
@@ -273,6 +379,10 @@ export interface Result {
   speakers?: SpeakerReport | null;
   /** Chapter markers (null when the job ran without them). */
   chapters?: Chapter[] | null;
+  /** Summaries (null when the job ran without them). */
+  summary?: Summary | null;
+  /** Sentiment over time (null when the job ran without it). */
+  sentiment?: Sentiment | null;
   config: Record<string, unknown>;
   files: Record<string, string>;
   edited_cues: CueData[] | null;

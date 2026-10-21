@@ -1,5 +1,5 @@
 import type { JobOptions, Mode, OptionField, OptionsInfo } from "../api/types";
-import { ASR_MODEL_LABEL, SEGMENTATION_LABEL, SPEAKER_LABEL_STYLE } from "../lib/labels";
+import { ASR_MODEL_LABEL, CHAPTER_MODE_LABEL, SEGMENTATION_LABEL, SPEAKER_LABEL_STYLE } from "../lib/labels";
 
 interface Props {
   info: OptionsInfo;
@@ -236,6 +236,27 @@ export default function OptionsForm({ info, value, onChange, mode }: Props) {
                 <small>Split the recording where the topic changes and name each part (WebVTT chapters, FFmpeg, timestamp list).</small>
               </span>
             </label>
+            {v.chapters && has("chapter_mode") && (
+              <label className="field">
+                <span>Kind of recording</span>
+                <select
+                  className="input sm"
+                  value={v.chapter_mode ?? "talk"}
+                  onChange={(e) => onChange({ ...value, chapter_mode: e.target.value as JobOptions["chapter_mode"] })}
+                >
+                  {(field(info, "chapter_mode")?.choices ?? ["talk", "meeting"]).map((c) => (
+                    <option key={c} value={c}>
+                      {CHAPTER_MODE_LABEL[c] ?? c}
+                    </option>
+                  ))}
+                </select>
+                <span className="hint">
+                  {v.chapter_mode === "meeting"
+                    ? "Also uses pauses and words like “okay” and “so” that open a new topic, and makes more, shorter chapters."
+                    : "Chapters follow changes in vocabulary: best with one main speaker."}
+                </span>
+              </label>
+            )}
             {v.chapters && has("num_chapters") && (
               <label className="field">
                 <span>Number of chapters</span>

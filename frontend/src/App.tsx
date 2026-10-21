@@ -68,7 +68,9 @@ function NotFound() {
 
 export default function App() {
   const { pathname } = useLocation();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);     // a block body: scrollTo returns a Promise in newer browsers, not a clean-up
+  }, [pathname]);
   return (
     <>
       <header className="topbar">

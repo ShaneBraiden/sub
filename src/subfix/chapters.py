@@ -11,6 +11,12 @@ of content-word stems, and the sentence sequence is split into topically coheren
 * ``tiling`` - TextTiling (Hearst 1997): cosine similarity of word blocks either side of every
   sentence boundary, depth scores, boundaries where the depth exceeds mean - cutoff * std.
 
+``mode: meeting`` (for meetings and discussions; the default ``talk`` suits talks, lectures and
+audiobooks) uses the DP with its own, finer chapter count, and gives a chapter start a bonus for
+the silence before it (nobody speaking) and for opening with a discourse marker ("okay", "so",
+...): in meetings these mark a change of topic more reliably than the words do. The weights and the
+count were tuned on the AMI meeting corpus (experiments/eval_chapters.py --stage ami).
+
 Content words are those our POS tagger tags NOUN/PROPN/VERB/ADJ (configurable), minus fillers,
 closed-class words and words our KN language model finds too common to signal a topic (unigram
 log-prob above ``generic_logp``); a light Porter step-1 stemmer merges inflections. Every chapter
@@ -273,13 +279,14 @@ class Document:
                     return out[::-1]
             return [0, S]
         pen = penalty * math.log(max(sum(len(t) for t in self.terms), 2))
-        best = np.full(S + 1, np.inf)
+        Ct = np.ascontiguousarray(C.T)                       # Ct[b, a] = C[a, b]: the loop reads rows
+        best = np.full(S + 1, np.inf)                        # best[a] - bon[a]: cost of a chapter starting at a
         back = np.zeros(S + 1, dtype=np.int64)
         best[0] = 0.0
         for b in range(1, S + 1):
-            v = best[:b] - bon[:b] + C[:b, b] + pen
+            v = best[:b] + Ct[b, :b] + pen
             a = int(np.argmin(v))
-            best[b], back[b] = v[a], a
+            best[b], back[b] = v[a] - bon[b], a
         out, b = [S], S
         while b > 0:
             b = int(back[b])
@@ -360,8 +367,37 @@ class Document:
                 chosen.insert(k, b)
         return chosen, d
 
+    def silence_before(self) -> np.ndarray:
+        """Silence before every sentence (s): its first word's start minus the latest end of any word
+        before it, so overlapping speech counts as no silence. 0 for the first sentence."""
+        out = np.zeros(len(self.sents))
+        if len(self.sents) > 1:
+            starts = np.asarray([a for a, _ in self.sents[1:]])
+            latest = np.maximum.accumulate(np.asarray(self.en))
+            out[1:] = np.maximum(np.asarray(self.st)[starts] - latest[starts - 1], 0.0)
+        return out
+
+    def boundary_bonus(self, pause_weight: float, cue_weight: float, pause_cap: float,
+                       cue_words) -> np.ndarray:
+        """Meeting-mode evidence for a chapter starting at each sentence (nats, 0 for the first):
+        pause_weight x the silence before it (at most pause_cap s) + cue_weight if it opens with a
+        discourse marker."""
+        cues = {T.norm(w) for w in cue_words}
+        opens = np.asarray([T.norm(self.words[a].text) in cues for a, _ in self.sents], dtype=float)
+        bonus = pause_weight * np.minimum(self.silence_before(), pause_cap) + cue_weight * opens
+        if len(bonus):
+            bonus[0] = 0.0
+        return bonus
+
     def boundaries(self, c) -> tuple[list[int], list[float]]:
         """Sentence indices [0, b1, ..., S] of the chapters, and the score of each chapter start."""
+        if c.mode == "meeting":
+            m = c.meeting
+            bonus = self.boundary_bonus(m.pause_weight, m.cue_weight, m.pause_cap, m.cue_words)
+            b = self.segment_dp(c.min_duration, m.penalty, c.num_chapters, bonus)
+            return b, self.dp_scores(b)
+        if c.mode != "talk":
+            raise ValueError(f"unknown chapters.mode {c.mode!r} (use talk or meeting)")
         if c.method == "tiling":
             b, d = self.segment_tiling(c.min_duration, c.window_words, c.smoothing, c.cutoff, c.num_chapters)
             return b, [0.0] + [float(d[x - 1]) for x in b[1:-1]]

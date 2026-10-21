@@ -93,18 +93,40 @@ Silence before a sentence (no speaker talking): median 0.69 s at the 968 true to
 | and | 2.6% | 4.1% |
 | i | 2.2% | 4.8% |
 
-## Experiment: silence and discourse markers in the DP (not shipped)
+## Meeting mode (`chapters.mode: meeting`)
 
-Each chapter start earns a bonus of `silence weight × silence before the sentence (s, at most 3)` + `cue weight` if the sentence opens with a discourse marker (alright, anyway, now, ok, okay, right, so, well: the classic list, fixed in advance). The number of chapters is fixed at the true one, so only placement counts. Weights were chosen on the 20 development meetings (WindowDiff) and tested on the 20 unseen meetings:
+Meeting mode keeps the DP and adds evidence besides the words: each chapter start earns `pause_weight × the silence before it` (s, at most `pause_cap`; nobody speaking) + `cue_weight` if its sentence opens with a discourse marker (`cue_words`: okay, ok, so, now, well, right, alright, anyway: the classic list, fixed in advance). It has its own penalty, for a finer chapter count.
 
-| True number of chapters, DP with | weights (dev) | Pk ↓ | WindowDiff ↓ (95% CI) | F1 @±10 s | F1 @±30 s |
-|---|---|---:|---:|---:|---:|
-| words only | – | 0.363 | 0.393 (0.358-0.425) | 0.22 | 0.36 |
-| words + silence | silence 64, cue 0 | 0.326 | 0.374 (0.333-0.419) | 0.16 | 0.38 |
-| words + discourse markers | silence 0, cue 16 | 0.325 | 0.356 (0.316-0.390) | 0.29 | 0.40 |
-| words + silence + discourse markers | silence 32, cue 16 | 0.324 | 0.362 (0.317-0.408) | 0.21 | 0.39 |
-| silence only (longest silences) | – | 0.316 | 0.364 | 0.16 | 0.37 |
+**Joint tuning** on the 20 AMI development meetings: for every pair of weights (8 silence × 8 cue values) the penalty was set so the number of chapters matches the true number of topics on average (pairs that no penalty brings within ±0.5 chapters of it drop out: 26 of 64 remain), and the pair with the lowest WindowDiff at that count won (matching the count first, because WindowDiff alone favours few chapters here and F1 many). Chosen: penalty **3**, silence weight **4**, cue weight **8** (dev WindowDiff 0.359, 8.1 chapters for 8.4 topics; words only at the same count: penalty 1, WindowDiff 0.404).
 
-Change against words only (paired bootstrap over the 20 meetings, 95% CI): + silence: WindowDiff -0.019 (-0.075 to +0.036), F1 @±30 s +0.021 (-0.069 to +0.115); + markers: WindowDiff -0.037 (-0.072 to -0.010), F1 @±30 s +0.041 (-0.020 to +0.104); + both: WindowDiff -0.031 (-0.087 to +0.028), F1 @±30 s +0.028 (-0.062 to +0.125).
+### On the 20 unseen meetings (the official test set): 20 meetings
 
-The same weights on the LibriSpeech/TED joins (Mode B, 200 test documents, true number of chapters there too) give WindowDiff 0.087 (words only), 0.356 (+ silence), 0.177 (+ markers), 0.279 (+ both). There, every excerpt starts at a random sentence and junction pauses are drawn from ordinary pauses, so neither cue carries signal by construction: the change shows what the bonus costs when the cues are absent.
+| System | Pk ↓ | WindowDiff ↓ (95% CI) | F1 @±10 s | F1 @±30 s | chapters |
+|---|---:|---:|---:|---:|---:|
+| One chapter | 0.360 | 0.360 | 0.00 | 0.00 | 1.0 (true 8.2) |
+| Talk mode (shipped default) | 0.350 | 0.356 (0.318-0.393) | 0.10 | 0.17 | 4.2 (true 8.2) |
+| Talk mode, penalty for AMI's count | 0.374 | 0.415 (0.360-0.469) | 0.22 | 0.36 | 8.9 (true 8.2) |
+| **Meeting mode** | 0.335 | 0.371 (0.342-0.397) | 0.27 | 0.41 | 8.3 (true 8.2) |
+| Longest silences, true number | 0.316 | 0.364 | 0.16 | 0.37 | 8.2 (true 8.2) |
+| Talk mode, true number of chapters | 0.363 | 0.393 | 0.22 | 0.36 | 8.2 (true 8.2) |
+| Meeting mode, true number of chapters | 0.353 | 0.387 | 0.25 | 0.39 | 8.2 (true 8.2) |
+
+Meeting mode minus talk mode at the same count (paired bootstrap over meetings, 95% CI): WindowDiff -0.044 (-0.108 to +0.024); F1 @±10 s +0.044 (-0.048 to +0.126); F1 @±30 s +0.049 (-0.044 to +0.131).
+With the true number of chapters (placement only): WindowDiff -0.006 (-0.048 to +0.040); F1 @±10 s +0.028 (-0.042 to +0.103); F1 @±30 s +0.034 (-0.041 to +0.113).
+
+### On all meetings the tuning did not see: 119 meetings
+
+| System | Pk ↓ | WindowDiff ↓ (95% CI) | F1 @±10 s | F1 @±30 s | chapters |
+|---|---:|---:|---:|---:|---:|
+| One chapter | 0.329 | 0.329 | 0.00 | 0.00 | 1.0 (true 7.9) |
+| Talk mode (shipped default) | 0.337 | 0.350 (0.333-0.366) | 0.10 | 0.20 | 4.0 (true 7.9) |
+| Talk mode, penalty for AMI's count | 0.379 | 0.424 (0.404-0.444) | 0.20 | 0.37 | 8.7 (true 7.9) |
+| **Meeting mode** | 0.344 | 0.388 (0.366-0.410) | 0.25 | 0.42 | 8.1 (true 7.9) |
+| Longest silences, true number | 0.321 | 0.366 | 0.18 | 0.37 | 7.9 (true 7.9) |
+| Talk mode, true number of chapters | 0.354 | 0.390 | 0.22 | 0.38 | 7.9 (true 7.9) |
+| Meeting mode, true number of chapters | 0.330 | 0.367 | 0.26 | 0.43 | 7.9 (true 7.9) |
+
+Meeting mode minus talk mode at the same count (paired bootstrap over meetings, 95% CI): WindowDiff -0.037 (-0.057 to -0.018); F1 @±10 s +0.057 (+0.027 to +0.089); F1 @±30 s +0.046 (+0.018 to +0.077).
+With the true number of chapters (placement only): WindowDiff -0.022 (-0.038 to -0.007); F1 @±10 s +0.042 (+0.013 to +0.071); F1 @±30 s +0.046 (+0.016 to +0.078).
+
+On the LibriSpeech/TED joins (Mode B, 200 test documents) meeting mode gives WindowDiff 0.333 and F1 @±10 s 0.41, against 0.121 and 0.73 in talk mode (6.3 chapters for 4.5): meeting mode is for meetings, talk mode stays the default.

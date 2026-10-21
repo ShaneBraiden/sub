@@ -36,8 +36,13 @@ class JobOptions(BaseModel):
     num_speakers: int | None = Field(None, ge=0, le=20, description="Number of speakers (0 = estimate)")
     speaker_labels: Literal["every", "change", "none"] | None = None
     chapters: bool | None = None
+    chapter_mode: Literal["talk", "meeting"] | None = None
     num_chapters: int | None = Field(None, ge=0, le=50, description="Number of chapters (0 = choose automatically)")
     min_chapter: float | None = Field(None, ge=10, le=900, description="Shortest chapter (s)")
+    summary: bool | None = None
+    llm_summary: bool | None = None
+    summary_words: int | None = Field(None, ge=40, le=400, description="Length of the overview (words)")
+    sentiment: bool | None = None
     terms: str = Field("", max_length=4000, description="Domain terms, comma or newline separated")
 
     @field_validator("terms")
@@ -67,8 +72,13 @@ CONFIG_KEYS: dict[str, str] = {
     "num_speakers": "diarize.num_speakers",
     "speaker_labels": "diarize.label",
     "chapters": "chapters.enabled",
+    "chapter_mode": "chapters.mode",
     "num_chapters": "chapters.num_chapters",
     "min_chapter": "chapters.min_duration",
+    "summary": "summary.enabled",
+    "llm_summary": "summary.abstractive",
+    "summary_words": "summary.overview_words",
+    "sentiment": "sentiment.enabled",
 }
 
 
@@ -157,6 +167,17 @@ def diarization_status(token_env: str = "HF_TOKEN") -> dict[str, bool]:
         except Exception:
             token = False
     return {"installed": installed, "token": token}
+
+
+def llm_status(cfg: Any) -> dict[str, Any]:
+    """Can the abstractive summaries run: is the Ollama server up and the configured model pulled?
+    (A local HTTP request with a short timeout; never raises.)"""
+    try:
+        from subfix.llm import Ollama
+        st = Ollama.from_config(cfg.llm).status(timeout=2.0)
+    except Exception as exc:                     # a broken llm section must not break /api/options
+        return {"available": False, "installed": False, "model": None, "error": str(exc)}
+    return {k: st[k] for k in ("available", "installed", "model", "error")}
 
 
 class CueIn(BaseModel):

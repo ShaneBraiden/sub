@@ -188,3 +188,49 @@ def test_texttiling_depth_matches_the_sentence_loop():
                 hi += 1
             ref.append((s[lo] - s[g]) + (s[hi] - s[g]))
         assert np.allclose(doc.depth(window, smoothing), ref)
+
+
+def meeting(num: int = 0, **kw):
+    """Chapters config in meeting mode with these chapters.meeting settings."""
+    return Config.load(overrides={"chapters.mode": "meeting", "chapters.min_duration": 30.0, "chapters.num_chapters": num,
+                                  **{f"chapters.meeting.{k}": v for k, v in kw.items()}})
+
+
+def test_meeting_mode_finds_a_change_marked_by_silence_and_a_discourse_marker():
+    """Both halves draw on the same words; only a long silence and "Okay," mark where the second starts."""
+    rng = random.Random(5)
+    vocab = TOPICS["whales"] + TOPICS["baking"]
+    words, t, change = [], 0.0, 0
+    for s in range(60):
+        if s == 30:
+            t += 4.0
+            change = len(words)
+        toks = [rng.choice(vocab) if k % 2 == 0 else rng.choice(GLUE) for k in range(rng.randint(8, 12))]
+        toks[0] = "Okay," if s == 30 else toks[0].capitalize()
+        toks[-1] += "."
+        for tok in toks:
+            words.append(Word(tok, round(t, 3), round(t + 0.25, 3)))
+            t += 0.3
+        t += 0.6
+    two = make_chapters(words, meeting(2, pause_weight=4.0, cue_weight=16.0), duration=t)
+    assert [ch.words[0] for ch in two] == [0, change]
+    talk = make_chapters(words, cfg(min_duration=30.0, num_chapters=2), duration=t)
+    assert [ch.words[0] for ch in talk] != [0, change]           # the words alone cannot see it
+    doc = Document(words, None, meeting().chapters)
+    k = next(i for i, (a, _) in enumerate(doc.sents) if a == change)
+    bonus = doc.boundary_bonus(4.0, 16.0, 3.0, ["okay", "so"])
+    assert bonus[k] == pytest.approx(4.0 * 3.0 + 16.0)          # silence capped at 3 s, plus the marker
+    assert bonus[0] == 0.0 and bonus[1] == pytest.approx(4.0 * 0.65)   # ordinary 0.65 s pause, no marker
+
+
+def test_overlapping_speech_counts_as_no_silence():
+    words = [Word("Right.", 0.0, 5.0), Word("Yes.", 1.0, 1.5), Word("So", 5.5, 5.8), Word("then.", 5.8, 6.0)]
+    doc = Document(words, None, cfg().chapters)
+    assert doc.silence_before().tolist() == pytest.approx([0.0, 0.0, 0.5])
+    assert doc.boundary_bonus(1.0, 2.0, 3.0, ["so"]).tolist() == pytest.approx([0.0, 0.0, 2.5])
+
+
+def test_unknown_mode_is_an_error():
+    words, _ = document(sentences=5)
+    with pytest.raises(ValueError, match="chapters.mode"):
+        make_chapters(words, Config.load(overrides={"chapters.mode": "lecture"}))

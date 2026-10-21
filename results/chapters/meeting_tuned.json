@@ -1,0 +1,6 @@
+{
+ "penalty": 3.0,
+ "pause_weight": 4.0,
+ "cue_weight": 8.0,
+ "words_penalty": 1.0
+}

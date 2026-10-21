@@ -1,7 +1,8 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { Chapter, Job, Result } from "../api/types";
+import type { Chapter, Job, OptionsInfo, Result } from "../api/types";
 import ChaptersPanel from "./ChaptersPanel";
+import OptionsForm from "./OptionsForm";
 import DiffTable from "./DiffTable";
 import ProgressPanel from "./ProgressPanel";
 import SpeakersPanel from "./SpeakersPanel";
@@ -186,5 +187,35 @@ describe("chapters", () => {
     cleanup();
     render(<ChaptersPanel result={result} time={0} onSeek={() => {}} />);
     expect(screen.getByText(/without chapter markers/)).toBeTruthy();
+  });
+});
+
+describe("meeting mode", () => {
+  it("says so in the Chapters tab", () => {
+    const meeting: Result = { ...result, audio_duration: 300, config: { chapters: { min_duration: 60, mode: "meeting" } },
+      chapters: [chapter(1, 0, 150, "Budget"), chapter(2, 150, 300, "Design")] };
+    render(<ChaptersPanel result={meeting} time={0} onSeek={() => {}} />);
+    expect(screen.getByText("meeting").parentElement?.textContent).toBe("meeting mode");
+  });
+
+  it("is a choice in the chapter settings", () => {
+    const info: OptionsInfo = {
+      defaults: { chapters: true, chapter_mode: "talk", num_chapters: 0, min_chapter: 60 },
+      fields: [
+        { key: "chapter_mode", type: "string", choices: ["talk", "meeting"] },
+        { key: "num_chapters", type: "integer", min: 0, max: 50 },
+        { key: "min_chapter", type: "number", min: 10, max: 900 },
+      ],
+      stages: [], media_exts: [], subs_exts: [], max_upload_mb: 100,
+    };
+    const onChange = vi.fn();
+    render(<OptionsForm info={info} value={{}} onChange={onChange} mode="B" />);
+    const select = screen.getByDisplayValue("Talk, lecture or audiobook") as HTMLSelectElement;
+    expect([...select.options].map((o) => o.textContent)).toEqual(["Talk, lecture or audiobook", "Meeting or discussion"]);
+    fireEvent.change(select, { target: { value: "meeting" } });
+    expect(onChange).toHaveBeenCalledWith({ chapter_mode: "meeting" });
+    cleanup();
+    render(<OptionsForm info={info} value={{ chapters: false }} onChange={onChange} mode="B" />);
+    expect(screen.queryByText("Kind of recording")).toBeNull();
   });
 });

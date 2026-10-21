@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { DiffRow } from "../api/types";
 import { changedOptions } from "../components/OptionsForm";
-import { chapterAt, minChapter, nextChapterStart, previousChapterStart } from "./chapters";
+import { chapterAt, chapterMode, minChapter, nextChapterStart, previousChapterStart } from "./chapters";
 import { cps, extension, findCueAt, isVideo, lastCueBefore, rowMatches, toVtt } from "./cues";
 import { formatClock, formatDuration, formatPercent, formatRelative, formatShift, formatTime } from "./format";
 import { plannedStages } from "./labels";
@@ -140,9 +140,12 @@ describe("chapters", () => {
     expect(nextChapterStart(chs, 150)).toBe(220);
     expect(nextChapterStart(chs, 250)).toBeNull();
   });
-  it("reads the shortest chapter length from the job configuration", () => {
+  it("reads the shortest chapter length and the mode from the job configuration", () => {
     expect(minChapter({ chapters: { min_duration: 45 } })).toBe(45);
     expect(minChapter({})).toBeNull();
+    expect(chapterMode({ chapters: { mode: "meeting" } })).toBe("meeting");
+    expect(chapterMode({ chapters: {} })).toBe("talk");
+    expect(chapterMode({})).toBe("talk");
   });
   it("plans the chapter stage unless it is switched off", () => {
     const all = ["segment", "chapters", "export"].map((key) => ({ key, label: key }));

@@ -128,6 +128,8 @@ Train our models once (every run resumes from `models/*/last.pt`):
 .venv\Scripts\subfix correct --media talk.mp4 --subs talk.srt --out outputs
 # Mode B: audio only
 .venv\Scripts\subfix correct --media talk.mp4 --out outputs
+# chapter markers for a meeting or discussion (default: talk, lecture, audiobook)
+.venv\Scripts\subfix correct --media meeting.mp4 --chapter-mode meeting --out outputs
 # overrides, domain terms
 .venv\Scripts\subfix correct --media a.wav --subs a.vtt --set segment.max_cps=20 gec.enabled=false --lexicon "Kubernetes, Chennai"
 # web app (see "Web app" below)
@@ -138,7 +140,8 @@ Outputs: `*.srt`, `*.vtt`, `*.changes.json` (every edit with stage, rule, ASR wo
 fusion score), `*.diff.html`; with `--diarize` also `*.rttm` and `*.speakers.json`; when the media
 is long enough for two or more chapters, the chapter markers `*.chapters.vtt`, `*.ffmetadata`,
 `*.chapters.txt` and `*.chapters.json` (`--chapters N` asks for exactly N, `--no-chapters` turns them
-off; see [Chapter markers](#chapter-markers-second-output)).
+off, `--chapter-mode meeting` tunes them for meetings; see
+[Chapter markers](#chapter-markers-second-output)).
 
 ## Speaker diarization
 
@@ -244,7 +247,8 @@ the change log and no chapter files.
    prior of `penalty · log N`. Dynamic programming over sentence boundaries finds the exact optimum
    under the minimum chapter length, either for any number of chapters or for exactly
    `--chapters N`. `chapters.method: tiling` switches to TextTiling (Hearst 1997: block
-   similarity, depth scores, mean − c·σ cutoff).
+   similarity, depth scores, mean − c·σ cutoff). Meeting mode (below) adds a bonus for silences
+   and discourse markers and uses its own penalty.
 4. **Times.** A chapter starts at the cue its first word opens, or 0.25 s before that word. The
    first chapter starts at 0:00 and the last ends with the media.
 5. **Titles and descriptions.** Titles are the chapter's top three noun phrases, ranked by how
@@ -330,15 +334,44 @@ the change log and no chapter files.
   * Topic starts follow a median 0.69 s of silence (0 s elsewhere).
   * "okay" opens 24.5% of topic-start sentences vs 6.1% of the others; "so", "right" and
     "alright" behave the same way.
-  * Given the true number of chapters on the 20 unseen meetings, the longest silences alone place
-    them better than the words (WindowDiff 0.364 vs 0.393).
-  * Adding a dev-tuned bonus to the DP for chapter starts that open with a discourse marker helps
-    significantly: WindowDiff 0.356, −0.037 (95% CI −0.072 to −0.010). Adding silence on top is
-    not significant.
-* **Why the bonus is not shipped.** The same weights hurt the LibriSpeech/TED joins: WindowDiff
-  0.087 → 0.177 with markers, 0.356 with silence. Tuning for WindowDiff on AMI only drives the
-  count down (penalty 12). A meeting mode would need its own tuning of the count and the weights.
+  * Given the true number of chapters, the longest silences alone place them better than the
+    words (WindowDiff 0.366 vs 0.390 on the 119 meetings not used for tuning).
 * **TextTiling** over-fires on meetings: its relative cutoff gives 14 chapters.
+
+**Meeting mode** (`--chapter-mode meeting`, *Kind of recording: Meeting or discussion* in the web
+app, or `chapters.mode: meeting`) is built on these findings:
+
+* **What it does.** It keeps the DP but gives each chapter start a bonus: 4 nats per second of
+  silence before it (at most 3 s, nobody speaking), plus 8 nats if its sentence opens with a
+  discourse marker (okay, ok, so, now, well, right, alright, anyway; a classic list fixed in
+  advance). It uses its own penalty (3), which gives about one chapter per 4 minutes.
+* **How it was tuned.** Jointly, on the 20 AMI development meetings only. For each pair of weights
+  (8 × 8 values), the penalty was set so the number of chapters matches AMI's number of topics on
+  average (within ±0.5 chapters; 26 of the 64 pairs can). Of those, the pair with the lowest
+  WindowDiff won. Matching the count first stops the choice from simply favouring few chapters
+  (WindowDiff's preference) or many (F1's).
+
+| 119 meetings the tuning did not see | Pk ↓ | WindowDiff ↓ | F1 @±10 s | F1 @±30 s | chapters (true 7.9) |
+|---|---:|---:|---:|---:|---:|
+| Talk mode (default) | 0.337 | 0.350 | 0.10 | 0.20 | 4.0 |
+| Talk mode, penalty set for AMI's count | 0.379 | 0.424 | 0.20 | 0.37 | 8.7 |
+| **Meeting mode** | 0.344 | 0.388 | 0.25 | 0.42 | 8.1 |
+| Talk mode, true number of chapters | 0.354 | 0.390 | 0.22 | 0.38 | 7.9 |
+| Meeting mode, true number of chapters | 0.330 | 0.367 | 0.26 | 0.43 | 7.9 |
+
+* **Against talk mode at the same, finer count**, meeting mode is better on every measure (paired
+  bootstrap over meetings, 95% CI): WindowDiff −0.037 (−0.057 to −0.018), F1 @±10 s +0.057
+  (+0.027 to +0.089), F1 @±30 s +0.046 (+0.018 to +0.077).
+* **Placement alone also improves.** With the true number of chapters: WindowDiff −0.022 (−0.038 to
+  −0.007).
+* **The 20 official unseen meetings** point the same way (WindowDiff −0.044, F1 @±30 s +0.049), but
+  with so few meetings the intervals include zero.
+* **Against the default talk mode**, meeting mode finds twice as many topic changes (F1 @±30 s 0.42
+  vs 0.20, @±10 s 0.25 vs 0.10) with twice as many chapters. WindowDiff prefers the fewer chapters
+  (0.350 vs 0.388), just as it prefers a single chapter (0.329) to both.
+* **Not for talks.** On the LibriSpeech/TED joins meeting mode gives WindowDiff 0.333 against 0.121
+  in talk mode, so talk mode stays the default and meeting mode is opt-in. On Kahneman's talk it
+  makes 5 chapters instead of 3.
 
 Example (Mode B, `ted-test-DanielKahneman`, no ground truth):
 
@@ -352,18 +385,22 @@ Example (Mode B, `ted-test-DanielKahneman`, no ground truth):
 
 **Limits.**
 
-* **Made for talks, lectures and audiobooks.** One main speaker, whose vocabulary shifts with the
-  topic. Joined excerpts change speaker, book or talk at every junction, which makes them easier
-  than real topic shifts. On real meeting topics (AMI, above) the chapters are much less accurate:
-  there, topic changes show in discourse markers and silences more than in vocabulary. The examples
-  on whole TED talks read sensibly, but nothing scores them.
+* **Talk mode is made for talks, lectures and audiobooks.** One main speaker, whose vocabulary
+  shifts with the topic. Joined excerpts change speaker, book or talk at every junction, which makes
+  them easier than real topic shifts. The examples on whole TED talks read sensibly, but nothing
+  scores them.
+* **Meeting chapters stay approximate.** Even in meeting mode, only about two in five chapter
+  starts fall within 30 s of an annotated topic change.
 * **The penalty was tuned for chapters of about 3 minutes.** For a different granularity, set the
   number of chapters or `chapters.penalty` (lower gives more chapters; about 1 matches the topics of
   the AMI meetings).
 * **Titles are keyword lists**, not written headings.
-* **Words only.** Silence and discourse markers are not used. On meetings they help, with
-  discourse markers the clearer gain, but with the same weights they hurt the joins (see above).
-  Prosody (pitch, loudness) is untested.
+* **Meeting mode's extra evidence is simple.** It uses the length of silences and a fixed list of
+  eight discourse markers. Prosody (pitch, loudness), speaker changes and other cue phrases are
+  untested.
+* **Meeting mode was tuned on one kind of meeting.** AMI scenario meetings: four people role-playing
+  a design team, with manual transcripts. It has not been checked on our own ASR output of meetings,
+  since we have no meeting audio.
 
 ## Web app
 
@@ -393,7 +430,8 @@ cd frontend; npm install; npm run build; cd ..          # once (and after fronte
   speaker's colour, and the *Speakers* tab has a who-spoke-when timeline (overlaps hatched), the
   per-speaker statistics and the list of speaker turns (click to play). The settings warn when the
   server has no pyannote.audio or no Hugging Face token.
-* **Chapters** (on by default; number of chapters and shortest chapter in the settings): the
+* **Chapters** (on by default; kind of recording (talk or meeting), number of chapters and
+  shortest chapter in the settings): the
   *Chapters* tab shows a strip of the chapters along the recording and the list of chapters with
   title, length, keywords and description (click to play); the timeline marks every chapter start;
   under the player, previous/next chapter buttons (keys `[` and `]`) and the current chapter's title.
@@ -607,7 +645,9 @@ the ±250 ms tolerance.
 **Chapter markers** (the second output): Utiyama-Isahara DP, WindowDiff 0.121 and boundary F1 0.73
 on 200 joined test documents (TextTiling 0.216 / 0.35, even split 0.366 / 0.12). On real meeting topics
 (AMI, 139 meetings) it is much weaker: WindowDiff 0.345, no better than one chapter (0.325); about a third
-of its chapter starts fall within 30 s of a topic change, against a fifth for random boundaries. See
+of its chapter starts fall within 30 s of a topic change, against a fifth for random boundaries. Meeting
+mode (silences + discourse markers, finer count, tuned on 20 AMI meetings) beats talk mode at the same count on
+the 119 meetings it was not tuned on (WindowDiff −0.037, F1 @±10 s +0.057). See
 [Chapter markers](#chapter-markers-second-output), `results/chapters/results.md` and `results/chapters/ami.md`.
 
 **Caveats.** Corruptions are synthetic (with real whisper-tiny confusions mixed in) and the references

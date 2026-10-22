@@ -146,37 +146,3 @@ chapters:                 # chapter markers from topic segmentation - the second
     cue_weight: 8.0       # nats for a chapter start whose sentence opens with one of cue_words
     pause_cap: 3.0        # seconds of silence counted at most
     cue_words: [okay, ok, so, now, well, right, alright, anyway]   # discourse markers that open a new topic
-
-summary:                  # summaries at three granularities - the third output (src/subfix/summarize.py)
-  enabled: true           # extractive summaries (our own; *.summary.md / .json)
-  method: embed           # embed = LSA sentence embeddings + MMR | textrank | tfidf; embed won on the AMI dev meetings
-  headline_words: 25      # one sentence
-  overview_words: 150     # a paragraph (the AMI abstracts average 160 words)
-  chapter_words: 50       # per chapter marker (the AMI topic-level references average 46 words)
-  min_words: 10           # shortest sentence a summary may quote; tuned on AMI dev (6: worse, 15: worse)
-  max_sentence_words: 40  # longer sentences are cut at their longest pause
-  mmr_lambda: 0.5         # relevance vs novelty (1 = relevance only); tuned on AMI dev (0.4-1.0 within 0.004)
-  redundancy: 0.5         # never pick a sentence more similar (cosine) than this to one already picked
-  damping: 0.85           # textrank: PageRank damping
-  lsa_model: models/summarizer/lsa.npz   # our LSA embeddings, 300 dims (experiments/train_summarizer.py)
-  abstractive: false      # opt-in: also summaries written by a local LLM (needs Ollama and the model below)
-  kind: auto              # what the LLM is told the recording is (auto: meeting in chapter meeting mode, else recording)
-
-llm:                      # local LLM for the abstractive summaries (src/subfix/llm.py); replies cached in cache/llm/
-  provider: ollama        # https://ollama.com - start the Ollama app, then: ollama pull qwen3:4b-instruct
-  host: http://127.0.0.1:11434
-  model: qwen3:4b-instruct  # Qwen3-4B-Instruct-2507, 2.5 GB (Q4_K_M), Apache-2.0
-  temperature: 0.0        # deterministic (with the seed): the same transcript gives the same summary
-  seed: 0
-  num_ctx: 8192           # context window (tokens); chapter transcripts are cut into chunks of chunk_words
-  timeout: 600.0          # seconds per request
-  keep_alive: 5m          # how long Ollama keeps the model loaded between requests
-  chunk_words: 2500       # longest transcript stretch sent in one prompt
-  unload_after: true      # free the GPU after the summaries (the next job needs it for Whisper)
-
-sentiment:                # sentiment over time - the fourth output (src/subfix/sentiment.py)
-  enabled: true           # *.sentiment.json / .csv / .png
-  model: models/sentiment # our classifier: logistic regression on SST + MELD (experiments/train_sentiment.py)
-  unit: sentence          # sentence | cue
-  bandwidth: 0.0          # Gaussian smoothing width (s); 0 = a fortieth of the recording, 4 s to 2 min
-  points: 400             # points of the smoothed curve

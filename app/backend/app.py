@@ -14,8 +14,7 @@
   DELETE /api/jobs/{id}/cues         drop the manual edits
   GET    /api/jobs/{id}/files/{kind} downloads: srt, vtt, json, html, edited_srt, edited_vtt,
                                      rttm + speakers (diarized jobs), chapters_vtt, chapters_txt,
-                                     chapters_json, ffmetadata (media with 2+ chapters),
-                                     summary_md, summary_json, sentiment_json, sentiment_csv, sentiment_png
+                                     chapters_json, ffmetadata (media with 2+ chapters)
   GET    /api/jobs/{id}/media        the uploaded media (supports Range requests)
   GET    /api/jobs/{id}/audio        the 16 kHz WAV the pipeline used
   GET    /api/jobs/{id}/waveform     peak envelope for the timeline
@@ -51,8 +50,7 @@ log = logging.getLogger(__name__)
 
 DOWNLOAD_TYPES = {"srt": "application/x-subrip", "vtt": "text/vtt", "json": "application/json",
                   "html": "text/html", "rttm": "text/plain", "speakers": "application/json",
-                  "txt": "text/plain", "ffmetadata": "text/plain", "md": "text/markdown", "csv": "text/csv",
-                  "png": "image/png"}
+                  "txt": "text/plain", "ffmetadata": "text/plain"}
 _UNSAFE = re.compile(r"[^\w.\- ]+")
 
 
@@ -110,10 +108,8 @@ def create_app(settings: Settings | None = None, runner=None) -> FastAPI:
     @api.get("/options")
     def options():
         diarization = getattr(runner, "diarization", None)
-        llm = getattr(runner, "llm", None)
         return {"defaults": runner.defaults(), "fields": option_fields(),
                 "diarization": diarization() if diarization else {"installed": False, "token": False},
-                "llm": llm() if llm else {"available": False, "installed": False, "model": None, "error": None},
                 "stages": [{"key": k, "label": label} for k, label in STAGES],
                 "media_exts": sorted(MEDIA_EXTS), "subs_exts": sorted(SUB_EXTS),
                 "max_upload_mb": settings.max_upload_mb}

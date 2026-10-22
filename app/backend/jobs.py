@@ -24,16 +24,6 @@ EDITED_FILE = "edited_cues.json"
 LOG_FILE = "run.log"
 
 
-def headline(result: dict) -> str | None:
-    """The one-sentence summary of a finished job (the LLM's when there is one), for the job list."""
-    summ = result.get("summary") or {}
-    for kind in ("abstractive", "extractive"):
-        text = ((summ.get(kind) or {}).get("headline") or {}).get("text")
-        if text:
-            return text
-    return None
-
-
 class JobManager:
     def __init__(self, store: JobStore, settings: Settings, runner):
         self.store = store
@@ -238,8 +228,6 @@ class JobManager:
                 "counts": result.get("counts", {}),
                 "sync_note": (result.get("sync") or {}).get("note"),
                 "chapters": len(result.get("chapters") or []),
-                "headline": headline(result),
-                "sentiment": ((result.get("sentiment") or {}).get("totals") or {}).get("mean"),
             }
             self.store.update(job_id, status="done", stage="Done", progress=1.0, finished=time.time(),
                               mode=result.get("mode", job["mode"]), summary=summary)

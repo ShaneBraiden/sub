@@ -6,8 +6,6 @@ then (both): punctuation -> truecasing -> SymSpell/LanguageTool -> our corrector
           -> forced alignment of the corrected words -> [speaker diarization, opt-in]
           -> DP re-segmentation (speaker-aware, labelled) -> cue timing rules
           -> chapter markers from topic segmentation (second output, cfg.chapters)
-          -> summaries at three granularities (third output, cfg.summary; LLM opt-in)
-          -> sentiment over time (fourth output, cfg.sentiment)
 """
 from __future__ import annotations
 
@@ -51,8 +49,6 @@ class RunResult:
     diarization: Diarization | None = None   # pyannote turns (cfg.diarize.enabled)
     speakers: dict | None = None             # diarize.speaker_report(): per-speaker stats, turns, overlaps
     chapters: list | None = None             # chapters.Chapter list (cfg.chapters.enabled)
-    summary: object | None = None            # summarize.SummaryResult (cfg.summary.enabled)
-    sentiment: object | None = None          # sentiment.SentimentTrack (cfg.sentiment.enabled)
 
     @property
     def total_time(self) -> float:
@@ -98,12 +94,6 @@ class RunResult:
             log["speakers"] = self.speakers
         if self.chapters is not None:
             log["chapters"] = [ch.to_json() for ch in self.chapters]
-        if self.summary is not None:
-            log["summary"] = self.summary.to_json()
-        if self.sentiment is not None:
-            s = self.sentiment
-            log["sentiment"] = {"totals": s.totals, "speakers": s.speakers, "chapters": s.chapters,
-                                "moments": s.moments, "bandwidth": s.bandwidth}
         return log
 
 
@@ -325,21 +315,6 @@ def _finish(mode, words, edits, orig_cues, orig_words, synced, sync_res, asr_res
                 pos = pos_tags(words, tagger) if tagger is not None else None
             chapters = make_chapters(words, cfg, pos, models.background(), cues, dur)
 
-    summary = None
-    if cfg.summary.enabled and words:
-        with timer("summary", 0.94):
-            summary = summarize_words(words, cfg, models, chapters, dur, timer.progress)
-
-    sentiment = None
-    if cfg.sentiment.enabled and words:
-        with timer("sentiment", 0.97):
-            model = models.sentiment()
-            if model is not None:
-                from .sentiment import track, units_from_cues, units_from_words
-                s = cfg.sentiment
-                units = units_from_words(words) if s.unit == "sentence" else units_from_cues(cues)
-                sentiment = track(units, model, dur, s.bandwidth, s.points, chapters)
-
     speakers = None
     if diar is not None:
         from .diarize import speaker_report
@@ -347,37 +322,7 @@ def _finish(mode, words, edits, orig_cues, orig_words, synced, sync_res, asr_res
     return RunResult(mode=mode, cues=cues, words=words, orig_cues=orig_cues, orig_words=orig_words,
                      asr=asr_result, sync=sync_res, edits=edits, stage_times=stage_times,
                      audio_duration=dur, wav=wav, timing_stats=timing_stats, config=cfg.to_dict(),
-                     diarization=diar, speakers=speakers, chapters=chapters, summary=summary,
-                     sentiment=sentiment)
-
-
-def summarize_words(words, cfg, models, chapters, dur, progress: Callable | None = None):
-    """Extractive summaries, + the LLM's when cfg.summary.abstractive (Whisper and our GPU models are
-    unloaded first so the LLM fits the GPU; the LLM is unloaded afterwards for the next job)."""
-    from .llm import Stats
-    from .summarize import summarize
-    client, error = None, None
-    if cfg.summary.abstractive:
-        client = models.llm()
-        status = client.status()
-        if status["installed"]:
-            client.stats = Stats()
-            models.free_gpu_for_llm()
-        else:
-            client, error = None, status["error"]
-
-    def tick():                     # lets a job be cancelled between LLM calls
-        if progress:
-            progress(0.95, desc="summary")
-    try:
-        res = summarize(words, cfg, chapters, dur, models.summarizer(), client, tick)
-    finally:
-        if client is not None and cfg.llm.unload_after:
-            client.unload()
-    if error:
-        res.llm_error = error
-        log.warning("abstractive summary skipped: %s", error)
-    return res
+                     diarization=diar, speakers=speakers, chapters=chapters)
 
 
 def raw_whisper_cues(asr: AsrResult) -> list[Cue]:

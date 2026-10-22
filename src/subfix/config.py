@@ -178,46 +178,6 @@ class ChaptersCfg:
     meeting: MeetingChaptersCfg = field(default_factory=MeetingChaptersCfg)
 
 
-@dataclass
-class SummaryCfg:
-    enabled: bool = True
-    method: str = "embed"
-    headline_words: int = 25
-    overview_words: int = 150
-    chapter_words: int = 50
-    min_words: int = 10
-    max_sentence_words: int = 40
-    mmr_lambda: float = 0.5
-    redundancy: float = 0.5
-    damping: float = 0.85
-    lsa_model: str = "models/summarizer/lsa.npz"
-    abstractive: bool = False
-    kind: str = "auto"
-
-
-@dataclass
-class LlmCfg:
-    provider: str = "ollama"
-    host: str = "http://127.0.0.1:11434"
-    model: str = "qwen3:4b-instruct"
-    temperature: float = 0.0
-    seed: int = 0
-    num_ctx: int = 8192
-    timeout: float = 600.0
-    keep_alive: str = "5m"
-    chunk_words: int = 2500
-    unload_after: bool = True
-
-
-@dataclass
-class SentimentCfg:
-    enabled: bool = True
-    model: str = "models/sentiment"
-    unit: str = "sentence"
-    bandwidth: float = 0.0
-    points: int = 400
-
-
 # Flat aliases accepted by Config.replace(...) (e.g. from the Gradio UI).
 ALIASES = {
     "use_gec": "gec.enabled",
@@ -251,9 +211,6 @@ class Config:
     segment: SegmentCfg = field(default_factory=SegmentCfg)
     diarize: DiarizeCfg = field(default_factory=DiarizeCfg)
     chapters: ChaptersCfg = field(default_factory=ChaptersCfg)
-    summary: SummaryCfg = field(default_factory=SummaryCfg)
-    llm: LlmCfg = field(default_factory=LlmCfg)
-    sentiment: SentimentCfg = field(default_factory=SentimentCfg)
 
     # ------------------------------------------------------------------ loading
     @classmethod

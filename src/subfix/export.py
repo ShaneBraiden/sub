@@ -1,7 +1,6 @@
 """Export corrected cues (.srt / .vtt) + a JSON change log (+ RTTM and speaker statistics when
 the run was diarized, + chapter markers as WebVTT / FFmpeg metadata / a timestamp list / JSON when
-the media has at least two chapters, + the summary as Markdown / JSON, + sentiment over time as JSON,
-CSV and a PNG plot)."""
+the media has at least two chapters)."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -36,12 +35,6 @@ def write_outputs(result, out_dir: str | Path, stem: str = "corrected", html: bo
     if chapters and len(chapters) >= 2:
         from .chapters import write_chapter_files
         paths.update(write_chapter_files(chapters, out_dir, stem))
-    if getattr(result, "summary", None) is not None:
-        from .summarize import write_summary_files
-        paths.update(write_summary_files(result.summary, out_dir, stem))
-    if getattr(result, "sentiment", None) is not None:
-        from .sentiment import write_sentiment_files
-        paths.update(write_sentiment_files(result.sentiment, out_dir, stem))
     if html:
         from .diff import html_side_by_side
         hp = Path(out_dir) / f"{stem}.diff.html"

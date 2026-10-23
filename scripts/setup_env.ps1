@@ -1,9 +1,8 @@
 # One-time environment setup on Windows (PowerShell), from the repo root:
-#   powershell -ExecutionPolicy Bypass -File scripts\setup_env.ps1 [-Cpu] [-SkipMfa] [-Diarize]
+#   powershell -ExecutionPolicy Bypass -File scripts\setup_env.ps1 [-Cpu] [-SkipMfa]
 # Creates .venv (Python 3.11) with CUDA 12.6 torch, all requirements, spaCy en_core_web_sm (for
-# ERRANT, evaluation only) and the editable `subfix` package; optionally the `mfa` conda env and
-# (-Diarize) pyannote.audio for the optional speaker labels.
-param([switch]$Cpu, [switch]$SkipMfa, [switch]$Diarize)
+# ERRANT, evaluation only) and the editable `subfix` package; optionally the `mfa` conda env.
+param([switch]$Cpu, [switch]$SkipMfa)
 $ErrorActionPreference = 'Stop'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 
@@ -29,16 +28,6 @@ if ($Cpu) {
 & $py -m spacy download en_core_web_sm
 & $py @pip --no-deps -e .
 & $py -c "import torch, ctranslate2; print('torch', torch.__version__, 'cuda', torch.cuda.is_available()); print('ctranslate2 cuda devices', ctranslate2.get_cuda_device_count())"
-
-# 3b. optional speaker diarization: pyannote.audio, with every installed package pinned so torch/numpy stay as they are
-if ($Diarize) {
-    $cons = Join-Path $env:TEMP 'subfix-constraints.txt'
-    & $py -m pip freeze --exclude-editable | Where-Object { $_ -notmatch ' @ ' } | Set-Content -Encoding utf8 $cons
-    $tv = & $py -c "import torch; print(torch.__version__.split('+')[0])"
-    Add-Content -Encoding utf8 $cons "torch==$tv"
-    & $py @pip -r requirements-diarize.txt -c $cons
-    Write-Output "pyannote installed. Accept the conditions of pyannote/speaker-diarization-community-1 on Hugging Face and set HF_TOKEN (README: Speaker diarization)."
-}
 
 # 4. Montreal Forced Aligner in its own conda env (silver-gold timing references, evaluation only)
 if (-not $SkipMfa) {

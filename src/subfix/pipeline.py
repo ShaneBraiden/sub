@@ -46,7 +46,7 @@ class RunResult:
     wav: str = ""
     timing_stats: dict = field(default_factory=dict)
     config: dict = field(default_factory=dict)
-    diarization: Diarization | None = None   # pyannote turns (cfg.diarize.enabled)
+    diarization: Diarization | None = None   # speaker turns (cfg.diarize.enabled)
     speakers: dict | None = None             # diarize.speaker_report(): per-speaker stats, turns, overlaps
     chapters: list | None = None             # chapters.Chapter list (cfg.chapters.enabled)
 

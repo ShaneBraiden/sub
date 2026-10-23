@@ -135,11 +135,15 @@ class SegmentCfg:
 @dataclass
 class DiarizeCfg:
     enabled: bool = False
-    model: str = "pyannote/speaker-diarization-community-1"
-    token_env: str = "HF_TOKEN"
+    model: str = "models/speaker/model.pt"
     num_speakers: int = 0
     min_speakers: int = 0
     max_speakers: int = 0
+    threshold: float = 0.0
+    window: float = 1.5
+    hop: float = 0.5
+    vad_rel: float = 0.3
+    min_turn: float = 0.5
     max_gap: float = 1.0
     overlap_min: float = 0.5
     smooth_cover: float = 0.5

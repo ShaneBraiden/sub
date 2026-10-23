@@ -1,0 +1,152 @@
+{
+ "split": "test-clean",
+ "conversations": 60,
+ "hours": 2.58,
+ "thresholds": {
+  "own": 0.85,
+  "mfcc": 1.0
+ },
+ "results": {
+  "MFCC statistics (untrained)": {
+   "all": {
+    "der": 18.44,
+    "miss": 1.35,
+    "fa": 0.0,
+    "conf": 17.09,
+    "count_exact": 0.4,
+    "count_abs_err": 0.75,
+    "n": 60
+   },
+   "k2": {
+    "der": 18.45,
+    "miss": 1.9,
+    "fa": 0.0,
+    "conf": 16.56,
+    "count_exact": 0.4,
+    "count_abs_err": 0.67,
+    "n": 15
+   },
+   "k3": {
+    "der": 13.15,
+    "miss": 0.89,
+    "fa": 0.0,
+    "conf": 12.26,
+    "count_exact": 0.6,
+    "count_abs_err": 0.47,
+    "n": 15
+   },
+   "k4": {
+    "der": 16.75,
+    "miss": 1.57,
+    "fa": 0.0,
+    "conf": 15.18,
+    "count_exact": 0.533,
+    "count_abs_err": 0.47,
+    "n": 15
+   },
+   "k5": {
+    "der": 25.26,
+    "miss": 1.02,
+    "fa": 0.0,
+    "conf": 24.24,
+    "count_exact": 0.067,
+    "count_abs_err": 1.4,
+    "n": 15
+   }
+  },
+  "Own speaker model": {
+   "all": {
+    "der": 8.76,
+    "miss": 1.35,
+    "fa": 0.0,
+    "conf": 7.41,
+    "count_exact": 0.517,
+    "count_abs_err": 0.57,
+    "n": 60
+   },
+   "k2": {
+    "der": 14.0,
+    "miss": 1.9,
+    "fa": 0.0,
+    "conf": 12.11,
+    "count_exact": 0.6,
+    "count_abs_err": 0.47,
+    "n": 15
+   },
+   "k3": {
+    "der": 7.41,
+    "miss": 0.89,
+    "fa": 0.0,
+    "conf": 6.52,
+    "count_exact": 0.4,
+    "count_abs_err": 0.6,
+    "n": 15
+   },
+   "k4": {
+    "der": 6.68,
+    "miss": 1.57,
+    "fa": 0.0,
+    "conf": 5.1,
+    "count_exact": 0.6,
+    "count_abs_err": 0.53,
+    "n": 15
+   },
+   "k5": {
+    "der": 6.96,
+    "miss": 1.02,
+    "fa": 0.0,
+    "conf": 5.94,
+    "count_exact": 0.467,
+    "count_abs_err": 0.67,
+    "n": 15
+   }
+  },
+  "Own speaker model, oracle K": {
+   "all": {
+    "der": 4.66,
+    "miss": 1.35,
+    "fa": 0.0,
+    "conf": 3.31,
+    "count_exact": 1.0,
+    "count_abs_err": 0.0,
+    "n": 60
+   },
+   "k2": {
+    "der": 4.91,
+    "miss": 1.9,
+    "fa": 0.0,
+    "conf": 3.01,
+    "count_exact": 1.0,
+    "count_abs_err": 0.0,
+    "n": 15
+   },
+   "k3": {
+    "der": 2.04,
+    "miss": 0.89,
+    "fa": 0.0,
+    "conf": 1.15,
+    "count_exact": 1.0,
+    "count_abs_err": 0.0,
+    "n": 15
+   },
+   "k4": {
+    "der": 7.23,
+    "miss": 1.57,
+    "fa": 0.0,
+    "conf": 5.66,
+    "count_exact": 1.0,
+    "count_abs_err": 0.0,
+    "n": 15
+   },
+   "k5": {
+    "der": 4.41,
+    "miss": 1.02,
+    "fa": 0.0,
+    "conf": 3.39,
+    "count_exact": 1.0,
+    "count_abs_err": 0.0,
+    "n": 15
+   }
+  }
+ }
+}

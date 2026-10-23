@@ -168,7 +168,7 @@ def test_options_and_system(make_client):
     assert seg["choices"] == ["dp", "greedy", "keep"]
     assert opts["stages"][0]["key"] == "preprocess"
     assert "diarize" in [s["key"] for s in opts["stages"]]
-    assert opts["diarization"] == {"installed": False, "token": False}     # the fake runner cannot diarize
+    assert opts["diarization"] == {"model": False}     # the fake runner cannot diarize
     labels = next(f for f in opts["fields"] if f["key"] == "speaker_labels")
     assert labels["choices"] == ["every", "change", "none"]
     sysinfo = c.get("/api/system").json()

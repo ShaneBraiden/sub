@@ -95,7 +95,7 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--lexicon", default=None, help="comma-separated domain terms or a text file")
     c.add_argument("--no-tuned", action="store_true", help="ignore configs/tuned.yaml")
     c.add_argument("--diarize", action="store_true",
-                   help="label speakers with pyannote.audio (needs requirements-diarize.txt and HF_TOKEN)")
+                   help="label speakers with our own speaker model (models/speaker, see experiments/train_speaker.py)")
     c.add_argument("--speakers", type=int, default=None, metavar="N",
                    help="number of speakers, if known (implies --diarize; 0 = estimate)")
     c.add_argument("--labels", choices=["every", "change", "none"], default=None,

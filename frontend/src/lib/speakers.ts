@@ -29,7 +29,7 @@ export function stripLabels(text: string, labels: string[] | undefined): string 
     .join("\n");
 }
 
-/** "SPEAKER_01" -> "Speaker 2" (pyannote counts from 00). Other names are shown as they are. */
+/** "SPEAKER_01" -> "Speaker 2" (the diarizer counts from 00). Other names are shown as they are. */
 export function speakerName(s: string): string {
   const m = s.match(/^SPEAKER_(\d+)$/);
   return m ? `Speaker ${parseInt(m[1], 10) + 1}` : s;

@@ -95,8 +95,8 @@ export interface OptionsInfo {
   media_exts: string[];
   subs_exts: string[];
   max_upload_mb: number;
-  /** Can speaker diarization run on this server (pyannote.audio installed, Hugging Face token found)? */
-  diarization?: { installed: boolean; token: boolean };
+  /** Can speaker diarization run on this server (our speaker model trained)? */
+  diarization?: { model: boolean };
 }
 
 export interface SystemInfo {

@@ -110,13 +110,17 @@ segment:
   pause_bonus: 1.0
   cue_cost: 1.0
 
-diarize:                  # speaker diarization (pyannote.audio) - opt-in, see README "Speaker diarization"
+diarize:                  # speaker diarization with our own speaker model (src/subfix/speaker.py) - opt-in, see README "Speaker diarization"
   enabled: false
-  model: pyannote/speaker-diarization-community-1   # gated on Hugging Face (accept its conditions once), or a local pipeline folder
-  token_env: HF_TOKEN     # environment variable holding the Hugging Face token (never put the token in this file)
-  num_speakers: 0         # exact number of speakers if known (0 = let pyannote estimate it)
+  model: models/speaker/model.pt   # trained by experiments/train_speaker.py (no pretrained model)
+  num_speakers: 0         # exact number of speakers if known (0 = estimate it from the clustering threshold)
   min_speakers: 0         # bounds for the estimate (0 = no bound)
   max_speakers: 0
+  threshold: 0.0          # clustering cosine-distance cut (0 = the dev-tuned value stored with the model; lower = more speakers)
+  window: 1.5             # embedding window (s)
+  hop: 0.5                # embedding window hop (s)
+  vad_rel: 0.3            # speech activity: energy above noise + vad_rel * (loud - noise)
+  min_turn: 0.5           # shorter speaker turns are absorbed by their neighbours (s)
   max_gap: 1.0            # words in a diarization gap take the nearest speaker turn within this (s)
   overlap_min: 0.5        # share of a word inside overlapping speech needed to flag it as overlapped
   smooth_cover: 0.5       # a one-word speaker island covered less than this by its own turns joins its neighbours

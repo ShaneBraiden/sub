@@ -1,12 +1,10 @@
 """Speaker diarization: word assignment, overlaps, speaker-aware segmentation, labels, statistics.
 
-pyannote itself is never loaded here: a fake pipeline module stands in for it, so these tests run
-without the model, a GPU or a Hugging Face token.
+Our diarizer is tested with the untrained MFCC-statistics embedder on synthetic voices, so these
+tests run without the trained speaker model or a GPU.
 """
 from __future__ import annotations
 
-import sys
-import types
 
 import numpy as np
 import pytest
@@ -14,14 +12,16 @@ import soundfile as sf
 from hypothesis import HealthCheck, given, settings
 from hypothesis import strategies as st
 
+from metrics.diarization import der
 from metrics.format_metrics import cue_cps, format_report
 from subfix import pipeline
 from subfix.config import Config
-from subfix.diarize import (Diarization, PyannoteDiarizer, Turn, assign_speakers, diarize, exclusive_from_turns,
-                            line_prefixes, overlap_regions, parse_labels, speaker_report, speaker_turns, to_rttm,
+from subfix.diarize import (Diarization, Turn, assign_speakers, diarize, exclusive_from_turns,
+                            line_prefixes, make_diarizer, overlap_regions, parse_labels, speaker_report, speaker_turns, to_rttm,
                             union_length)
 from subfix.export import write_outputs
 from subfix.segment import keep_original, segment
+from subfix.speaker import MFCCStats, OwnDiarizer, cluster, speech_regions
 from subfix.subio import Cue, Word, compose_srt, compose_vtt, parse_srt_text, parse_vtt_text, spoken_text, tokenize
 
 CFG = Config().override({"diarize.enabled": True})
@@ -281,70 +281,87 @@ def test_speaker_turns_report_and_rttm():
     assert rttm[0] == "SPEAKER my_clip 1 0.000 3.000 <NA> <NA> SPEAKER_00 <NA> <NA>" and len(rttm) == 3
 
 
-# ------------------------------------------------------------------ pyannote wrapper (faked) + cache + pipeline
-class _Seg:
-    def __init__(self, start, end):
-        self.start, self.end = start, end
+# ------------------------------------------------------------------ our diarizer + cache + pipeline
+def voices(pattern, sr=16000, seed=0):
+    """Synthetic 'speakers' (harmonic tones with their own pitch and timbre) talking in turns with
+    short pauses: pattern = [(speaker index, seconds)]. Returns audio and reference turns."""
+    rng = np.random.default_rng(seed)
+    pitch, tilt = [110.0, 210.0, 330.0], [0.5, 0.9, 0.2]
+    out, ref, t = [], [], 0.0
+    for spk, dur in pattern:
+        out.append(np.zeros(int(0.5 * sr), np.float32))
+        t += 0.5
+        x = np.arange(int(dur * sr)) / sr
+        f0 = pitch[spk] * (1 + 0.03 * np.sin(2 * np.pi * 3 * x))
+        ph = 2 * np.pi * np.cumsum(f0) / sr
+        y = sum(tilt[spk] ** h * np.sin(h * ph) for h in range(1, 8)) * (0.6 + 0.4 * np.sin(2 * np.pi * 4 * x) ** 2)
+        out.append((0.1 * y + 0.002 * rng.normal(size=len(x))).astype(np.float32))
+        ref.append((t, t + dur, f"v{spk}"))
+        t += dur
+    out.append(np.zeros(int(0.3 * sr), np.float32))
+    return np.concatenate(out), ref
 
 
-class _Ann:
-    def __init__(self, tracks):
-        self.tracks = tracks
-
-    def itertracks(self, yield_label=False):
-        for a, b, s in self.tracks:
-            yield _Seg(a, b), None, s
-
-
-class _Out:
-    def __init__(self, regular, exclusive):
-        self.speaker_diarization, self.exclusive_speaker_diarization = regular, exclusive
+def test_speech_regions_find_the_voiced_stretches():
+    audio, ref = voices([(0, 2.0), (1, 1.5)])
+    regions = speech_regions(audio)
+    assert len(regions) == 2
+    for (a, b), (ra, rb, _) in zip(regions, ref):
+        assert abs(a - ra) < 0.1 and abs(b - rb) < 0.1
+    assert speech_regions(np.zeros(16000, np.float32)) == []
 
 
-@pytest.fixture
-def fake_pyannote(monkeypatch):
-    calls: dict = {}
-
-    class Pipeline:
-        @staticmethod
-        def from_pretrained(source, token=None):
-            calls["source"], calls["token"] = source, token
-            if source == "gated/model":
-                raise PermissionError("403 gated")
-            return Pipeline()
-
-        def to(self, device):
-            calls["device"] = str(device)
-            return self
-
-        def __call__(self, file, **kw):
-            calls["kw"], calls["shape"] = kw, tuple(file["waveform"].shape)
-            return _Out(_Ann([(0.0, 2.0, "spk_b"), (1.5, 3.0, "spk_a")]),
-                        _Ann([(0.0, 1.7, "spk_b"), (1.7, 3.0, "spk_a")]))
-
-    audio = types.ModuleType("pyannote.audio")
-    audio.Pipeline = Pipeline
-    root = types.ModuleType("pyannote")
-    root.audio = audio
-    monkeypatch.setitem(sys.modules, "pyannote", root)
-    monkeypatch.setitem(sys.modules, "pyannote.audio", audio)
-    monkeypatch.delenv("PYANNOTE_METRICS_ENABLED", raising=False)
-    return calls
+def test_cluster_threshold_count_and_bounds():
+    rng = np.random.default_rng(0)
+    centres = np.eye(3, 8)
+    emb = np.concatenate([c + 0.05 * rng.normal(size=(10, 8)) for c in centres])
+    emb /= np.linalg.norm(emb, axis=1, keepdims=True)
+    lab = cluster(emb, threshold=0.5)
+    assert len(set(lab)) == 3 and all(len(set(lab[k * 10:(k + 1) * 10])) == 1 for k in range(3))
+    assert len(set(cluster(emb, 0.5, num_speakers=2))) == 2
+    assert len(set(cluster(emb, 0.5, max_speakers=2))) == 2
+    assert len(set(cluster(emb, 1.9, min_speakers=3))) == 3
+    assert list(cluster(emb[:1], 0.5)) == [0]
 
 
-def test_pyannote_wrapper(fake_pyannote, monkeypatch):
-    import os
-    monkeypatch.setenv("MY_TOKEN", "hf_test")
-    dz = PyannoteDiarizer("some/model", "cpu", "MY_TOKEN")
-    assert os.environ["PYANNOTE_METRICS_ENABLED"] == "false"     # pyannote telemetry stays off
-    assert fake_pyannote["token"] == "hf_test" and fake_pyannote["device"] == "cpu"
-    res = dz(np.zeros(16000 * 3, np.float32), 16000, num_speakers=2, max_speakers=5)
-    assert fake_pyannote["kw"] == {"num_speakers": 2} and fake_pyannote["shape"] == (1, 48000)
-    assert res.speakers == ["SPEAKER_00", "SPEAKER_01"]           # spk_b spoke first
-    assert [(t.start, t.end) for t in res.exclusive] == [(0.0, 1.7), (1.7, 3.0)]
-    assert res.info["exclusive"] == "pyannote"
-    with pytest.raises(RuntimeError, match="huggingface.co/gated/model.*MY_TOKEN"):
-        PyannoteDiarizer("gated/model", "cpu", "MY_TOKEN")
+def test_own_diarizer_finds_who_spoke_when():
+    audio, ref = voices([(0, 3.0), (1, 2.5), (0, 2.0), (2, 3.0), (1, 2.0)])
+    dz = OwnDiarizer(MFCCStats(), threshold=0.6)
+    res = dz(audio, 16000)
+    assert len(res.speakers) == 3 and res.info["backend"] == "own"
+    assert res.turns == res.exclusive                     # one speaker at a time
+    hyp = [(t.start, t.end, t.speaker) for t in res.turns]
+    assert der(ref, hyp)["der"] < 0.05
+    assert len(dz(audio, 16000, num_speakers=2).speakers) == 2
+    assert dz(np.zeros(16000, np.float32), 16000).turns == []
+
+
+def test_speaker_embedder_loads_a_checkpoint(tmp_path):
+    import torch
+
+    from subfix.speaker import SpeakerEmbedder, build_speaker_net
+    net = build_speaker_net(channels=32, pool_channels=64, emb=16)
+    torch.save({"model": net.state_dict(), "arch": {"channels": 32, "pool_channels": 64, "emb": 16},
+                "threshold": 0.42}, tmp_path / "model.pt")
+    emb = SpeakerEmbedder(tmp_path / "model.pt")
+    e = emb([np.random.default_rng(0).normal(size=24000).astype(np.float32), np.zeros(8000, np.float32) + 0.01])
+    assert e.shape == (2, 16) and np.allclose(np.linalg.norm(e, axis=1), 1, atol=1e-4)
+    assert emb.threshold == 0.42 and OwnDiarizer(emb).threshold == 0.42
+
+
+def test_make_diarizer_explains_a_missing_model():
+    with pytest.raises(RuntimeError, match="train_speaker.py"):
+        make_diarizer(CFG.override({"diarize.model": "models/speaker/missing.pt"}))
+
+
+def test_der_mapping_collar_and_parts():
+    ref = [(0.0, 4.0, "a"), (4.0, 8.0, "b")]
+    assert der(ref, [(0.0, 4.0, "x"), (4.0, 8.0, "y")])["der"] == 0.0           # names do not matter
+    r = der(ref, [(0.0, 8.0, "x")], collar=0.0)
+    assert abs(r["conf"] - 4.0) < 0.02 and abs(r["der"] - 0.5) < 0.01
+    r = der(ref, [(0.0, 2.0, "x"), (4.0, 9.0, "y")], collar=0.0)
+    assert abs(r["miss"] - 2.0) < 0.02 and abs(r["fa"] - 1.0) < 0.02
+    assert der(ref, [(0.0, 4.2, "x"), (4.2, 8.0, "y")], collar=0.25)["der"] == 0.0
 
 
 def write_wav(path, seconds=8.0):

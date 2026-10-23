@@ -172,8 +172,8 @@ class PipelineRunner:
         return option_defaults(self.base_config())
 
     def diarization(self) -> dict:
-        """Can speaker diarization run here? (pyannote installed, Hugging Face token found)"""
-        return diarization_status(self.base_config().diarize.token_env)
+        """Can speaker diarization run here? (our speaker model is trained)"""
+        return diarization_status(self.base_config().diarize.model)
 
     def run(self, job: dict, media: Path, subs: Path | None, out_dir: Path, progress: Progress) -> dict:
         from subfix.export import write_outputs

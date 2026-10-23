@@ -16,7 +16,7 @@ media ──ffmpeg──► 16 kHz WAV ──faster-whisper──► words + pro
   Mode B: ASR words as the draft
 both  ─► punctuation (own BiLSTM) ─► truecasing ─► SymSpell + LanguageTool ─► own Transformer corrector
       ─► audio-consistency guard ─► CTC forced alignment (own acoustic model)
-      ─► [speaker diarization, opt-in: pyannote] ─► DP re-segmentation (own POS tagger, speaker-aware)
+      ─► [speaker diarization, opt-in: own speaker model] ─► DP re-segmentation (own POS tagger, speaker-aware)
       ─► cue timing rules ─► .srt / .vtt / change log / HTML diff [+ .rttm / speaker statistics]
       ─► chapter markers: topic segmentation of the corrected words (own POS tagger + LM unigrams)
          ─► .chapters.vtt / .ffmetadata / .chapters.txt / .chapters.json   (the second output)
@@ -24,8 +24,8 @@ both  ─► punctuation (own BiLSTM) ─► truecasing ─► SymSpell + Langua
 
 Whisper is the only pretrained model in the default pipeline. The fusion LM, punctuation tagger,
 corrector, POS tagger and forced aligner are our own, trained from scratch on this machine (see
-[Self-trained models](#self-trained-models)). The optional speaker labels use pyannote.audio, a
-second pretrained model, which is off unless you turn it on (see
+[Self-trained models](#self-trained-models)). The optional speaker labels use our own speaker
+model too (trained from scratch, no pretrained model), and are off unless you turn them on (see
 [Speaker diarization](#speaker-diarization)).
 
 | Module | What it does |
@@ -39,7 +39,8 @@ second pretrained model, which is off unless you turn it on (see
 | `src/subfix/textfix/` | punctuation (our BiLSTM), truecasing, SymSpell + LanguageTool, our Transformer corrector (`seq2seq.py`, BPE in `bpe.py`) with ratio guard, audio guard |
 | `src/subfix/timing.py`, `acoustic.py` | our CTC acoustic model (log-mel + conv + BiLSTM) + NumPy CTC Viterbi, or Whisper DTW timings; cue rules |
 | `src/subfix/segment.py`, `postag.py` | greedy and POS-aware DP segmentation (≤42 chars, ≤2 lines, CPS, 0.833–7 s, gaps; speaker-aware with labels); our averaged-perceptron POS tagger |
-| `src/subfix/diarize.py` | optional pyannote speaker diarization (cached), words → speakers, overlapping speech, speaker turns and statistics, labels, RTTM |
+| `src/subfix/speaker.py` | our speaker-embedding network (x-vector style TDNN + attentive pooling, AAM-softmax), energy speech activity, clustering, the diarizer |
+| `src/subfix/diarize.py` | optional speaker diarization (cached), words → speakers, overlapping speech, speaker turns and statistics, labels, RTTM |
 | `src/subfix/chapters.py` | chapter markers: Utiyama-Isahara DP or TextTiling over sentences, content words from our POS tagger, generic words filtered with our LM's unigrams, titles and descriptions, WebVTT / FFmpeg / timestamp-list writers |
 | `src/subfix/pipeline.py` | Mode A / B orchestration, text-stage cache, model registry (6 GB GPU budget) |
 | `metrics/` | WER/CER, edit and ERRANT F0.5, over-correction, GLEU/BLEU, punctuation F1, timing, format, topic segmentation (Pk, WindowDiff, boundary F1) |
@@ -145,24 +146,47 @@ off, `--chapter-mode meeting` tunes them for meetings; see
 
 ## Speaker diarization
 
-Optional: identify who is speaking with [pyannote.audio](https://github.com/pyannote/pyannote-audio)
-and label the cues (`SPEAKER_00: ...`). Off by default; the benchmark numbers below are all without it.
+Optional: identify who is speaking and label the cues (`SPEAKER_00: ...`). Off by default; the
+benchmark numbers below are all without it. No pretrained model is used: the speaker model is our own,
+trained from scratch (`src/subfix/speaker.py`).
 
-**Setup (once).** pyannote is the one pretrained model besides Whisper, and its pipeline is gated on
-Hugging Face:
+**How it finds the speakers.**
 
-1. `.venv\Scripts\python -m pip install -r requirements-diarize.txt` (pyannote.audio 4.0.7; the
-   setup script does this with `-Diarize`).
-2. Signed in to Hugging Face, open
-   [pyannote/speaker-diarization-community-1](https://huggingface.co/pyannote/speaker-diarization-community-1)
-   and accept its conditions, then create a *read* token at https://huggingface.co/settings/tokens.
-3. Put the token in the `HF_TOKEN` environment variable (or store it once with
-   `.venv\Scripts\python -m huggingface_hub.cli.hf auth login`). The token never goes into a config
-   file. The pipeline is downloaded on the first run and cached; `diarize.model` may also point to a
-   local copy of the pipeline folder.
+1. **Speech activity:** frames whose log-energy is above the recording's noise floor by 30 % of the
+   noise-to-loud-speech range (5th / 95th percentile), gaps < 0.3 s filled, blips < 0.25 s dropped.
+2. **Speaker embeddings:** windows of 1.5 s (hop 0.5 s) inside the speech go through our speaker
+   network: 64-band log-mel → five TDNN layers (1-D convolutions, dilations 1-2-3-1-1) → attentive
+   statistics pooling → a 192-d embedding (1.24 M parameters). It was trained as a 251-way speaker
+   classifier with an additive angular margin softmax on LibriSpeech train-clean-100, so the same
+   voice gives embeddings that point in the same direction.
+3. **Clustering:** average-linkage agglomerative clustering on cosine distance, cut at a threshold
+   tuned on synthetic dev-clean conversations (stored with the model) or at `--speakers N`, then a few
+   k-means passes that move each window to its nearest speaker centroid.
+4. **Turns:** each 10 ms speech frame takes the speaker whose windows over it fit best; turns shorter
+   than 0.5 s are absorbed by their neighbours. One speaker at a time (no overlapping speech).
 
-pyannote.audio 4 sends usage telemetry (file duration, speaker counts) to pyannote.ai by default;
-subfix sets `PYANNOTE_METRICS_ENABLED=false` unless you set that variable yourself.
+**Setup (once).** Train the model (~2 h on the 6 GB GPU, resumable) and tune the threshold:
+
+```powershell
+.venv\Scripts\python experiments	rain_speaker.py            # -> models/speaker/model.pt (best dev-clean EER)
+.venv\Scripts\python experiments\eval_diarize.py --stage tune # clustering threshold on dev-clean conversations
+.venv\Scripts\python experiments\eval_diarize.py --stage test # DER table -> results/diarize/results.md
+```
+
+**Results** (`results/diarize/results.md`). The test set is 60 synthetic conversations (2.6 h) of 2-5
+test-clean speakers taking turns of 1-15 s. None of these speakers were in training, and there is no
+overlapping speech. DER is measured with a 0.25 s collar, and the threshold was tuned on 32 dev-clean
+conversations. The embedding reaches 5.05 % equal error rate on 4000 dev-clean verification trials.
+
+| System | DER % | Confusion % | Speaker count exact | 2 spk | 3 spk | 4 spk | 5 spk |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| MFCC statistics (untrained, same clustering) | 18.44 | 17.09 | 40 % | 18.45 | 13.15 | 16.75 | 25.26 |
+| **Own speaker model** | **8.76** | 7.41 | 52 % | 14.00 | 7.41 | 6.68 | 6.96 |
+| Own speaker model, number of speakers given | 4.66 | 3.31 | 100 % | 4.91 | 2.04 | 7.23 | 4.41 |
+
+Most of the remaining error comes from estimating the number of speakers: two-person conversations
+are sometimes split into three. Pass `--speakers N` when you know it. Missed speech is 1.35 % and false
+alarm is 0, but this is clean read speech; real meetings will be harder.
 
 ```powershell
 .venv\Scripts\subfix correct --media meeting.mp4 --out outputs --diarize                 # estimate the speakers
@@ -174,8 +198,9 @@ The same settings live in `configs/default.yaml` under `diarize:` (`--set diariz
 in the web app they are under *Settings → Audio → Identify speakers*.
 
 **What happens.** Diarization runs on the 16 kHz audio after forced alignment (cached by audio
-content + settings, like the ASR). pyannote gives two views: regular turns, which may overlap, and an
-exclusive view with one speaker at a time.
+content + model + settings, like the ASR). A diarization has two views: regular turns, which may
+overlap, and an exclusive view with one speaker at a time. Our diarizer gives one speaker at a time,
+so both are the same; the overlap handling below applies to turns that do overlap.
 
 * **Words → speakers:** each word gets the speaker with the largest overlap in the exclusive view;
   words in a diarization gap take the nearest turn within `max_gap` (1 s), else their neighbours'
@@ -197,7 +222,7 @@ exclusive view with one speaker at a time.
   labelled file back (Mode A) strips the labels, so corrected output can be corrected again. In the
   web editor a wrong speaker is fixed by editing the label; the edited `.vtt` voice tags follow it.
 
-**Outputs.** `*.rttm` (the regular turns in NIST RTTM, for pyannote.metrics / dscore) and
+**Outputs.** `*.rttm` (the regular turns in NIST RTTM, for dscore or `metrics/diarization.py`) and
 `*.speakers.json`, which holds:
 
 | Per speaker | |
@@ -214,9 +239,10 @@ overlapped words and cues, dialogue cues. It also lists every speaker turn (with
 overlap region. `*.changes.json` gains `speaker` per word and `speakers` per cue.
 
 **Limits.** In overlaps only the words Whisper heard can be labelled: a second voice that Whisper did
-not transcribe stays missing. Diarization quality is pyannote's (it drops on very short turns, similar
-voices and noisy audio); giving the exact number of speakers helps when it is known. Names are
-pyannote's `SPEAKER_nn`, numbered by first appearance. Edit them in the web editor if you want real names.
+not transcribe stays missing. The model was trained on read audiobook speech (251 speakers, clean
+audio), so quality drops on noisy, far-field or overlapping speech and on very short turns, and the
+energy-based speech detector also takes loud non-speech (music, noise) as speech; giving the exact
+number of speakers helps when it is known. Names are `SPEAKER_nn`, numbered by first appearance. Edit them in the web editor if you want real names.
 
 ## Chapter markers (second output)
 
@@ -429,7 +455,7 @@ cd frontend; npm install; npm run build; cd ..          # once (and after fronte
   the table filters by speaker or by overlapping speech, the caption draws the label with the
   speaker's colour, and the *Speakers* tab has a who-spoke-when timeline (overlaps hatched), the
   per-speaker statistics and the list of speaker turns (click to play). The settings warn when the
-  server has no pyannote.audio or no Hugging Face token.
+  speaker model has not been trained on the server.
 * **Chapters** (on by default; kind of recording (talk or meeting), number of chapters and
   shortest chapter in the settings): the
   *Chapters* tab shows a strip of the chapters along the recording and the list of chapters with

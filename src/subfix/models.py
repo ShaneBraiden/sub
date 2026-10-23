@@ -80,12 +80,12 @@ class Models:
         return self._get("aligner", key, lambda: make_aligner(backend, cfg, self.device))
 
     def diarizer(self, cfg=None):
-        """pyannote speaker-diarization pipeline (opt-in; needs pyannote.audio and a Hugging Face token)."""
+        """Our speaker diarizer (speaker-embedding model + clustering; opt-in)."""
         cfg = cfg or self.cfg
-        from .diarize import PyannoteDiarizer
+        from .diarize import make_diarizer
         d = cfg.diarize
-        return self._get("diarizer", (d.model, d.token_env),
-                         lambda: PyannoteDiarizer(d.model, self.device, d.token_env))
+        return self._get("diarizer", (d.model, d.threshold, d.window, d.hop, d.vad_rel, d.min_turn),
+                         lambda: make_diarizer(cfg, self.device))
 
     def background(self, cfg=None):
         """Unigram log-probabilities of our KN LM for chapter segmentation and titles (read from

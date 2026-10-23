@@ -109,7 +109,7 @@ def create_app(settings: Settings | None = None, runner=None) -> FastAPI:
     def options():
         diarization = getattr(runner, "diarization", None)
         return {"defaults": runner.defaults(), "fields": option_fields(),
-                "diarization": diarization() if diarization else {"installed": False, "token": False},
+                "diarization": diarization() if diarization else {"model": False},
                 "stages": [{"key": k, "label": label} for k, label in STAGES],
                 "media_exts": sorted(MEDIA_EXTS), "subs_exts": sorted(SUB_EXTS),
                 "max_upload_mb": settings.max_upload_mb}

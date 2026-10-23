@@ -1,13 +1,15 @@
-"""Speaker diarization (pyannote.audio): who spoke when, mapped onto the timed words.
+"""Speaker diarization: who spoke when, mapped onto the timed words.
 
-pyannote is the only pretrained model besides Whisper, and it is opt-in (cfg.diarize.enabled).
-It runs on the in-memory 16 kHz waveform (no torchcodec/FFmpeg decoding), and its output is
-cached as JSON keyed by audio content + diarization settings, like the ASR cache.
+The diarizer is our own (src/subfix/speaker.py: a small speaker-embedding network trained from
+scratch on LibriSpeech train-clean-100, plus clustering); no pretrained model is involved. It is
+opt-in (cfg.diarize.enabled), runs on the in-memory 16 kHz waveform, and its output is cached as
+JSON keyed by audio content + model file + diarization settings, like the ASR cache.
 
-Two views of the pyannote output are kept:
+Two views of a diarization are kept:
   turns      regular diarization: turns of different speakers may overlap (overlapping speech)
-  exclusive  at most one speaker at any time (pyannote's exclusive diarization; derived from
-             `turns` when the pipeline does not provide it) - used to give each word one speaker
+  exclusive  at most one speaker at any time (derived from `turns` when not given) - used to give
+             each word one speaker. Our diarizer finds one speaker at a time, so both are the same;
+             the overlap handling below applies to turns that do overlap (e.g. imported RTTM)
 Speakers are renamed SPEAKER_00, SPEAKER_01, ... in order of first appearance.
 
 Each word then gets meta["speaker"]: the speaker with the largest overlap among the exclusive
@@ -25,7 +27,6 @@ from __future__ import annotations
 import bisect
 import logging
 import math
-import os
 import re
 import time
 from collections import Counter
@@ -407,75 +408,29 @@ def to_rttm(diar: Diarization, uri: str = "audio") -> str:
                    for t in diar.turns)
 
 
-# ------------------------------------------------------------------ pyannote
-def _access_help(model: str, token_env: str, exc: Exception | None) -> str:
-    why = f" ({type(exc).__name__}: {exc})" if exc is not None else ""
-    return (f"could not load the pyannote pipeline '{model}'{why}. It is gated on Hugging Face: open "
-            f"https://huggingface.co/{model} while signed in, accept its conditions, create a read token at "
-            f"https://huggingface.co/settings/tokens and put it in the {token_env} environment variable "
-            f"(or run `hf auth login` once). Alternatively set diarize.model to a local copy of the pipeline.")
-
-
-class PyannoteDiarizer:
-    """A loaded pyannote speaker-diarization pipeline."""
-
-    def __init__(self, model: str, device: str = "cpu", token_env: str = "HF_TOKEN"):
-        # pyannote.audio 4 reports usage (file durations, speaker counts) to pyannote.ai unless this is off;
-        # keep it off unless the user opted in by setting the variable themselves
-        os.environ.setdefault("PYANNOTE_METRICS_ENABLED", "false")
-        try:
-            from pyannote.audio import Pipeline
-        except ImportError as exc:
-            raise RuntimeError("speaker diarization needs pyannote.audio: "
-                               "pip install -r requirements-diarize.txt") from exc
-        import torch
-
-        from .lm import resolve_model_path
-        local = resolve_model_path(model)
-        source = str(local) if local.exists() else model
-        token = os.environ.get(token_env) if token_env else None
-        try:
-            pipe = Pipeline.from_pretrained(source, token=token) if token else Pipeline.from_pretrained(source)
-        except Exception as exc:
-            raise RuntimeError(_access_help(model, token_env, exc)) from exc
-        if pipe is None:
-            raise RuntimeError(_access_help(model, token_env, None))
-        self.pipeline = pipe.to(torch.device(device))
-        self.model, self.device = model, device
-
-    def __call__(self, audio: np.ndarray, sr: int, num_speakers: int = 0, min_speakers: int = 0,
-                 max_speakers: int = 0) -> Diarization:
-        import torch
-        kw: dict = {}
-        if num_speakers > 0:
-            kw["num_speakers"] = num_speakers
-        else:
-            if min_speakers > 0:
-                kw["min_speakers"] = min_speakers
-            if max_speakers > 0:
-                kw["max_speakers"] = max_speakers
-        wav = torch.from_numpy(np.ascontiguousarray(audio, dtype=np.float32)).unsqueeze(0)
-        out = self.pipeline({"waveform": wav, "sample_rate": sr}, **kw)
-        regular = getattr(out, "speaker_diarization", out)          # pyannote 4 DiarizeOutput, or 3.x Annotation
-        exclusive = getattr(out, "exclusive_speaker_diarization", None)
-
-        def turns(ann) -> list[Turn]:
-            return [Turn(float(seg.start), float(seg.end), str(spk)) for seg, _, spk in ann.itertracks(yield_label=True)]
-        return Diarization.build(turns(regular), turns(exclusive) if exclusive is not None else None,
-                                 {"model": self.model, "device": self.device,
-                                  "exclusive": "pyannote" if exclusive is not None else "derived", **kw})
-
-    def close(self) -> None:
-        self.pipeline = None
+# ------------------------------------------------------------------ our diarizer
+def make_diarizer(cfg, device: str = "cpu"):
+    """Our speaker-embedding model + clustering (src/subfix/speaker.py), set up from cfg.diarize."""
+    from .lm import resolve_model_path
+    from .speaker import OwnDiarizer, SpeakerEmbedder
+    d = cfg.diarize
+    path = resolve_model_path(d.model)
+    if not path.exists():
+        raise RuntimeError(f"speaker model {path} not found: train it with python experiments/train_speaker.py "
+                           "and tune it with python experiments/eval_diarize.py --stage tune")
+    return OwnDiarizer(SpeakerEmbedder(path, device), d.threshold, d.window, d.hop, d.vad_rel, d.min_turn)
 
 
 def diarize(wav: str, cfg, models=None, audio: np.ndarray | None = None, use_cache: bool = True) -> Diarization:
-    """Diarization of a 16 kHz WAV (cached by audio content + model + speaker-count settings)."""
+    """Diarization of a 16 kHz WAV (cached by audio content + model file + diarization settings)."""
+    from .lm import resolve_model_path
     from .paths import cache_dir
     from .preprocess import SR, load_audio
     from .utils.cache import file_hash, load_json, save_json, text_hash
     d = cfg.diarize
-    key = text_hash(file_hash(wav), d.model, d.num_speakers, d.min_speakers, d.max_speakers)
+    mpath = resolve_model_path(d.model)
+    key = text_hash(file_hash(wav), file_hash(str(mpath)) if mpath.exists() else d.model, d.num_speakers,
+                    d.min_speakers, d.max_speakers, d.threshold, d.window, d.hop, d.vad_rel, d.min_turn)
     path = cache_dir("diarize") / f"{Path(wav).stem}-{key}.json"
     if use_cache and path.exists():
         return Diarization.from_json(load_json(path))
@@ -483,7 +438,7 @@ def diarize(wav: str, cfg, models=None, audio: np.ndarray | None = None, use_cac
         diarizer = models.diarizer(cfg)
     else:
         from .utils.device import resolve_device
-        diarizer = PyannoteDiarizer(d.model, resolve_device(cfg.device), d.token_env)
+        diarizer = make_diarizer(cfg, resolve_device(cfg.device))
     if audio is None:
         audio = load_audio(wav)
     t0 = time.perf_counter()

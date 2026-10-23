@@ -180,14 +180,12 @@ export default function OptionsForm({ info, value, onChange, mode }: Props) {
               <span className="sw" />
               <span className="t-text">
                 <b>Identify speakers</b>
-                <small>Label who is speaking (pyannote). Cues never mix speakers, except two-line dialogue cues.</small>
+                <small>Label who is speaking (our own speaker model). Cues never mix speakers, except two-line dialogue cues.</small>
               </span>
             </label>
-            {v.diarize && info.diarization && !(info.diarization.installed && info.diarization.token) && (
+            {v.diarize && info.diarization && !info.diarization.model && (
               <p className="hint warn-text" role="status">
-                {!info.diarization.installed
-                  ? "pyannote.audio is not installed on the server (pip install -r requirements-diarize.txt)."
-                  : "No Hugging Face token found on the server: set HF_TOKEN after accepting the model's conditions (see the README)."}
+                The speaker model is not trained on the server (python experiments/train_speaker.py, see the README).
               </p>
             )}
             {v.diarize && has("num_speakers") && (

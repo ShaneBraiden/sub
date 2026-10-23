@@ -141,24 +141,10 @@ def option_fields() -> list[dict[str, Any]]:
     return fields
 
 
-def diarization_status(token_env: str = "HF_TOKEN") -> dict[str, bool]:
-    """Whether speaker diarization can run: pyannote.audio installed, a Hugging Face token available
-    (checked without importing pyannote or touching the network)."""
-    import importlib.util
-    import os
-
-    try:
-        installed = importlib.util.find_spec("pyannote.audio") is not None
-    except (ImportError, ValueError):
-        installed = False
-    token = bool(token_env and os.environ.get(token_env))
-    if not token:
-        try:
-            from huggingface_hub import get_token
-            token = bool(get_token())
-        except Exception:
-            token = False
-    return {"installed": installed, "token": token}
+def diarization_status(model: str = "models/speaker/model.pt") -> dict[str, bool]:
+    """Whether speaker diarization can run: our speaker model has been trained."""
+    from subfix.lm import resolve_model_path
+    return {"model": resolve_model_path(model).exists()}
 
 
 class CueIn(BaseModel):

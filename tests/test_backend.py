@@ -155,6 +155,8 @@ def test_build_result_is_plain_json():
     assert [c["text"] for c in out["cues"]] == ["Hello there, and welcome.", "Today we talk about it."]
     assert out["cues"][0]["words"][0] == ["Hello", 0.6, 0.9]
     assert out["original_cues"][0]["text"].startswith("Hello there")
+    assert out["asr_raw"]["text"] == " ".join(c["text"] for c in out["original_cues"])
+    assert len(out["asr_raw"]["segments"]) == len(out["original_cues"])
     assert out["edits"][0]["prob"] == pytest.approx(0.95, abs=1e-6)
 
 

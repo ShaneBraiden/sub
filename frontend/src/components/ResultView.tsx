@@ -8,10 +8,11 @@ import ChaptersPanel from "./ChaptersPanel";
 import DiffTable from "./DiffTable";
 import Player from "./Player";
 import QualityPanel from "./QualityPanel";
+import RawWhisperPanel from "./RawWhisperPanel";
 import SpeakersPanel from "./SpeakersPanel";
 import Timeline from "./Timeline";
 
-type Tab = "subs" | "changes" | "speakers" | "chapters" | "quality";
+type Tab = "subs" | "raw" | "changes" | "speakers" | "chapters" | "quality";
 
 function Stat({ label, value, sub, delta }: { label: string; value: string; sub?: string; delta?: string }) {
   return (
@@ -153,6 +154,9 @@ export default function ResultView({ job, result, onSaved }: { job: Job; result:
             <button role="tab" aria-selected={tab === "subs"} className={tab === "subs" ? "on" : ""} onClick={() => setTab("subs")}>
               Subtitles<span className="count">{result.cues.length}</span>
             </button>
+            <button role="tab" aria-selected={tab === "raw"} className={tab === "raw" ? "on" : ""} onClick={() => setTab("raw")}>
+              Raw Whisper
+            </button>
             <button role="tab" aria-selected={tab === "changes"} className={tab === "changes" ? "on" : ""} onClick={() => setTab("changes")}>
               Change log<span className="count">{appliedEdits}</span>
             </button>
@@ -171,6 +175,7 @@ export default function ResultView({ job, result, onSaved }: { job: Job; result:
             </button>
           </div>
           {tab === "subs" && <DiffTable jobId={job.id} result={result} time={time} playing={playing} onSeek={seek} onSaved={onSaved} />}
+          {tab === "raw" && <RawWhisperPanel result={result} onSeek={seek} />}
           {tab === "changes" && <ChangesTable edits={result.edits} onSeek={seek} mode={result.mode} />}
           {tab === "speakers" && <SpeakersPanel result={result} time={time} onSeek={seek} />}
           {tab === "chapters" && <ChaptersPanel result={result} time={time} onSeek={seek} />}

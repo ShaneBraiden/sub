@@ -109,6 +109,10 @@ def build_result(res, cfg) -> dict:
         sync = dict(res.sync.to_json(), note=sync_note(res.sync))
     asr_info = dict(res.asr.info) if res.asr else {}
     asr_info["words"] = len(res.asr.words) if res.asr else 0
+    # Whisper's untouched output (segment texts as decoded), shown in the "Raw Whisper" tab
+    raw_segs = [{"start": round(s["start"], 3), "end": round(s["end"], 3), "text": s.get("text", "").strip(),
+                 "avg_logprob": s.get("avg_logprob"), "no_speech_prob": s.get("no_speech_prob")}
+                for s in (res.asr.segments if res.asr else []) if s.get("text", "").strip()]
     return jsonable({
         "mode": res.mode,
         "audio_duration": res.audio_duration,
@@ -118,6 +122,7 @@ def build_result(res, cfg) -> dict:
         "sync": sync,
         "timing": res.timing_stats,
         "asr": asr_info,
+        "asr_raw": {"text": " ".join(s["text"] for s in raw_segs), "segments": raw_segs},
         "counts": summary_counts(rows),
         "edit_counts": res.edit_counts(),
         "format_before": format_report(before, cfg) if before else {},

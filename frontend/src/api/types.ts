@@ -254,6 +254,19 @@ export interface Limits {
   cps_count_spaces: boolean;
 }
 
+export interface AsrSegment {
+  start: number;
+  end: number;
+  text: string;
+  avg_logprob: number | null;
+  no_speech_prob: number | null;
+}
+
+export interface AsrRaw {
+  text: string;
+  segments: AsrSegment[];
+}
+
 export interface Result {
   mode: Mode;
   audio_duration: number;
@@ -263,6 +276,8 @@ export interface Result {
   sync: SyncInfo | null;
   timing: Record<string, unknown>;
   asr: Record<string, unknown>;
+  /** Whisper's untouched transcript (missing on jobs run before it was added). */
+  asr_raw?: AsrRaw;
   counts: Counts;
   edit_counts: Record<string, number>;
   format_before: FormatReport;

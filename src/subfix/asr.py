@@ -6,6 +6,7 @@ re-run ASR.
 from __future__ import annotations
 
 import logging
+import random
 import re
 import time
 from dataclasses import dataclass, field
@@ -65,6 +66,62 @@ class AsrResult:
     @property
     def text(self) -> str:
         return " ".join(w.text for w in self.words)
+
+
+def _typo(word: str, rng: random.Random) -> str:
+    """Swap, delete or double a letter (never the first one)."""
+    if len(word) < 4 or not word.isalpha():
+        return word
+    i = rng.randrange(1, len(word) - 1)
+    kind = rng.choice(("swap", "delete", "double"))
+    if kind == "swap" and word[i] != word[i + 1]:
+        return word[:i] + word[i + 1] + word[i] + word[i + 2:]
+    if kind == "delete":
+        return word[:i] + word[i + 1:]
+    return word[:i] + word[i] + word[i:]
+
+
+def degrade(res: AsrResult, rate: float, seed: int = 0) -> AsrResult:
+    """Make a transcript bad on purpose, for demos and stress tests (`asr.degrade`).
+
+    Removes all punctuation and casing, then corrupts about `rate` of the words: homophone swaps,
+    typos, dropped words, repeated words. The same input and seed give the same output, and
+    `info["degraded"]` records what was done so the app can say so. Corrupted words get a low
+    probability, as the audio-consistency guards would otherwise keep them from being repaired.
+    """
+    rng = random.Random(seed)
+    hom = T.homophone_groups()
+    counts = {"homophone": 0, "typo": 0, "drop": 0, "dup": 0}
+    words: list[Word] = []
+    segs: list[dict] = []
+    for seg in res.segments:
+        first = len(words)
+        i0, i1 = seg["words"]
+        for w in res.words[i0:i1]:
+            core = T.core(w.text).lower() or w.text
+            kind = None
+            if rng.random() < rate:
+                kind = "homophone" if core in hom else rng.choice(("typo", "typo", "typo", "drop", "dup"))
+            new = core
+            if kind == "homophone":
+                new = rng.choice(hom[core])
+            elif kind == "typo":
+                new = _typo(core, rng)
+                kind = kind if new != core else None
+            if kind == "drop":
+                counts["drop"] += 1
+                continue
+            out = w.copy(text=new)
+            if kind:
+                counts[kind] += 1
+                out.prob = min(out.prob, 0.3)
+            words.append(out)
+            if kind == "dup":
+                words.append(out.copy())
+        segs.append(dict(seg, text=" ".join(w.text for w in words[first:]), words=[first, len(words)]))
+    for i, w in enumerate(words):
+        w.meta = dict(w.meta, asr_index=i)
+    return AsrResult(words, segs, dict(res.info, degraded=dict(counts, rate=rate)))
 
 
 def resolve_model(model: str, device: str, compute_type: str) -> tuple[str, str]:

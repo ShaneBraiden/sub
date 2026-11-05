@@ -159,6 +159,24 @@ export default function OptionsForm({ info, value, onChange, mode }: Props) {
             <span className="hint">Whisper. Automatic picks large-v3-turbo on a GPU and small.en on a CPU.</span>
           </label>
         )}
+        {has("fusion_method") && mode === "A" && v.fusion && (
+          <label className="field">
+            <span>Who decides each word change</span>
+            <select
+              className="input sm"
+              value={v.fusion_method}
+              onChange={(e) => onChange({ ...value, fusion_method: e.target.value as JobOptions["fusion_method"] })}
+            >
+              <option value="neural">Neural network (checks the audio)</option>
+              <option value="rule">Linear rule (faster)</option>
+            </select>
+            <span className="hint">
+              {v.fusion_method === "rule"
+                ? "Weighs Whisper's confidence, how alike the words sound and a language model with fixed weights."
+                : "Our trained network also scores each change against the audio, so a word really said twice is kept."}
+            </span>
+          </label>
+        )}
         {has("timing") && (
           <label className="field">
             <span>Word timing</span>

@@ -20,6 +20,7 @@ class AsrCfg:
     language: str = "en"
     initial_prompt: str = "Hello, and welcome. Today, we will talk about it."
     use_lexicon_hotwords: bool = True
+    degrade: float = 0.0
 
 
 @dataclass
@@ -48,6 +49,9 @@ class AlignCfg:
 @dataclass
 class FusionCfg:
     enabled: bool = True
+    method: str = "neural"
+    model: str = "models/fusion"
+    threshold: float = 0.0
     w_conf: float = 1.0
     w_phon: float = 0.5
     w_lm: float = 0.3

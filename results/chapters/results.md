@@ -22,7 +22,7 @@ Chosen: **dp** with `['dp', 'NVA', 0.0, 6.0]`; TextTiling best `['tiling', 'NVAR
 | System | Pk ↓ | WindowDiff ↓ (95% CI) | P | R | F1 @±10 s | chapters | abs. count error |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Mode B output (audio only) | 0.121 | 0.121 (0.104-0.137) | 0.77 | 0.70 | 0.73 | 4.2 | 0.39 |
-| Mode A output (corrected subtitles) | 0.122 | 0.122 (0.107-0.139) | 0.76 | 0.68 | 0.72 | 4.1 | 0.41 |
+| Mode A output (corrected subtitles) | 0.122 | 0.123 (0.109-0.140) | 0.76 | 0.68 | 0.72 | 4.1 | 0.42 |
 | Reference transcripts (MFA timings) | 0.113 | 0.113 (0.098-0.130) | 0.77 | 0.70 | 0.74 | 4.2 | 0.41 |
 
 ## Ablations (chosen method, Mode B words)
@@ -47,4 +47,4 @@ Chosen: **dp** with `['dp', 'NVA', 0.0, 6.0]`; TextTiling best `['tiling', 'NVAR
 | libri / ted | 353 | 0.71 |
 | ted / ted | 106 | 0.60 |
 
-Run time per document (segmentation only, after tagging): dp 33 ms mean / 214 ms max, tiling 3 ms mean / 22 ms max.
+Run time per document (segmentation only, after tagging): dp 26 ms mean / 93 ms max, tiling 2 ms mean / 7 ms max.

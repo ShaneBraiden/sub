@@ -17,6 +17,7 @@ asr:
   # a short punctuated, cased prompt: without it Whisper sometimes emits lowercase text without punctuation
   initial_prompt: "Hello, and welcome. Today, we will talk about it."
   use_lexicon_hotwords: true
+  degrade: 0.0            # demo only: share of Whisper words to corrupt on purpose, also strips its punctuation and casing (0 = off)
 
 sync:                     # coarse offset/drift fit (Mode A)
   enabled: true
@@ -37,8 +38,11 @@ align:                    # graded Needleman-Wunsch (subtitle words vs ASR words
   time_penalty: 1.0
   anchor_ngram: 3
 
-fusion:                   # imp.md 4.1 decision rule
+fusion:                   # who decides each candidate edit: our network, or the imp.md 4.1 linear rule (w_*, tau_*)
   enabled: true
+  method: neural          # neural (src/subfix/fusenet.py; the rule is used if it is not trained) | rule
+  model: models/fusion    # our fusion network (experiments/train_fusion.py)
+  threshold: 0.0          # neural: min P(edit helps) (0 = the dev-tuned per-kind values stored with the model)
   w_conf: 1.0             # Whisper word probability
   w_phon: 0.5             # metaphone similarity
   w_lm: 0.3               # LM log-prob difference (clipped)

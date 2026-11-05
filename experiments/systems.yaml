@@ -27,8 +27,13 @@ systems:
     label: "B3: Raw Whisper replace"
   ours:
     type: pipeline
-    label: "Ours: fusion (own KN LM) + own punct + own corrector + own CTC align + DP seg"
+    label: "Ours: neural fusion (own KN LM, own CTC) + own punct + own corrector + own CTC align + DP seg"
     overrides: {}
+  ours_rule:
+    type: pipeline
+    label: "Ours with the linear fusion rule instead of the network"
+    overrides:
+      fusion.method: rule
   modeb_raw:
     type: raw_whisper
     mode: B
@@ -42,12 +47,31 @@ systems:
 # imp.md 6.3 ablations (each entry = overrides on top of `ours`).
 # Fusion-signal ablations take their re-tuned threshold from configs/tuned_ablations.yaml.
 ablations:
-  fusion_signals:
-    full: {}
-    no_conf: {fusion.w_conf: 0}
-    no_phon: {fusion.w_phon: 0}
-    no_lm: {fusion.w_lm: 0}
-    no_oov: {fusion.w_oov: 0}
+  fusion_signals:         # the signals of the linear rule (the network's variants are under fusion_method)
+    full: {fusion.method: rule}
+    no_conf: {fusion.method: rule, fusion.w_conf: 0}
+    no_phon: {fusion.method: rule, fusion.w_phon: 0}
+    no_lm: {fusion.method: rule, fusion.w_lm: 0}
+    no_oov: {fusion.method: rule, fusion.w_oov: 0}
+  fusion_method:          # who decides each candidate edit (experiments/train_fusion.py trains the variants)
+    rule_v1:              # the rule as first tuned, on position-based labels
+      fusion.method: rule
+      fusion.w_conf: 3.0
+      fusion.w_phon: 0.25
+      fusion.w_lm: 0.2
+      fusion.w_oov: 0.0
+      fusion.tau_sub: 2.15
+      fusion.tau_ins: 0.95
+      fusion.tau_lm_ins: -11.25
+      fusion.del_span_conf: 0.98
+      fusion.tau_lm_del: 2.75
+    rule_f05: {fusion.method: rule}      # corrected labels, F0.5 alone (parameters in configs/tuned_ablations.yaml)
+    rule: {fusion.method: rule}          # corrected labels, the network's selection score
+    logistic: {fusion.model: models/fusion_abl/logistic}  # one linear layer on the signals + CTC evidence
+    mlp: {fusion.model: models/fusion_abl/mlp}            # per-candidate MLP on the signals + CTC evidence
+    words: {fusion.model: models/fusion_abl/words}        # shipped network + word and character embeddings
+    no_ctc: {fusion.model: models/fusion_abl/no_ctc}      # shipped network without the CTC evidence
+    neural: {}                                            # BiLSTM over the signals + CTC evidence (shipped)
   gec_model:              # our from-scratch Transformer corrector on/off
     none: {gec.enabled: false}
     own_transformer: {}

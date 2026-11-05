@@ -1,4 +1,4 @@
-"""One-page summary of the six self-trained models -> docs/Subfix_Models_Summary.pdf.
+"""One-page summary of the seven self-trained models -> docs/Subfix_Models_Summary.pdf.
 
 python docs/report/build_model_table.py   (re-run after retraining; numbers are read from models/)
 """
@@ -30,6 +30,12 @@ punct = load("models/punct/metrics.json").get("best", {})
 corr = load("models/corrector/metrics.json").get("best", {})
 pos = load("models/pos/perceptron.metrics.json")
 spk = load("models/speaker/metrics.json")
+fusion = load("models/fusion/metrics.json")
+fus_best = fusion.get("best", {})
+summary = (ROOT / "results" / "SUMMARY.md").read_text(encoding="utf-8")
+ours_row = next(ln for ln in summary.splitlines() if ln.startswith("| **Ours**")).split("|")
+rule_row = next(ln for ln in summary.splitlines() if ln.startswith("| Ours with the linear")).split("|")
+ours_f05, rule_f05 = ours_row[5].strip(), rule_row[5].strip()
 spk_best = spk.get("best", {})
 spk_done = len(spk.get("history", []))
 spk_total = spk.get("args", {}).get("epochs", 12)
@@ -44,11 +50,11 @@ title = ParagraphStyle("t", parent=ss["Title"], fontName="Helvetica-Bold", fontS
                        spaceAfter=2)
 sub = ParagraphStyle("s", parent=ss["Normal"], fontName="Helvetica", fontSize=9.5, textColor=colors.HexColor("#4a5563"),
                      spaceAfter=8)
-cell = ParagraphStyle("c", parent=ss["Normal"], fontName="Helvetica", fontSize=8, leading=10, textColor=ink)
+cell = ParagraphStyle("c", parent=ss["Normal"], fontName="Helvetica", fontSize=7.5, leading=9, textColor=ink)
 head = ParagraphStyle("h", parent=cell, fontName="Helvetica-Bold", textColor=colors.white)
 h2 = ParagraphStyle("h2", parent=ss["Heading2"], fontName="Helvetica-Bold", fontSize=11.5, textColor=accent,
-                    spaceBefore=10, spaceAfter=3)
-small = ParagraphStyle("sm", parent=cell, fontSize=8.5, leading=11.5)
+                    spaceBefore=6, spaceAfter=2)
+small = ParagraphStyle("sm", parent=cell, fontSize=8, leading=10)
 
 
 def P(text: str, style=cell) -> Paragraph:
@@ -56,7 +62,7 @@ def P(text: str, style=cell) -> Paragraph:
 
 
 spk_result = (f"Verification EER {spk_best.get('dev_eer', 0) * 100:.2f}% on unseen speakers"
-              + ("" if spk_final else f" <b>(training in progress: epoch {spk_done} of {spk_total})</b>"))
+              + "; test DER 8.76%" + ("" if spk_final else f" <b>(training in progress: epoch {spk_done} of {spk_total})</b>"))
 
 rows = [
     ["#", "Model", "Type", "Used for", "Parameters", "Dataset", "Training", "Result"],
@@ -76,21 +82,28 @@ rows = [
      "8.4M", "513k LibriSpeech sentences, made noisy on purpose (synthetic + real Whisper-tiny errors)",
      "Seq2seq, label smoothing 0.1, 15 epochs, ~76 min, GPU",
      f"Error rate 13.9% to {corr.get('wer_model', 0) * 100:.1f}%; "
-     f"{corr.get('clean_unchanged', 0) * 100:.1f}% of clean text unchanged"],
+     f"{corr.get('clean_unchanged', 0) * 100:.1f}% of clean text unchanged; costs 0.21 WER points in the pipeline "
+     f"(19 test files)"],
     ["4", "<b>POS tagger</b>", "Averaged perceptron",
      "Finds good line-break points (never split an article from its noun)",
      f"{pos.get('features', 0) / 1000:.0f}k features", "Brown corpus: 54,473 sentences (87 tags mapped to 17)",
      "5 passes, CPU, ~3 min",
      f"Accuracy {pos.get('heldout_accuracy', 0) * 100:.1f}% (held out)"],
     ["5", "<b>CTC aligner</b>", "Log-mel, 2 conv layers, 4-layer BiLSTM, CTC loss",
-     "Gives each word an exact start time (forced alignment)",
+     "Gives each word an exact start time (forced alignment); runs the audio test for fusion",
      "9.3M", "LibriSpeech train-clean-100: 100 h, 251 speakers",
      "CTC, AdamW, SpecAugment, fp16, best epoch 11, ~3 h, GPU",
      f"Word-start error {align.get('onset_mean_abs_ms', 0):.0f} ms; character error {align.get('dev_cer', 0) * 100:.1f}%"],
     ["6", "<b>Speaker model</b>", "Dilated-conv network with attentive pooling, angular-margin softmax",
      "Tells speakers apart to label subtitles SPEAKER_01 / SPEAKER_02 (opt-in)",
      "1.2M", "LibriSpeech train-clean-100: 251 speakers, random 2 s crops, noise added",
-     f"251-way classification, AdamW, {spk_total} epochs planned, GPU", spk_result],
+     f"251-way classification, AdamW, {spk_total} epochs (best {spk_best.get('epoch', 0)}), 1.7 h, GPU", spk_result],
+    ["7", "<b>Fusion network</b>", "28 signals + edit-kind embedding, 2-layer BiLSTM (32 units each way)",
+     "Decides each word change between subtitle and Whisper, with a CTC audio test",
+     f"0.1M ({fusion.get('params', 0):,})",
+     f"325 other clips, 24.8 h: {fusion.get('train_candidates', 0):,} candidate edits",
+     f"Binary cross-entropy, one-cycle, 14 epochs (best {fus_best.get('epoch', 0)}), {fusion.get('minutes', 0)} min, GPU",
+     f"Dev F0.5 0.936 (rule 0.860); test Edit F0.5 {ours_f05} (rule {rule_f05})"],
 ]
 data = [[P(c, head) for c in rows[0]]] + [[P(c) for c in r] for r in rows[1:]]
 widths = [7, 27, 40, 48, 25, 50, 42, 40]
@@ -106,26 +119,28 @@ tbl.setStyle(TableStyle([
 ]))
 
 how = [
-    ("Same recipe for the neural models (2, 3, 5, 6)",
+    ("Same recipe for the neural models (2, 3, 5, 6, 7)",
      "A small network, a loss, the AdamW optimiser, a warm-up then decaying learning rate, gradient clipping, and a "
      "separate dev set that picks the best epoch. Every trainer saves a checkpoint each epoch and can resume. All "
      "training ran on one laptop (RTX 4050, 6 GB GPU, 16 GB RAM)."),
     ("Why train our own instead of using pretrained models",
-     "To control and understand every part, to run offline on a small GPU, and to keep the system small: these six "
-     "models total about 31M neural parameters, against roughly 1.2 billion for the pretrained models they replaced. "
-     "Accuracy did not drop: pipeline error rate went from 3.03% to 2.75% and cue-start timing error from 50 to 39 ms."),
+     "To control and understand every part, to run offline on a small GPU, and to keep the system small: these seven "
+     "models include about 31M neural parameters, against roughly 1.2 billion for the pretrained models they replaced. "
+     "With the same linear rule, cue-start error fell from 50 to 39 ms and WER from 3.03% to 2.72% (mostly from a wider "
+     "tuning grid). The fusion network then gives WER 2.54% and half the over-correction; its WER lead over the rule is "
+     "not significant."),
     ("The one pretrained model",
      "Whisper (large-v3-turbo, trained by OpenAI, about 0.8 billion parameters) does the speech recognition. We did not "
      "train it. Everything else in the pipeline is ours."),
     ("Where the code is",
      "Trainers: <font face='Courier'>experiments/train_lm.py, train_punct.py, train_corrector.py, train_pos.py, "
-     "train_aligner.py, train_speaker.py</font>. Model definitions: <font face='Courier'>src/subfix/</font> "
-     "(ngram.py, textfix/punct.py, textfix/seq2seq.py, bpe.py, postag.py, acoustic.py, speaker.py). "
+     "train_aligner.py, train_speaker.py, train_fusion.py</font>. Model definitions: <font face='Courier'>src/subfix/</font> "
+     "(ngram.py, textfix/punct.py, textfix/seq2seq.py, bpe.py, postag.py, acoustic.py, speaker.py, fusenet.py). "
      "Trained files: <font face='Courier'>models/</font>."),
 ]
 
 story = [
-    P("Subfix: the six models we trained", title),
+    P("Subfix: the seven models we trained", title),
     P("Audio-aware subtitle correction. All figures are measured on held-out data, from the repository's metrics "
       "files.", sub),
     tbl,
@@ -138,7 +153,7 @@ if not spk_final:
                               f"update its result.</i>", small)]
 
 doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=14 * mm, rightMargin=14 * mm,
-                        topMargin=12 * mm, bottomMargin=12 * mm, title="Subfix: the six models we trained",
+                        topMargin=10 * mm, bottomMargin=8 * mm, title="Subfix: the seven models we trained",
                         author="Shane Braiden")
 doc.build(story)
 print(OUT)

@@ -4,9 +4,12 @@ python experiments/summarize.py
 """
 from __future__ import annotations
 
+import csv
 import json
 import math
 from pathlib import Path
+
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "results"
@@ -18,7 +21,8 @@ COLS = [("wer", "WER %", 100, ".2f"), ("cer", "CER %", 100, ".2f"), ("errant_f05
         ("fmt_cps20_ok", "CPS≤20 %", 100, ".1f"), ("fmt_lines_ok", "Lines ok %", 100, ".1f"), ("rtf", "RTF", 1, ".3f")]
 LABELS = {"noop": "Corrupted input (no-op)", "b1_symspell_lt": "B1: SymSpell + LanguageTool",
           "b2_ffsubsync": "B2: ffsubsync (timing only)", "b3_raw_whisper": "B3: raw Whisper replace",
-          "ours": "**Ours** (all self-trained models except Whisper)", "modeb_raw": "Mode B: raw Whisper",
+          "ours": "**Ours** (all self-trained models except Whisper)",
+          "ours_rule": "Ours with the linear fusion rule", "modeb_raw": "Mode B: raw Whisper",
           "modeb_ours": "Mode B: Ours"}
 # the earlier system with pretrained text/alignment models (results archived in results/pretrained_v1/)
 V1_LABELS = {"ours": "Ours v1: distilgpt2 + FullStop XLM-R + T5-base GEC + MMS-300M + spaCy",
@@ -40,13 +44,56 @@ def table(metrics: dict, dataset: str, systems: list[str]) -> list[str]:
     return lines
 
 
+def paired_bootstrap(a: list[dict], b: list[dict], boot: int = 10000, seed: int = 0) -> dict:
+    """a minus b over the same files, resampled: metric -> (difference, 95% CI low, high). WER and
+    Edit F0.5 are pooled over each sample, as in the tables."""
+    keys = ("sub", "del", "ins", "n_ref_words", "edit_tp", "edit_fp", "edit_fn")
+    x, y = (np.array([[float(r[k]) for k in keys] for r in rows]) for rows in (a, b))
+
+    def wer(z: np.ndarray) -> np.ndarray:
+        return z[..., :3].sum(-1) / z[..., 3]
+
+    def f05(z: np.ndarray) -> np.ndarray:
+        return 1.25 * z[..., 4] / (1.25 * z[..., 4] + 0.25 * z[..., 6] + z[..., 5])
+    idx = np.random.default_rng(seed).integers(0, len(a), (boot, len(a)))
+    out = {}
+    for name, score in (("wer", wer), ("edit_f05", f05)):
+        low, high = np.percentile(score(x[idx].sum(1)) - score(y[idx].sum(1)), [2.5, 97.5])
+        out[name] = (float(score(x.sum(0)) - score(y.sum(0))), float(low), float(high))
+    return out
+
+
+def paired_table(path: Path, ours: str, others: dict[str, str]) -> list[str]:
+    """The shipped system minus each other system (name -> label) over the files of a per_item.csv."""
+    if not path.exists():
+        return []
+    with path.open(encoding="utf-8", newline="") as f:
+        rows: dict[str, dict[str, dict]] = {}
+        for r in csv.DictReader(f):
+            rows.setdefault(r["system"], {})[r["id"]] = r
+    if ours not in rows:
+        return []
+    lines = ["| Network minus | WER points (95% CI) | Edit F0.5 points (95% CI) | Files with lower WER |", "|---|---|---|---|"]
+    for name, label in others.items():
+        ids = sorted(rows[ours].keys() & rows.get(name, {}).keys())
+        if not ids:
+            continue
+        a, b = [rows[ours][i] for i in ids], [rows[name][i] for i in ids]
+        d = paired_bootstrap(a, b)
+        w, e = [tuple(v * 100 for v in d[k]) for k in ("wer", "edit_f05")]
+        lower = sum(float(x["wer"]) < float(y["wer"]) for x, y in zip(a, b))
+        lines.append(f"| {label} | {w[0]:+.2f} ({w[1]:+.2f} to {w[2]:+.2f}) | {e[0]:+.1f} ({e[1]:+.1f} to {e[2]:+.1f}) | "
+                     f"{lower} of {len(ids)} |")
+    return lines
+
+
 def main() -> None:
     p = RES / "test" / "metrics.json"
     if not p.exists():
         print("no results/test/metrics.json yet")
         return
     m = json.loads(p.read_text(encoding="utf-8"))
-    mode_a = [s for s in ("noop", "b1_symspell_lt", "b2_ffsubsync", "b3_raw_whisper", "ours") if s in m]
+    mode_a = [s for s in ("noop", "b1_symspell_lt", "b2_ffsubsync", "b3_raw_whisper", "ours_rule", "ours") if s in m]
     mode_b = [s for s in ("modeb_raw", "modeb_ours") if s in m]
     datasets = [d for d in ("ALL", "libri-test-clean", "libri-test-other", "ted-test", "own") if d in m.get("ours", {})]
     out = ["# Results summary (test split)", ""]
@@ -96,7 +143,17 @@ def main() -> None:
             if r:
                 rows.append(f"| {label} | " + " | ".join(fmt(r.get(c[0]), c[2], c[3]) for c in COLS) + " |")
         out += rows + [""]
-    for name in ("timing_source", "segmenter", "audio_guard", "fusion_signals", "asr_size", "gec_model"):
+    paired = paired_table(RES / "test" / "per_item.csv", "ours", {"ours_rule": "Linear rule, all test files",
+                                                                     "b3_raw_whisper": "Raw Whisper, all test files"})
+    paired += paired_table(RES / "ablations" / "fusion_method" / "per_item.csv", "abl_fusion_method_neural",
+                           {"abl_fusion_method_rule_f05": "Linear rule tuned on F0.5 alone",
+                            "abl_fusion_method_logistic": "Logistic regression", "abl_fusion_method_mlp": "MLP per candidate",
+                            "abl_fusion_method_words": "Network + word embeddings", "abl_fusion_method_no_ctc": "Network without CTC evidence"})[2:]
+    if paired:
+        out += ["## The fusion network against the alternatives, paired over test files", "",
+                "Files resampled 10,000 times. The first two rows use all test files; the others use the ablation's "
+                "libri-test-clean + ted-test. Negative WER and positive F0.5 favour the network.", ""] + paired + [""]
+    for name in ("fusion_method", "timing_source", "segmenter", "audio_guard", "fusion_signals", "asr_size", "gec_model"):
         q = RES / "ablations" / name / "metrics.json"
         if not q.exists():
             continue
@@ -109,13 +166,14 @@ def main() -> None:
             if ds in v), ""] if name == "timing_source" else []
     sweeps = sorted((RES / "ablations").glob("corruption_rate_*/metrics.json"))
     if sweeps:
-        out += ["## Corruption-rate sweep (libri-test-clean + ted-test)", "", "| Injected rate | No-op WER % | Ours WER % |",
-                "|---|---|---|"]
+        out += ["## Corruption-rate sweep (libri-test-clean + ted-test)", "",
+                "| Injected rate | No-op WER % | Linear rule WER % | Ours WER % |", "|---|---|---|---|"]
         for q in sweeps:
             sm = json.loads(q.read_text(encoding="utf-8"))
             key = "ALL" if "ALL" in sm.get("ours", {}) else next(iter(sm.get("ours", {"x": {}})))
+            rule = sm.get("ours_rule", {}).get(key, {}).get("wer")
             out.append(f"| {float(q.parent.name.split('_')[-1]) * 100:.0f}% | {sm['noop'][key]['wer'] * 100:.2f} | "
-                       f"{sm['ours'][key]['wer'] * 100:.2f} |")
+                       f"{'–' if rule is None else format(rule * 100, '.2f')} | {sm['ours'][key]['wer'] * 100:.2f} |")
         out.append("")
     (RES / "SUMMARY.md").write_text("\n".join(out), encoding="utf-8")
     print("\n".join(out))

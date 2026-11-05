@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import logging
 import math
+import os
 import threading
 from pathlib import Path
 from typing import Any, Callable
@@ -171,7 +172,9 @@ class PipelineRunner:
 
     def base_config(self):
         from subfix.config import Config
-        return Config.load()
+        cfg = Config.load()
+        degrade = os.environ.get("SUBFIX_SERVER_DEGRADE_WHISPER")  # python -m app.backend --degrade-whisper RATE
+        return cfg.override({"asr.degrade": float(degrade)}) if degrade else cfg
 
     def defaults(self) -> dict:
         return option_defaults(self.base_config())

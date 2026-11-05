@@ -1,0 +1,157 @@
+{
+ "dev-clean": {
+  "fit_before": -0.83,
+  "sub": {
+   "n": 12896,
+   "good": 0.896,
+   "ctc": 0.656,
+   "whisper": 0.839,
+   "lm": 0.827
+  },
+  "ins": {
+   "n": 3493,
+   "good": 0.909,
+   "ctc": 0.662,
+   "whisper": 0.735,
+   "lm": 0.76
+  },
+  "del": {
+   "n": 2550,
+   "good": 0.657,
+   "ctc": 0.728,
+   "whisper": 0.773,
+   "lm": 0.705
+  },
+  "duplicate del": {
+   "n": 1465,
+   "good": 0.993,
+   "ctc": 0.599,
+   "whisper": 0.531,
+   "lm": 0.517
+  }
+ },
+ "ted": {
+  "fit_before": -0.914,
+  "sub": {
+   "n": 3521,
+   "good": 0.902,
+   "ctc": 0.638,
+   "whisper": 0.823,
+   "lm": 0.821
+  },
+  "ins": {
+   "n": 1182,
+   "good": 0.821,
+   "ctc": 0.733,
+   "whisper": 0.86,
+   "lm": 0.755
+  },
+  "del": {
+   "n": 1420,
+   "good": 0.39,
+   "ctc": 0.74,
+   "whisper": 0.607,
+   "lm": 0.728
+  },
+  "duplicate del": {
+   "n": 611,
+   "good": 0.799,
+   "ctc": 0.959,
+   "whisper": 0.71,
+   "lm": 0.737
+  }
+ },
+ "train-clean-100": {
+  "fit_before": -0.799,
+  "sub": {
+   "n": 72404,
+   "good": 0.898,
+   "ctc": 0.7,
+   "whisper": 0.821,
+   "lm": 0.835
+  },
+  "ins": {
+   "n": 19081,
+   "good": 0.892,
+   "ctc": 0.701,
+   "whisper": 0.764,
+   "lm": 0.824
+  },
+  "del": {
+   "n": 12516,
+   "good": 0.691,
+   "ctc": 0.668,
+   "whisper": 0.762,
+   "lm": 0.674
+  },
+  "duplicate del": {
+   "n": 8148,
+   "good": 0.989,
+   "ctc": 0.585,
+   "whisper": 0.587,
+   "lm": 0.625
+  }
+ },
+ "benchmark libri": {
+  "fit_before": -0.73,
+  "sub": {
+   "n": 1390,
+   "good": 0.886,
+   "ctc": 0.8,
+   "whisper": 0.739,
+   "lm": 0.892
+  },
+  "ins": {
+   "n": 302,
+   "good": 0.887,
+   "ctc": 0.843,
+   "whisper": 0.897,
+   "lm": 0.844
+  },
+  "del": {
+   "n": 171,
+   "good": 0.795,
+   "ctc": 0.657,
+   "whisper": 0.601,
+   "lm": 0.674
+  },
+  "duplicate del": {
+   "n": 137,
+   "good": 0.978,
+   "ctc": 0.858,
+   "whisper": 0.784,
+   "lm": 0.726
+  }
+ },
+ "benchmark ted": {
+  "fit_before": -0.939,
+  "sub": {
+   "n": 1146,
+   "good": 0.913,
+   "ctc": 0.677,
+   "whisper": 0.819,
+   "lm": 0.866
+  },
+  "ins": {
+   "n": 404,
+   "good": 0.851,
+   "ctc": 0.845,
+   "whisper": 0.763,
+   "lm": 0.764
+  },
+  "del": {
+   "n": 701,
+   "good": 0.304,
+   "ctc": 0.79,
+   "whisper": 0.54,
+   "lm": 0.701
+  },
+  "duplicate del": {
+   "n": 299,
+   "good": 0.569,
+   "ctc": 0.969,
+   "whisper": 0.542,
+   "lm": 0.734
+  }
+ }
+}

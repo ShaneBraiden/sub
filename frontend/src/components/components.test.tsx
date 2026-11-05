@@ -198,6 +198,25 @@ describe("meeting mode", () => {
     expect(screen.getByText("meeting").parentElement?.textContent).toBe("meeting mode");
   });
 
+  it("offers the fusion method only when subtitles are compared with the audio", () => {
+    const info: OptionsInfo = {
+      defaults: { fusion: true, fusion_method: "neural" },
+      fields: [{ key: "fusion_method", type: "string", choices: ["neural", "rule"] }],
+      stages: [], media_exts: [], subs_exts: [], max_upload_mb: 100,
+    };
+    const onChange = vi.fn();
+    render(<OptionsForm info={info} value={{}} onChange={onChange} mode="A" />);
+    const select = screen.getByDisplayValue("Neural network (checks the audio)") as HTMLSelectElement;
+    fireEvent.change(select, { target: { value: "rule" } });
+    expect(onChange).toHaveBeenCalledWith({ fusion_method: "rule" });
+    cleanup();
+    render(<OptionsForm info={info} value={{}} onChange={onChange} mode="B" />);
+    expect(screen.queryByText("Who decides each word change")).toBeNull();
+    cleanup();
+    render(<OptionsForm info={info} value={{ fusion: false }} onChange={onChange} mode="A" />);
+    expect(screen.queryByText("Who decides each word change")).toBeNull();
+  });
+
   it("is a choice in the chapter settings", () => {
     const info: OptionsInfo = {
       defaults: { chapters: true, chapter_mode: "talk", num_chapters: 0, min_chapter: 60 },

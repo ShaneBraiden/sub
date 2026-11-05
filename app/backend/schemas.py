@@ -25,6 +25,7 @@ class JobOptions(BaseModel):
     segmentation: Literal["dp", "greedy", "keep"] | None = None
     sync: bool | None = None
     fusion: bool | None = None
+    fusion_method: Literal["neural", "rule"] | None = None
     punctuation: bool | None = None
     truecase: bool | None = None
     spelling: bool | None = None
@@ -57,6 +58,7 @@ CONFIG_KEYS: dict[str, str] = {
     "segmentation": "segment.method",
     "sync": "sync.enabled",
     "fusion": "fusion.enabled",
+    "fusion_method": "fusion.method",
     "punctuation": "punct.enabled",
     "truecase": "truecase.enabled",
     "spelling": "spell.symspell",

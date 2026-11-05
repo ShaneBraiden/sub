@@ -19,75 +19,25 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 24
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
     "R:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 44
     },
+    "U:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 12
+    },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 5
-    },
-    "R:OTHER": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 322
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 7
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 11
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 14
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 270
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
     },
     "M:VERB": {
      "tp": 0,
@@ -99,30 +49,80 @@
      "fp": 0,
      "fn": 5
     },
-    "U:DET": {
+    "R:MORPH": {
      "tp": 0,
      "fp": 0,
      "fn": 5
     },
-    "R:NOUN": {
+    "R:SPELL": {
      "tp": 0,
      "fp": 0,
-     "fn": 280
+     "fn": 270
     },
-    "R:PREP": {
+    "U:VERB": {
      "tp": 0,
      "fp": 0,
-     "fn": 12
+     "fn": 7
     },
     "R:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 6
     },
-    "U:PART": {
+    "R:NOUN": {
      "tp": 0,
      "fp": 0,
-     "fn": 1
+     "fn": 280
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 11
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 14
+    },
+    "R:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 322
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
     },
     "U:ADV": {
      "tp": 0,
@@ -134,11 +134,6 @@
      "fp": 0,
      "fn": 3
     },
-    "M:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 4
-    },
     "R:ORTH": {
      "tp": 0,
      "fp": 0,
@@ -149,15 +144,20 @@
      "fp": 0,
      "fn": 4
     },
-    "M:OTHER": {
+    "M:CONJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 1
+     "fn": 4
     },
     "U:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 2
+    },
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
     },
     "U:PRON": {
      "tp": 0,
@@ -225,7 +225,7 @@
    "fmt_gap_ok": 0.6728538283062645,
    "fmt_all_ok": 0.5261958997722096,
    "n_cues": 439,
-   "rtf": 4.456791687197283e-06,
+   "rtf": 5.354525064503172e-06,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -278,30 +278,50 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "U:NOUN": {
+    "R:VERB": {
      "tp": 0,
      "fp": 0,
-     "fn": 6
+     "fn": 41
     },
     "U:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 2
     },
-    "R:VERB": {
+    "R:PREP": {
      "tp": 0,
      "fp": 0,
-     "fn": 41
+     "fn": 21
     },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 6
     },
-    "M:CONJ": {
+    "M:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 9
+    },
+    "U:NOUN": {
      "tp": 0,
      "fp": 0,
      "fn": 6
+    },
+    "U:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 8
+    },
+    "R:SPELL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 270
+    },
+    "R:NOUN": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 360
     },
     "R:ORTH": {
      "tp": 0,
@@ -313,35 +333,10 @@
      "fp": 0,
      "fn": 28
     },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 28
-    },
     "R:ADJ": {
      "tp": 0,
      "fp": 0,
      "fn": 13
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 9
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 270
-    },
-    "U:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 8
-    },
-    "R:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 21
     },
     "R:VERB:TENSE": {
      "tp": 0,
@@ -353,10 +348,35 @@
      "fp": 0,
      "fn": 296
     },
-    "R:NOUN": {
+    "M:PREP": {
      "tp": 0,
      "fp": 0,
-     "fn": 360
+     "fn": 28
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
     },
     "M:PRON": {
      "tp": 0,
@@ -368,35 +388,10 @@
      "fp": 0,
      "fn": 1
     },
-    "U:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "U:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 2
-    },
-    "U:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
     "R:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 7
-    },
-    "R:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
     },
     "R:VERB:FORM": {
      "tp": 0,
@@ -413,35 +408,35 @@
      "fp": 0,
      "fn": 5
     },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "M:VERB:FORM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "U:VERB:TENSE": {
+    "R:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 1
     },
-    "M:ADV": {
+    "U:ADJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 2
+     "fn": 5
     },
     "R:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 11
     },
-    "R:NOUN:NUM": {
+    "M:VERB:FORM": {
      "tp": 0,
      "fp": 0,
      "fn": 3
+    },
+    "M:ADV": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
     },
     "U:VERB": {
      "tp": 0,
@@ -453,12 +448,17 @@
      "fp": 0,
      "fn": 1
     },
-    "U:OTHER": {
+    "R:NOUN:NUM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "U:PART": {
      "tp": 0,
      "fp": 0,
      "fn": 1
     },
-    "U:PART": {
+    "U:OTHER": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -494,7 +494,7 @@
    "fmt_gap_ok": 0.6666666666666666,
    "fmt_all_ok": 0.5146726862302483,
    "n_cues": 443,
-   "rtf": 3.9345649160043315e-06,
+   "rtf": 5.150570284099993e-06,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -547,115 +547,10 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "M:VERB:FORM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 30
-    },
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 83
-    },
-    "M:PART": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 7
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 25
-    },
     "R:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 62
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 16
-    },
-    "R:NOUN:NUM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 20
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 93
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 131
-    },
-    "U:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 21
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 26
-    },
-    "U:OTHER": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 9
-    },
-    "M:ADV": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 33
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 43
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1111
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 14
-    },
-    "R:NOUN": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 125
-    },
-    "R:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 44
-    },
-    "R:PUNCT": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 2
-    },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "U:NOUN": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 59
     },
     "U:ADV": {
      "tp": 0,
@@ -667,52 +562,157 @@
      "fp": 0,
      "fn": 7
     },
-    "M:CONJ": {
+    "R:PREP": {
      "tp": 0,
      "fp": 0,
-     "fn": 32
+     "fn": 81
     },
-    "U:CONJ": {
+    "U:PRON": {
      "tp": 0,
      "fp": 0,
-     "fn": 9
+     "fn": 21
     },
-    "R:ADJ": {
+    "U:NOUN": {
      "tp": 0,
      "fp": 0,
-     "fn": 8
+     "fn": 59
+    },
+    "R:MORPH": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 25
+    },
+    "R:SPELL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1111
+    },
+    "R:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 44
+    },
+    "M:VERB:FORM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 30
     },
     "R:PART": {
      "tp": 0,
      "fp": 0,
      "fn": 7
     },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 131
+    },
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 9
+    },
     "U:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 29
     },
-    "R:PREP": {
+    "M:PRON": {
      "tp": 0,
      "fp": 0,
-     "fn": 81
+     "fn": 83
     },
-    "R:OTHER": {
+    "U:CONJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 391
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 32
+     "fn": 9
     },
     "R:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 14
     },
-    "R:NOUN:POSS": {
+    "R:NOUN:NUM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 20
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 16
+    },
+    "R:PUNCT": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 14
+    },
+    "M:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 7
+    },
+    "M:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 43
+    },
+    "U:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 26
+    },
+    "R:NOUN": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 125
+    },
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 8
+    },
+    "M:ADV": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 33
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "R:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 391
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 93
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
+    },
+    "R:NOUN:INFL": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -732,7 +732,7 @@
      "fp": 0,
      "fn": 21
     },
-    "R:NOUN:INFL": {
+    "R:NOUN:POSS": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -782,7 +782,7 @@
    "fmt_gap_ok": 0.5422943221320974,
    "fmt_all_ok": 0.3517559009786989,
    "n_cues": 1737,
-   "rtf": 1.512097846201682e-05,
+   "rtf": 2.7917594149106326e-05,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -830,75 +830,25 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 119
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 41
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 35
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 23
-    },
     "R:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 147
     },
+    "U:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 11
+    },
+    "R:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 114
+    },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 31
-    },
-    "R:OTHER": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1009
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 188
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 150
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 40
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 32
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 48
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1651
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 25
     },
     "M:VERB": {
      "tp": 0,
@@ -910,30 +860,80 @@
      "fp": 0,
      "fn": 34
     },
-    "U:DET": {
+    "R:MORPH": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 35
+    },
+    "R:SPELL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1651
+    },
+    "U:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 40
-    },
-    "R:NOUN": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 765
-    },
-    "R:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 114
     },
     "R:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 61
     },
-    "U:PART": {
+    "R:NOUN": {
      "tp": 0,
      "fp": 0,
-     "fn": 11
+     "fn": 765
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 41
+    },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 188
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 40
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 119
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 23
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 48
+    },
+    "R:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1009
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 150
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 25
     },
     "U:ADV": {
      "tp": 0,
@@ -945,11 +945,6 @@
      "fp": 0,
      "fn": 11
     },
-    "M:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 42
-    },
     "R:ORTH": {
      "tp": 0,
      "fp": 0,
@@ -960,15 +955,20 @@
      "fp": 0,
      "fn": 39
     },
-    "M:OTHER": {
+    "M:CONJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 10
+     "fn": 42
     },
     "U:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 16
+    },
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 10
     },
     "U:PRON": {
      "tp": 0,
@@ -1025,12 +1025,12 @@
      "fp": 0,
      "fn": 10
     },
-    "R:NOUN:POSS": {
+    "R:NOUN:INFL": {
      "tp": 0,
      "fp": 0,
      "fn": 1
     },
-    "R:NOUN:INFL": {
+    "R:NOUN:POSS": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -1086,7 +1086,7 @@
    "fmt_gap_ok": 0.5848765432098766,
    "fmt_all_ok": 0.4085528827796869,
    "n_cues": 2619,
-   "rtf": 8.64672651510363e-06,
+   "rtf": 1.4486455497370182e-05,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -1141,120 +1141,120 @@
    "errant_r": 0.1687853107344633,
    "errant_f05": 0.3830128205128205,
    "errant_types": {
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 24
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 5
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
     "R:VERB": {
      "tp": 1,
      "fp": 1,
      "fn": 43
     },
-    "M:VERB:TENSE": {
+    "U:PART": {
      "tp": 0,
      "fp": 0,
-     "fn": 5
-    },
-    "R:ORTH": {
-     "tp": 108,
-     "fp": 53,
-     "fn": 192
-    },
-    "M:DET": {
-     "tp": 1,
-     "fp": 0,
-     "fn": 28
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 7
-    },
-    "R:NOUN:INFL": {
-     "tp": 0,
-     "fp": 3,
-     "fn": 0
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 11
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 14
-    },
-    "R:SPELL": {
-     "tp": 114,
-     "fp": 94,
-     "fn": 156
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 2
-    },
-    "U:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "R:OTHER": {
-     "tp": 8,
-     "fp": 10,
-     "fn": 314
-    },
-    "R:NOUN": {
-     "tp": 6,
-     "fp": 5,
-     "fn": 274
-    },
-    "R:PRON": {
-     "tp": 1,
-     "fp": 1,
-     "fn": 2
-    },
-    "R:DET": {
-     "tp": 0,
-     "fp": 8,
-     "fn": 6
-    },
-    "U:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
+     "fn": 1
     },
     "R:PREP": {
      "tp": 0,
      "fp": 0,
      "fn": 12
     },
-    "U:PART": {
+    "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
-     "fn": 1
+     "fn": 5
+    },
+    "M:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "R:NOUN:INFL": {
+     "tp": 0,
+     "fp": 3,
+     "fn": 0
+    },
+    "U:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
+    "R:MORPH": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 5
+    },
+    "R:SPELL": {
+     "tp": 114,
+     "fp": 94,
+     "fn": 156
+    },
+    "U:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 7
+    },
+    "R:NOUN": {
+     "tp": 6,
+     "fp": 5,
+     "fn": 274
+    },
+    "R:DET": {
+     "tp": 0,
+     "fp": 8,
+     "fn": 6
+    },
+    "R:ORTH": {
+     "tp": 108,
+     "fp": 53,
+     "fn": 192
+    },
+    "R:PRON": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 2
+    },
+    "M:DET": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 28
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 11
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 14
+    },
+    "R:OTHER": {
+     "tp": 8,
+     "fp": 10,
+     "fn": 314
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
     },
     "U:ADV": {
      "tp": 0,
@@ -1266,7 +1266,12 @@
      "fp": 0,
      "fn": 3
     },
-    "M:CONJ": {
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 3,
+     "fn": 1
+    },
+    "M:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 4
@@ -1276,30 +1281,25 @@
      "fp": 2,
      "fn": 1
     },
-    "M:ADV": {
+    "M:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 4
-    },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 3,
-     "fn": 1
     },
     "R:VERB:FORM": {
      "tp": 0,
      "fp": 1,
      "fn": 1
     },
-    "M:OTHER": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
-    },
     "U:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 2
+    },
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
     },
     "U:PRON": {
      "tp": 0,
@@ -1363,7 +1363,7 @@
    "fmt_gap_ok": 0.6728538283062645,
    "fmt_all_ok": 0.5284738041002278,
    "n_cues": 439,
-   "rtf": 0.03792941894586292,
+   "rtf": 0.03565587335092298,
    "recall_by_type": {
     "asr": {
      "fixed": 7,
@@ -1416,85 +1416,50 @@
    "errant_r": 0.12189781021897811,
    "errant_f05": 0.3108711839166046,
    "errant_types": {
-    "U:NOUN": {
+    "R:VERB": {
      "tp": 0,
-     "fp": 1,
-     "fn": 6
+     "fp": 3,
+     "fn": 41
     },
     "U:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 2
     },
-    "R:MORPH": {
+    "R:PREP": {
      "tp": 0,
-     "fp": 4,
-     "fn": 5
-    },
-    "R:VERB": {
-     "tp": 0,
-     "fp": 3,
-     "fn": 41
+     "fp": 0,
+     "fn": 21
     },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 6
     },
-    "M:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
-    "R:ORTH": {
-     "tp": 29,
-     "fp": 30,
-     "fn": 159
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 28
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 28
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 13
-    },
     "M:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 9
     },
-    "R:SPELL": {
-     "tp": 130,
-     "fp": 78,
-     "fn": 140
+    "U:NOUN": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 6
     },
     "U:PREP": {
      "tp": 0,
      "fp": 0,
      "fn": 8
     },
-    "R:PREP": {
+    "R:MORPH": {
      "tp": 0,
-     "fp": 0,
-     "fn": 21
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
+     "fp": 4,
      "fn": 5
     },
-    "R:OTHER": {
-     "tp": 3,
-     "fp": 6,
-     "fn": 293
+    "R:SPELL": {
+     "tp": 130,
+     "fp": 78,
+     "fn": 140
     },
     "R:NOUN": {
      "tp": 3,
@@ -1506,6 +1471,61 @@
      "fp": 10,
      "fn": 9
     },
+    "R:ORTH": {
+     "tp": 29,
+     "fp": 30,
+     "fn": 159
+    },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 28
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 13
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
+    "R:OTHER": {
+     "tp": 3,
+     "fp": 6,
+     "fn": 293
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 28
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:PRON": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 2
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 6
+    },
+    "U:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
     "M:PRON": {
      "tp": 0,
      "fp": 0,
@@ -1516,35 +1536,10 @@
      "fp": 0,
      "fn": 1
     },
-    "U:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "U:PRON": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 2
-    },
-    "U:DET": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 6
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
     "R:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 7
-    },
-    "R:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
     },
     "R:VERB:FORM": {
      "tp": 0,
@@ -1561,39 +1556,34 @@
      "fp": 2,
      "fn": 3
     },
+    "R:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
     "U:ADJ": {
      "tp": 0,
      "fp": 0,
      "fn": 5
-    },
-    "M:VERB:FORM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 1
-    },
-    "M:ADV": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 2
     },
     "R:VERB:SVA": {
      "tp": 0,
      "fp": 2,
      "fn": 0
     },
-    "R:VERB:INFL": {
+    "M:VERB:FORM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "M:ADV": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:VERB:TENSE": {
      "tp": 0,
      "fp": 1,
-     "fn": 0
-    },
-    "U:OTHER": {
-     "tp": 0,
-     "fp": 2,
      "fn": 1
     },
     "U:VERB": {
@@ -1601,7 +1591,22 @@
      "fp": 0,
      "fn": 7
     },
+    "R:VERB:INFL": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 0
+    },
     "R:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:PART": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -1610,11 +1615,6 @@
      "tp": 0,
      "fp": 1,
      "fn": 0
-    },
-    "U:PART": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
     }
    },
    "punct_._p": 1.0,
@@ -1653,7 +1653,7 @@
    "fmt_gap_ok": 0.6666666666666666,
    "fmt_all_ok": 0.5146726862302483,
    "n_cues": 443,
-   "rtf": 0.03219499138491027,
+   "rtf": 0.03117240920885036,
    "recall_by_type": {
     "asr": {
      "fixed": 7,
@@ -1706,205 +1706,205 @@
    "errant_r": 0.2671869193608324,
    "errant_f05": 0.500487261589865,
    "errant_types": {
-    "M:VERB:FORM": {
-     "tp": 10,
-     "fp": 4,
-     "fn": 20
-    },
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 83
-    },
-    "M:PART": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 7
-    },
-    "R:MORPH": {
-     "tp": 4,
-     "fp": 4,
-     "fn": 21
+    "R:VERB:FORM": {
+     "tp": 1,
+     "fp": 17,
+     "fn": 6
     },
     "R:VERB": {
      "tp": 7,
      "fp": 6,
      "fn": 55
     },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 16
-    },
-    "M:VERB:TENSE": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 20
-    },
-    "R:NOUN:NUM": {
-     "tp": 0,
-     "fp": 8,
-     "fn": 20
-    },
-    "R:ORTH": {
-     "tp": 0,
-     "fp": 10,
-     "fn": 0
-    },
-    "M:DET": {
-     "tp": 2,
-     "fp": 9,
-     "fn": 129
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 93
-    },
-    "U:PRON": {
-     "tp": 0,
-     "fp": 3,
-     "fn": 21
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 26
-    },
-    "U:OTHER": {
-     "tp": 2,
-     "fp": 25,
-     "fn": 7
-    },
-    "M:ADV": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 33
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 5,
-     "fn": 43
-    },
-    "R:SPELL": {
-     "tp": 644,
-     "fp": 203,
-     "fn": 467
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 29
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 14
-    },
-    "R:NOUN": {
-     "tp": 2,
-     "fp": 7,
-     "fn": 123
-    },
-    "R:DET": {
-     "tp": 2,
-     "fp": 33,
-     "fn": 42
-    },
-    "R:PUNCT": {
-     "tp": 1,
-     "fp": 1,
-     "fn": 1
-    },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 3
-    },
-    "U:NOUN": {
-     "tp": 0,
-     "fp": 5,
-     "fn": 59
-    },
     "U:ADV": {
      "tp": 2,
      "fp": 2,
      "fn": 27
-    },
-    "R:VERB:FORM": {
-     "tp": 1,
-     "fp": 17,
-     "fn": 6
-    },
-    "M:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 32
-    },
-    "U:CONJ": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 9
-    },
-    "R:NOUN:INFL": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 1
-    },
-    "R:PART": {
-     "tp": 2,
-     "fp": 0,
-     "fn": 5
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 8
-    },
-    "U:DET": {
-     "tp": 0,
-     "fp": 12,
-     "fn": 29
     },
     "R:PREP": {
      "tp": 3,
      "fp": 1,
      "fn": 78
     },
-    "R:OTHER": {
-     "tp": 30,
-     "fp": 26,
-     "fn": 361
+    "R:NOUN:INFL": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 1
     },
-    "R:PRON": {
+    "U:PRON": {
+     "tp": 0,
+     "fp": 3,
+     "fn": 21
+    },
+    "U:NOUN": {
+     "tp": 0,
+     "fp": 5,
+     "fn": 59
+    },
+    "R:MORPH": {
      "tp": 4,
+     "fp": 4,
+     "fn": 21
+    },
+    "R:SPELL": {
+     "tp": 644,
+     "fp": 203,
+     "fn": 467
+    },
+    "R:DET": {
+     "tp": 2,
+     "fp": 33,
+     "fn": 42
+    },
+    "M:VERB:FORM": {
+     "tp": 10,
+     "fp": 4,
+     "fn": 20
+    },
+    "R:PART": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 5
+    },
+    "M:DET": {
+     "tp": 2,
+     "fp": 9,
+     "fn": 129
+    },
+    "U:OTHER": {
+     "tp": 2,
+     "fp": 25,
+     "fn": 7
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 12,
+     "fn": 29
+    },
+    "U:CONJ": {
+     "tp": 0,
      "fp": 1,
-     "fn": 28
+     "fn": 9
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 83
     },
     "R:ADV": {
      "tp": 3,
      "fp": 0,
      "fn": 11
     },
-    "R:NOUN:POSS": {
+    "R:NOUN:NUM": {
+     "tp": 0,
+     "fp": 8,
+     "fn": 20
+    },
+    "U:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
+     "fn": 16
+    },
+    "R:PUNCT": {
+     "tp": 1,
+     "fp": 1,
      "fn": 1
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 14
+    },
+    "M:VERB:TENSE": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 20
+    },
+    "M:VERB": {
+     "tp": 0,
+     "fp": 5,
+     "fn": 43
+    },
+    "M:PART": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 7
+    },
+    "U:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 26
+    },
+    "R:NOUN": {
+     "tp": 2,
+     "fp": 7,
+     "fn": 123
+    },
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 3
+    },
+    "R:ORTH": {
+     "tp": 0,
+     "fp": 10,
+     "fn": 0
+    },
+    "R:PRON": {
+     "tp": 4,
+     "fp": 1,
+     "fn": 28
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 8
+    },
+    "M:ADV": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 33
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 29
+    },
+    "R:OTHER": {
+     "tp": 30,
+     "fp": 26,
+     "fn": 361
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 93
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
     },
     "M:OTHER": {
      "tp": 0,
      "fp": 1,
      "fn": 8
     },
-    "R:VERB:INFL": {
-     "tp": 0,
-     "fp": 4,
-     "fn": 0
-    },
     "U:PREP": {
      "tp": 0,
      "fp": 2,
      "fn": 21
+    },
+    "R:NOUN:POSS": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:VERB:INFL": {
+     "tp": 0,
+     "fp": 4,
+     "fn": 0
     },
     "U:PART": {
      "tp": 0,
@@ -1957,7 +1957,7 @@
    "fmt_gap_ok": 0.5422943221320974,
    "fmt_all_ok": 0.35578583765112265,
    "n_cues": 1737,
-   "rtf": 0.03949198280030486,
+   "rtf": 0.03794788734796181,
    "recall_by_type": {
     "asr": {
      "fixed": 30,
@@ -2005,120 +2005,120 @@
    "errant_r": 0.2054044184772686,
    "errant_f05": 0.43305874201247213,
    "errant_types": {
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 119
-    },
-    "R:MORPH": {
-     "tp": 4,
-     "fp": 9,
-     "fn": 31
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 23
-    },
     "R:VERB": {
      "tp": 8,
      "fp": 10,
      "fn": 139
     },
-    "M:VERB:TENSE": {
+    "U:PART": {
      "tp": 0,
-     "fp": 2,
-     "fn": 31
-    },
-    "R:ORTH": {
-     "tp": 137,
-     "fp": 93,
-     "fn": 351
-    },
-    "M:DET": {
-     "tp": 3,
-     "fp": 9,
-     "fn": 185
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 3,
-     "fn": 150
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 40
-    },
-    "R:NOUN:INFL": {
-     "tp": 0,
-     "fp": 5,
-     "fn": 1
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 4,
-     "fn": 32
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 3,
-     "fn": 48
-    },
-    "R:SPELL": {
-     "tp": 888,
-     "fp": 375,
-     "fn": 763
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 25
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 5,
-     "fn": 54
-    },
-    "U:PREP": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 34
-    },
-    "R:OTHER": {
-     "tp": 41,
-     "fp": 42,
-     "fn": 968
-    },
-    "R:NOUN": {
-     "tp": 11,
-     "fp": 27,
-     "fn": 754
-    },
-    "R:PRON": {
-     "tp": 5,
-     "fp": 2,
-     "fn": 36
-    },
-    "R:DET": {
-     "tp": 4,
-     "fp": 51,
-     "fn": 57
-    },
-    "U:DET": {
-     "tp": 0,
-     "fp": 13,
-     "fn": 40
+     "fp": 1,
+     "fn": 11
     },
     "R:PREP": {
      "tp": 3,
      "fp": 1,
      "fn": 111
     },
-    "U:PART": {
+    "M:VERB:TENSE": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 31
+    },
+    "M:VERB": {
+     "tp": 0,
+     "fp": 5,
+     "fn": 54
+    },
+    "R:NOUN:INFL": {
+     "tp": 0,
+     "fp": 5,
+     "fn": 1
+    },
+    "U:PREP": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 34
+    },
+    "R:MORPH": {
+     "tp": 4,
+     "fp": 9,
+     "fn": 31
+    },
+    "R:SPELL": {
+     "tp": 888,
+     "fp": 375,
+     "fn": 763
+    },
+    "U:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 40
+    },
+    "R:NOUN": {
+     "tp": 11,
+     "fp": 27,
+     "fn": 754
+    },
+    "R:DET": {
+     "tp": 4,
+     "fp": 51,
+     "fn": 57
+    },
+    "R:ORTH": {
+     "tp": 137,
+     "fp": 93,
+     "fn": 351
+    },
+    "R:PRON": {
+     "tp": 5,
+     "fp": 2,
+     "fn": 36
+    },
+    "M:DET": {
+     "tp": 3,
+     "fp": 9,
+     "fn": 185
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 13,
+     "fn": 40
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 119
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 4,
+     "fn": 32
+    },
+    "U:VERB:TENSE": {
      "tp": 0,
      "fp": 1,
-     "fn": 11
+     "fn": 23
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 3,
+     "fn": 48
+    },
+    "R:OTHER": {
+     "tp": 41,
+     "fp": 42,
+     "fn": 968
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 3,
+     "fn": 150
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 25
     },
     "U:ADV": {
      "tp": 2,
@@ -2130,40 +2130,40 @@
      "fp": 1,
      "fn": 11
     },
-    "M:CONJ": {
+    "R:VERB:SVA": {
      "tp": 0,
-     "fp": 0,
-     "fn": 42
-    },
-    "R:NOUN:NUM": {
-     "tp": 0,
-     "fp": 12,
-     "fn": 24
+     "fp": 7,
+     "fn": 4
     },
     "M:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 39
     },
-    "R:VERB:SVA": {
+    "R:NOUN:NUM": {
      "tp": 0,
-     "fp": 7,
-     "fn": 4
+     "fp": 12,
+     "fn": 24
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 42
     },
     "R:VERB:FORM": {
      "tp": 1,
      "fp": 20,
      "fn": 9
     },
-    "M:OTHER": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 10
-    },
     "U:CONJ": {
      "tp": 0,
      "fp": 1,
      "fn": 16
+    },
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 10
     },
     "U:PRON": {
      "tp": 0,
@@ -2200,15 +2200,15 @@
      "fp": 4,
      "fn": 23
     },
-    "U:OTHER": {
-     "tp": 2,
-     "fp": 27,
-     "fn": 8
-    },
     "R:PART": {
      "tp": 2,
      "fp": 0,
      "fn": 6
+    },
+    "U:OTHER": {
+     "tp": 2,
+     "fp": 27,
+     "fn": 8
     },
     "U:VERB:FORM": {
      "tp": 0,
@@ -2272,7 +2272,7 @@
    "fmt_gap_ok": 0.5848765432098766,
    "fmt_all_ok": 0.4116074837724322,
    "n_cues": 2619,
-   "rtf": 0.03686692938701996,
+   "rtf": 0.03526122301132469,
    "recall_by_type": {
     "asr": {
      "fixed": 44,
@@ -2327,75 +2327,25 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 24
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
     "R:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 44
     },
+    "U:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 12
+    },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 5
-    },
-    "R:OTHER": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 322
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 7
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 11
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 14
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 270
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
     },
     "M:VERB": {
      "tp": 0,
@@ -2407,30 +2357,80 @@
      "fp": 0,
      "fn": 5
     },
-    "U:DET": {
+    "R:MORPH": {
      "tp": 0,
      "fp": 0,
      "fn": 5
     },
-    "R:NOUN": {
+    "R:SPELL": {
      "tp": 0,
      "fp": 0,
-     "fn": 280
+     "fn": 270
     },
-    "R:PREP": {
+    "U:VERB": {
      "tp": 0,
      "fp": 0,
-     "fn": 12
+     "fn": 7
     },
     "R:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 6
     },
-    "U:PART": {
+    "R:NOUN": {
      "tp": 0,
      "fp": 0,
-     "fn": 1
+     "fn": 280
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 11
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 14
+    },
+    "R:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 322
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
     },
     "U:ADV": {
      "tp": 0,
@@ -2442,11 +2442,6 @@
      "fp": 0,
      "fn": 3
     },
-    "M:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 4
-    },
     "R:ORTH": {
      "tp": 0,
      "fp": 0,
@@ -2457,20 +2452,25 @@
      "fp": 0,
      "fn": 4
     },
-    "M:OTHER": {
+    "M:CONJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 1
+     "fn": 4
+    },
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 0
     },
     "U:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 2
     },
-    "U:OTHER": {
+    "M:OTHER": {
      "tp": 0,
-     "fp": 2,
-     "fn": 0
+     "fp": 0,
+     "fn": 1
     },
     "U:PRON": {
      "tp": 0,
@@ -2538,7 +2538,7 @@
    "fmt_gap_ok": 0.6876456876456877,
    "fmt_all_ok": 0.517162471395881,
    "n_cues": 437,
-   "rtf": 0.004110308570964107,
+   "rtf": 0.0025812071843993676,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -2591,30 +2591,50 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "U:NOUN": {
+    "R:VERB": {
      "tp": 0,
      "fp": 0,
-     "fn": 6
+     "fn": 41
     },
     "U:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 2
     },
-    "R:VERB": {
+    "R:PREP": {
      "tp": 0,
      "fp": 0,
-     "fn": 41
+     "fn": 21
     },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 6
     },
-    "M:CONJ": {
+    "M:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 9
+    },
+    "U:NOUN": {
      "tp": 0,
      "fp": 0,
      "fn": 6
+    },
+    "U:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 8
+    },
+    "R:SPELL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 270
+    },
+    "R:NOUN": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 360
     },
     "R:ORTH": {
      "tp": 0,
@@ -2626,35 +2646,10 @@
      "fp": 0,
      "fn": 28
     },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 28
-    },
     "R:ADJ": {
      "tp": 0,
      "fp": 0,
      "fn": 13
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 9
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 270
-    },
-    "U:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 8
-    },
-    "R:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 21
     },
     "R:VERB:TENSE": {
      "tp": 0,
@@ -2666,10 +2661,35 @@
      "fp": 0,
      "fn": 296
     },
-    "R:NOUN": {
+    "M:PREP": {
      "tp": 0,
      "fp": 0,
-     "fn": 360
+     "fn": 28
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "U:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
     },
     "M:PRON": {
      "tp": 0,
@@ -2681,35 +2701,10 @@
      "fp": 0,
      "fn": 1
     },
-    "U:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "U:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 2
-    },
-    "U:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 6
-    },
     "R:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 7
-    },
-    "R:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
     },
     "R:VERB:FORM": {
      "tp": 0,
@@ -2726,39 +2721,34 @@
      "fp": 0,
      "fn": 5
     },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 5
-    },
-    "M:VERB:FORM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "U:VERB:TENSE": {
+    "R:CONJ": {
      "tp": 0,
      "fp": 0,
      "fn": 1
     },
-    "M:ADV": {
+    "U:ADJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 2
+     "fn": 5
     },
     "R:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 11
     },
-    "R:NOUN:NUM": {
+    "M:VERB:FORM": {
      "tp": 0,
      "fp": 0,
      "fn": 3
     },
-    "U:OTHER": {
+    "M:ADV": {
      "tp": 0,
-     "fp": 3,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
      "fn": 1
     },
     "U:VERB": {
@@ -2770,6 +2760,16 @@
      "tp": 0,
      "fp": 0,
      "fn": 1
+    },
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 3,
+     "fn": 1
+    },
+    "R:NOUN:NUM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
     },
     "U:PART": {
      "tp": 0,
@@ -2807,7 +2807,7 @@
    "fmt_gap_ok": 0.6875,
    "fmt_all_ok": 0.5181818181818182,
    "n_cues": 440,
-   "rtf": 0.003943436572272583,
+   "rtf": 0.00237397580401494,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -2860,115 +2860,10 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "M:VERB:FORM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 30
-    },
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 83
-    },
-    "M:PART": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 7
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 25
-    },
     "R:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 62
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 16
-    },
-    "R:NOUN:NUM": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 20
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 93
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 131
-    },
-    "U:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 21
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 26
-    },
-    "U:OTHER": {
-     "tp": 0,
-     "fp": 14,
-     "fn": 9
-    },
-    "M:ADV": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 33
-    },
-    "M:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 43
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1111
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 29
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 14
-    },
-    "R:NOUN": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 125
-    },
-    "R:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 44
-    },
-    "R:PUNCT": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 2
-    },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 3
-    },
-    "U:NOUN": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 59
     },
     "U:ADV": {
      "tp": 0,
@@ -2980,52 +2875,157 @@
      "fp": 0,
      "fn": 7
     },
-    "M:CONJ": {
+    "R:PREP": {
      "tp": 0,
      "fp": 0,
-     "fn": 32
+     "fn": 81
     },
-    "U:CONJ": {
+    "U:PRON": {
      "tp": 0,
      "fp": 0,
-     "fn": 9
+     "fn": 21
     },
-    "R:ADJ": {
+    "U:NOUN": {
      "tp": 0,
      "fp": 0,
-     "fn": 8
+     "fn": 59
+    },
+    "R:MORPH": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 25
+    },
+    "R:SPELL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1111
+    },
+    "R:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 44
+    },
+    "M:VERB:FORM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 30
     },
     "R:PART": {
      "tp": 0,
      "fp": 0,
      "fn": 7
     },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 131
+    },
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 14,
+     "fn": 9
+    },
     "U:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 29
     },
-    "R:PREP": {
+    "M:PRON": {
      "tp": 0,
      "fp": 0,
-     "fn": 81
+     "fn": 83
     },
-    "R:OTHER": {
+    "U:CONJ": {
      "tp": 0,
      "fp": 0,
-     "fn": 391
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 32
+     "fn": 9
     },
     "R:ADV": {
      "tp": 0,
      "fp": 0,
      "fn": 14
     },
-    "R:NOUN:POSS": {
+    "R:NOUN:NUM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 20
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 16
+    },
+    "R:PUNCT": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 14
+    },
+    "M:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 7
+    },
+    "M:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 43
+    },
+    "U:VERB": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 26
+    },
+    "R:NOUN": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 125
+    },
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 8
+    },
+    "M:ADV": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 33
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 29
+    },
+    "R:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 391
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 93
+    },
+    "M:CONJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
+    },
+    "R:NOUN:INFL": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -3045,7 +3045,7 @@
      "fp": 0,
      "fn": 21
     },
-    "R:NOUN:INFL": {
+    "R:NOUN:POSS": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -3095,7 +3095,7 @@
    "fmt_gap_ok": 0.5695093457943925,
    "fmt_all_ok": 0.3505513639001741,
    "n_cues": 1723,
-   "rtf": 0.013327495576498581,
+   "rtf": 0.008289195062467343,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -3143,75 +3143,25 @@
    "errant_r": 0.0,
    "errant_f05": 0.0,
    "errant_types": {
-    "M:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 119
-    },
-    "R:PRON": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 41
-    },
-    "R:MORPH": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 35
-    },
-    "U:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 23
-    },
     "R:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 147
     },
+    "U:PART": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 11
+    },
+    "R:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 114
+    },
     "M:VERB:TENSE": {
      "tp": 0,
      "fp": 0,
      "fn": 31
-    },
-    "R:OTHER": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1009
-    },
-    "M:DET": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 188
-    },
-    "M:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 150
-    },
-    "U:VERB": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 40
-    },
-    "R:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 32
-    },
-    "R:VERB:TENSE": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 48
-    },
-    "R:SPELL": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1651
-    },
-    "U:ADJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 25
     },
     "M:VERB": {
      "tp": 0,
@@ -3223,30 +3173,80 @@
      "fp": 0,
      "fn": 34
     },
-    "U:DET": {
+    "R:MORPH": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 35
+    },
+    "R:SPELL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1651
+    },
+    "U:VERB": {
      "tp": 0,
      "fp": 0,
      "fn": 40
-    },
-    "R:NOUN": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 765
-    },
-    "R:PREP": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 114
     },
     "R:DET": {
      "tp": 0,
      "fp": 0,
      "fn": 61
     },
-    "U:PART": {
+    "R:NOUN": {
      "tp": 0,
      "fp": 0,
-     "fn": 11
+     "fn": 765
+    },
+    "R:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 41
+    },
+    "M:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 188
+    },
+    "U:DET": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 40
+    },
+    "M:PRON": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 119
+    },
+    "R:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 32
+    },
+    "U:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 23
+    },
+    "R:VERB:TENSE": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 48
+    },
+    "R:OTHER": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1009
+    },
+    "M:PREP": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 150
+    },
+    "U:ADJ": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 25
     },
     "U:ADV": {
      "tp": 0,
@@ -3258,11 +3258,6 @@
      "fp": 0,
      "fn": 11
     },
-    "M:CONJ": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 42
-    },
     "R:ORTH": {
      "tp": 0,
      "fp": 0,
@@ -3273,9 +3268,14 @@
      "fp": 0,
      "fn": 39
     },
-    "M:OTHER": {
+    "M:CONJ": {
      "tp": 0,
      "fp": 0,
+     "fn": 42
+    },
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 19,
      "fn": 10
     },
     "U:CONJ": {
@@ -3283,9 +3283,9 @@
      "fp": 0,
      "fn": 16
     },
-    "U:OTHER": {
+    "M:OTHER": {
      "tp": 0,
-     "fp": 19,
+     "fp": 0,
      "fn": 10
     },
     "U:PRON": {
@@ -3338,12 +3338,12 @@
      "fp": 0,
      "fn": 8
     },
-    "R:NOUN:POSS": {
+    "R:NOUN:INFL": {
      "tp": 0,
      "fp": 0,
      "fn": 1
     },
-    "R:NOUN:INFL": {
+    "R:NOUN:POSS": {
      "tp": 0,
      "fp": 0,
      "fn": 1
@@ -3399,7 +3399,7 @@
    "fmt_gap_ok": 0.6090167120093276,
    "fmt_all_ok": 0.40692307692307694,
    "n_cues": 2600,
-   "rtf": 0.007816015277310292,
+   "rtf": 0.004845281836831676,
    "recall_by_type": {
     "asr": {
      "fixed": 0,
@@ -3454,84 +3454,14 @@
    "errant_r": 0.6016949152542372,
    "errant_f05": 0.634684147794994,
    "errant_types": {
-    "M:PRON": {
-     "tp": 15,
-     "fp": 8,
-     "fn": 9
-    },
-    "R:MORPH": {
-     "tp": 4,
-     "fp": 0,
-     "fn": 1
-    },
-    "U:VERB:TENSE": {
-     "tp": 6,
-     "fp": 0,
-     "fn": 0
-    },
     "R:VERB": {
      "tp": 27,
      "fp": 10,
      "fn": 17
     },
-    "M:VERB:TENSE": {
-     "tp": 4,
-     "fp": 1,
-     "fn": 1
-    },
-    "R:OTHER": {
-     "tp": 160,
-     "fp": 144,
-     "fn": 162
-    },
-    "R:ORTH": {
-     "tp": 148,
-     "fp": 80,
-     "fn": 152
-    },
-    "M:DET": {
-     "tp": 28,
-     "fp": 6,
-     "fn": 1
-    },
-    "M:PREP": {
-     "tp": 27,
-     "fp": 2,
-     "fn": 2
-    },
-    "U:VERB": {
-     "tp": 7,
-     "fp": 4,
-     "fn": 0
-    },
-    "R:ADJ": {
-     "tp": 8,
-     "fp": 6,
-     "fn": 3
-    },
-    "R:VERB:TENSE": {
-     "tp": 11,
-     "fp": 5,
-     "fn": 3
-    },
-    "R:SPELL": {
-     "tp": 214,
-     "fp": 44,
-     "fn": 56
-    },
-    "U:ADJ": {
-     "tp": 5,
+    "U:PART": {
+     "tp": 1,
      "fp": 0,
-     "fn": 1
-    },
-    "M:VERB": {
-     "tp": 2,
-     "fp": 0,
-     "fn": 0
-    },
-    "U:DET": {
-     "tp": 5,
-     "fp": 1,
      "fn": 0
     },
     "R:PREP": {
@@ -3539,35 +3469,100 @@
      "fp": 0,
      "fn": 1
     },
-    "R:NOUN": {
-     "tp": 137,
-     "fp": 125,
-     "fn": 143
-    },
-    "R:PRON": {
-     "tp": 2,
+    "M:VERB:TENSE": {
+     "tp": 4,
      "fp": 1,
      "fn": 1
     },
-    "R:DET": {
+    "M:VERB": {
      "tp": 2,
-     "fp": 4,
-     "fn": 4
+     "fp": 0,
+     "fn": 0
     },
     "U:PREP": {
      "tp": 4,
      "fp": 3,
      "fn": 1
     },
-    "U:PART": {
-     "tp": 1,
+    "R:MORPH": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:SPELL": {
+     "tp": 214,
+     "fp": 44,
+     "fn": 56
+    },
+    "U:VERB": {
+     "tp": 7,
+     "fp": 4,
+     "fn": 0
+    },
+    "R:DET": {
+     "tp": 2,
+     "fp": 4,
+     "fn": 4
+    },
+    "R:NOUN": {
+     "tp": 137,
+     "fp": 125,
+     "fn": 143
+    },
+    "R:ORTH": {
+     "tp": 148,
+     "fp": 80,
+     "fn": 152
+    },
+    "R:PRON": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 1
+    },
+    "M:DET": {
+     "tp": 28,
+     "fp": 6,
+     "fn": 1
+    },
+    "U:DET": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:PRON": {
+     "tp": 15,
+     "fp": 8,
+     "fn": 9
+    },
+    "R:ADJ": {
+     "tp": 8,
+     "fp": 6,
+     "fn": 3
+    },
+    "U:VERB:TENSE": {
+     "tp": 6,
      "fp": 0,
      "fn": 0
     },
-    "U:NOUN": {
-     "tp": 2,
-     "fp": 4,
+    "R:VERB:TENSE": {
+     "tp": 11,
+     "fp": 5,
+     "fn": 3
+    },
+    "R:OTHER": {
+     "tp": 160,
+     "fp": 144,
+     "fn": 162
+    },
+    "M:PREP": {
+     "tp": 27,
+     "fp": 2,
      "fn": 2
+    },
+    "U:ADJ": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 1
     },
     "U:ADV": {
      "tp": 4,
@@ -3577,6 +3572,16 @@
     "M:PART": {
      "tp": 3,
      "fp": 0,
+     "fn": 0
+    },
+    "U:NOUN": {
+     "tp": 2,
+     "fp": 4,
+     "fn": 2
+    },
+    "M:ADV": {
+     "tp": 4,
+     "fp": 2,
      "fn": 0
     },
     "M:NOUN": {
@@ -3589,14 +3594,14 @@
      "fp": 0,
      "fn": 0
     },
-    "M:ADV": {
-     "tp": 4,
-     "fp": 2,
+    "U:PRON": {
+     "tp": 1,
+     "fp": 6,
      "fn": 0
     },
-    "M:OTHER": {
-     "tp": 1,
-     "fp": 1,
+    "U:OTHER": {
+     "tp": 0,
+     "fp": 4,
      "fn": 0
     },
     "U:CONJ": {
@@ -3604,14 +3609,9 @@
      "fp": 1,
      "fn": 1
     },
-    "U:OTHER": {
-     "tp": 0,
-     "fp": 4,
-     "fn": 0
-    },
-    "U:PRON": {
+    "M:OTHER": {
      "tp": 1,
-     "fp": 6,
+     "fp": 1,
      "fn": 0
     },
     "R:ADV": {
@@ -3624,17 +3624,17 @@
      "fp": 0,
      "fn": 2
     },
-    "M:VERB:FORM": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 0
-    },
     "R:NOUN:POSS": {
      "tp": 0,
      "fp": 1,
      "fn": 0
     },
-    "R:CONJ": {
+    "R:VERB:SVA": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:VERB:FORM": {
      "tp": 0,
      "fp": 1,
      "fn": 0
@@ -3644,9 +3644,9 @@
      "fp": 1,
      "fn": 0
     },
-    "R:VERB:SVA": {
-     "tp": 1,
-     "fp": 0,
+    "R:CONJ": {
+     "tp": 0,
+     "fp": 1,
      "fn": 0
     },
     "R:VERB:FORM": {
@@ -3696,7 +3696,7 @@
    "fmt_gap_ok": 0.5833333333333334,
    "fmt_all_ok": 0.16847826086956522,
    "n_cues": 368,
-   "rtf": 0.02865339231906378,
+   "rtf": 0.028640359301205846,
    "recall_by_type": {
     "asr": {
      "fixed": 89,
@@ -3749,14 +3749,39 @@
    "errant_r": 0.6693430656934306,
    "errant_f05": 0.6612344966830112,
    "errant_types": {
+    "R:VERB": {
+     "tp": 30,
+     "fp": 17,
+     "fn": 11
+    },
+    "U:ADV": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 19,
+     "fp": 2,
+     "fn": 2
+    },
+    "M:VERB:TENSE": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 1
+    },
+    "M:VERB": {
+     "tp": 9,
+     "fp": 1,
+     "fn": 0
+    },
     "U:NOUN": {
      "tp": 5,
      "fp": 3,
      "fn": 1
     },
-    "U:ADV": {
-     "tp": 2,
-     "fp": 0,
+    "U:PREP": {
+     "tp": 8,
+     "fp": 4,
      "fn": 0
     },
     "R:MORPH": {
@@ -3764,20 +3789,15 @@
      "fp": 5,
      "fn": 3
     },
-    "R:VERB": {
-     "tp": 30,
-     "fp": 17,
-     "fn": 11
+    "R:SPELL": {
+     "tp": 211,
+     "fp": 59,
+     "fn": 59
     },
-    "M:VERB:TENSE": {
-     "tp": 5,
-     "fp": 0,
-     "fn": 1
-    },
-    "M:CONJ": {
-     "tp": 6,
-     "fp": 0,
-     "fn": 0
+    "R:NOUN": {
+     "tp": 198,
+     "fp": 115,
+     "fn": 162
     },
     "R:ORTH": {
      "tp": 127,
@@ -3787,11 +3807,6 @@
     "M:DET": {
      "tp": 27,
      "fp": 3,
-     "fn": 1
-    },
-    "M:PREP": {
-     "tp": 27,
-     "fp": 0,
      "fn": 1
     },
     "U:OTHER": {
@@ -3804,26 +3819,6 @@
      "fp": 7,
      "fn": 3
     },
-    "M:VERB": {
-     "tp": 9,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:SPELL": {
-     "tp": 211,
-     "fp": 59,
-     "fn": 59
-    },
-    "U:PREP": {
-     "tp": 8,
-     "fp": 4,
-     "fn": 0
-    },
-    "R:PREP": {
-     "tp": 19,
-     "fp": 2,
-     "fn": 2
-    },
     "R:VERB:TENSE": {
      "tp": 4,
      "fp": 2,
@@ -3834,48 +3829,23 @@
      "fp": 114,
      "fn": 127
     },
-    "R:NOUN": {
-     "tp": 198,
-     "fp": 115,
-     "fn": 162
+    "M:PREP": {
+     "tp": 27,
+     "fp": 0,
+     "fn": 1
     },
-    "M:PRON": {
-     "tp": 9,
-     "fp": 1,
-     "fn": 3
+    "M:CONJ": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
     },
     "R:VERB:FORM": {
      "tp": 1,
      "fp": 1,
      "fn": 1
     },
-    "M:OTHER": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 1
-    },
-    "R:NOUN:NUM": {
-     "tp": 2,
-     "fp": 1,
-     "fn": 1
-    },
-    "U:CONJ": {
-     "tp": 5,
-     "fp": 1,
-     "fn": 0
-    },
     "U:PRON": {
      "tp": 1,
-     "fp": 1,
-     "fn": 1
-    },
-    "U:DET": {
-     "tp": 6,
-     "fp": 2,
-     "fn": 0
-    },
-    "R:PRON": {
-     "tp": 5,
      "fp": 1,
      "fn": 1
     },
@@ -3884,19 +3854,49 @@
      "fp": 6,
      "fn": 4
     },
+    "R:PRON": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 1
+    },
+    "U:DET": {
+     "tp": 6,
+     "fp": 2,
+     "fn": 0
+    },
+    "U:CONJ": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:PRON": {
+     "tp": 9,
+     "fp": 1,
+     "fn": 3
+    },
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1
+    },
     "R:ADV": {
      "tp": 4,
      "fp": 2,
      "fn": 3
     },
-    "R:CONJ": {
-     "tp": 1,
-     "fp": 0,
-     "fn": 0
+    "R:NOUN:NUM": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 1
     },
     "M:PART": {
      "tp": 1,
      "fp": 1,
+     "fn": 0
+    },
+    "R:CONJ": {
+     "tp": 1,
+     "fp": 0,
      "fn": 0
     },
     "U:ADJ": {
@@ -3909,6 +3909,16 @@
      "fp": 0,
      "fn": 0
     },
+    "M:ADV": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 2
+    },
+    "U:VERB:TENSE": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
     "M:PUNCT": {
      "tp": 0,
      "fp": 1,
@@ -3918,16 +3928,6 @@
      "tp": 0,
      "fp": 1,
      "fn": 0
-    },
-    "U:VERB:TENSE": {
-     "tp": 1,
-     "fp": 0,
-     "fn": 0
-    },
-    "M:ADV": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 2
     },
     "U:VERB": {
      "tp": 5,
@@ -3986,7 +3986,7 @@
    "fmt_gap_ok": 0.6666666666666666,
    "fmt_all_ok": 0.15730337078651685,
    "n_cues": 356,
-   "rtf": 0.028430683505430963,
+   "rtf": 0.028424129649745555,
    "recall_by_type": {
     "asr": {
      "fixed": 123,
@@ -4039,135 +4039,10 @@
    "errant_r": 0.8067632850241546,
    "errant_f05": 0.7394917909939369,
    "errant_types": {
-    "M:VERB:FORM": {
-     "tp": 29,
-     "fp": 0,
-     "fn": 1
-    },
-    "M:PRON": {
-     "tp": 75,
-     "fp": 9,
-     "fn": 8
-    },
-    "M:PART": {
-     "tp": 7,
-     "fp": 1,
-     "fn": 0
-    },
-    "M:NOUN": {
-     "tp": 1,
-     "fp": 5,
-     "fn": 0
-    },
-    "R:MORPH": {
-     "tp": 17,
-     "fp": 2,
-     "fn": 8
-    },
-    "U:VERB:TENSE": {
-     "tp": 16,
-     "fp": 15,
-     "fn": 0
-    },
     "R:VERB": {
      "tp": 49,
      "fp": 7,
      "fn": 13
-    },
-    "M:OTHER": {
-     "tp": 8,
-     "fp": 10,
-     "fn": 0
-    },
-    "M:VERB:TENSE": {
-     "tp": 20,
-     "fp": 6,
-     "fn": 0
-    },
-    "R:NOUN:NUM": {
-     "tp": 9,
-     "fp": 2,
-     "fn": 11
-    },
-    "R:ORTH": {
-     "tp": 0,
-     "fp": 61,
-     "fn": 0
-    },
-    "M:PREP": {
-     "tp": 80,
-     "fp": 13,
-     "fn": 13
-    },
-    "M:DET": {
-     "tp": 123,
-     "fp": 11,
-     "fn": 8
-    },
-    "U:PRON": {
-     "tp": 19,
-     "fp": 34,
-     "fn": 2
-    },
-    "U:VERB": {
-     "tp": 24,
-     "fp": 32,
-     "fn": 2
-    },
-    "U:OTHER": {
-     "tp": 7,
-     "fp": 151,
-     "fn": 2
-    },
-    "M:ADV": {
-     "tp": 31,
-     "fp": 9,
-     "fn": 2
-    },
-    "M:VERB": {
-     "tp": 38,
-     "fp": 7,
-     "fn": 5
-    },
-    "R:SPELL": {
-     "tp": 1021,
-     "fp": 15,
-     "fn": 90
-    },
-    "R:VERB:TENSE": {
-     "tp": 12,
-     "fp": 4,
-     "fn": 17
-    },
-    "U:ADJ": {
-     "tp": 14,
-     "fp": 9,
-     "fn": 0
-    },
-    "R:NOUN": {
-     "tp": 59,
-     "fp": 18,
-     "fn": 66
-    },
-    "R:DET": {
-     "tp": 19,
-     "fp": 6,
-     "fn": 25
-    },
-    "R:PUNCT": {
-     "tp": 2,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 3
-    },
-    "U:NOUN": {
-     "tp": 55,
-     "fp": 37,
-     "fn": 4
     },
     "U:ADV": {
      "tp": 28,
@@ -4179,14 +4054,39 @@
      "fp": 0,
      "fn": 2
     },
-    "M:CONJ": {
-     "tp": 29,
-     "fp": 10,
-     "fn": 3
+    "R:PREP": {
+     "tp": 63,
+     "fp": 3,
+     "fn": 18
     },
-    "U:CONJ": {
-     "tp": 8,
-     "fp": 23,
+    "U:PRON": {
+     "tp": 19,
+     "fp": 34,
+     "fn": 2
+    },
+    "U:NOUN": {
+     "tp": 55,
+     "fp": 37,
+     "fn": 4
+    },
+    "R:MORPH": {
+     "tp": 17,
+     "fp": 2,
+     "fn": 8
+    },
+    "R:SPELL": {
+     "tp": 1021,
+     "fp": 15,
+     "fn": 90
+    },
+    "R:DET": {
+     "tp": 19,
+     "fp": 6,
+     "fn": 25
+    },
+    "M:VERB:FORM": {
+     "tp": 29,
+     "fp": 0,
      "fn": 1
     },
     "R:PART": {
@@ -4194,9 +4094,14 @@
      "fp": 0,
      "fn": 3
     },
-    "R:ADJ": {
-     "tp": 6,
-     "fp": 2,
+    "M:DET": {
+     "tp": 123,
+     "fp": 11,
+     "fn": 8
+    },
+    "U:OTHER": {
+     "tp": 7,
+     "fp": 151,
      "fn": 2
     },
     "U:DET": {
@@ -4204,39 +4109,124 @@
      "fp": 58,
      "fn": 4
     },
-    "R:PREP": {
-     "tp": 63,
-     "fp": 3,
-     "fn": 18
+    "M:PRON": {
+     "tp": 75,
+     "fp": 9,
+     "fn": 8
     },
-    "R:OTHER": {
-     "tp": 208,
-     "fp": 198,
-     "fn": 183
+    "U:CONJ": {
+     "tp": 8,
+     "fp": 23,
+     "fn": 1
     },
-    "R:PRON": {
-     "tp": 16,
-     "fp": 3,
-     "fn": 16
+    "M:OTHER": {
+     "tp": 8,
+     "fp": 10,
+     "fn": 0
     },
     "R:ADV": {
      "tp": 11,
      "fp": 4,
      "fn": 3
     },
-    "R:NOUN:POSS": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
+    "R:NOUN:NUM": {
+     "tp": 9,
+     "fp": 2,
+     "fn": 11
     },
-    "U:PREP": {
-     "tp": 21,
-     "fp": 35,
+    "U:VERB:TENSE": {
+     "tp": 16,
+     "fp": 15,
      "fn": 0
     },
-    "U:PUNCT": {
+    "M:NOUN": {
+     "tp": 1,
+     "fp": 5,
+     "fn": 0
+    },
+    "R:PUNCT": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 0
+    },
+    "U:ADJ": {
+     "tp": 14,
+     "fp": 9,
+     "fn": 0
+    },
+    "M:PART": {
+     "tp": 7,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:VERB": {
+     "tp": 38,
+     "fp": 7,
+     "fn": 5
+    },
+    "M:VERB:TENSE": {
+     "tp": 20,
+     "fp": 6,
+     "fn": 0
+    },
+    "U:VERB": {
+     "tp": 24,
+     "fp": 32,
+     "fn": 2
+    },
+    "R:NOUN": {
+     "tp": 59,
+     "fp": 18,
+     "fn": 66
+    },
+    "R:VERB:SVA": {
      "tp": 0,
      "fp": 1,
+     "fn": 3
+    },
+    "R:ORTH": {
+     "tp": 0,
+     "fp": 61,
+     "fn": 0
+    },
+    "R:PRON": {
+     "tp": 16,
+     "fp": 3,
+     "fn": 16
+    },
+    "R:ADJ": {
+     "tp": 6,
+     "fp": 2,
+     "fn": 2
+    },
+    "M:ADV": {
+     "tp": 31,
+     "fp": 9,
+     "fn": 2
+    },
+    "R:VERB:TENSE": {
+     "tp": 12,
+     "fp": 4,
+     "fn": 17
+    },
+    "R:OTHER": {
+     "tp": 208,
+     "fp": 198,
+     "fn": 183
+    },
+    "M:PREP": {
+     "tp": 80,
+     "fp": 13,
+     "fn": 13
+    },
+    "M:CONJ": {
+     "tp": 29,
+     "fp": 10,
+     "fn": 3
+    },
+    "R:NOUN:INFL": {
+     "tp": 1,
+     "fp": 0,
      "fn": 0
     },
     "U:VERB:FORM": {
@@ -4244,10 +4234,20 @@
      "fp": 3,
      "fn": 0
     },
-    "R:NOUN:INFL": {
-     "tp": 1,
-     "fp": 0,
+    "U:PUNCT": {
+     "tp": 0,
+     "fp": 1,
      "fn": 0
+    },
+    "U:PREP": {
+     "tp": 21,
+     "fp": 35,
+     "fn": 0
+    },
+    "R:NOUN:POSS": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
     },
     "U:PART": {
      "tp": 9,
@@ -4290,7 +4290,7 @@
    "fmt_gap_ok": 0.5515487748497457,
    "fmt_all_ok": 0.13385464581416742,
    "n_cues": 2174,
-   "rtf": 0.03508487360567612,
+   "rtf": 0.0350770816474367,
    "recall_by_type": {
     "asr": {
      "fixed": 304,
@@ -4338,74 +4338,24 @@
    "errant_r": 0.7193719189337229,
    "errant_f05": 0.6954986760812003,
    "errant_types": {
-    "M:PRON": {
-     "tp": 99,
-     "fp": 18,
-     "fn": 20
-    },
-    "R:MORPH": {
-     "tp": 23,
-     "fp": 7,
-     "fn": 12
-    },
-    "U:VERB:TENSE": {
-     "tp": 23,
-     "fp": 15,
-     "fn": 0
-    },
     "R:VERB": {
      "tp": 106,
      "fp": 34,
      "fn": 41
     },
+    "U:PART": {
+     "tp": 11,
+     "fp": 4,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 93,
+     "fp": 5,
+     "fn": 21
+    },
     "M:VERB:TENSE": {
      "tp": 29,
      "fp": 7,
-     "fn": 2
-    },
-    "R:OTHER": {
-     "tp": 537,
-     "fp": 456,
-     "fn": 472
-    },
-    "R:ORTH": {
-     "tp": 275,
-     "fp": 250,
-     "fn": 213
-    },
-    "M:DET": {
-     "tp": 178,
-     "fp": 20,
-     "fn": 10
-    },
-    "M:PREP": {
-     "tp": 134,
-     "fp": 15,
-     "fn": 16
-    },
-    "U:VERB": {
-     "tp": 36,
-     "fp": 36,
-     "fn": 4
-    },
-    "R:ADJ": {
-     "tp": 24,
-     "fp": 15,
-     "fn": 8
-    },
-    "R:VERB:TENSE": {
-     "tp": 27,
-     "fp": 11,
-     "fn": 21
-    },
-    "R:SPELL": {
-     "tp": 1446,
-     "fp": 118,
-     "fn": 205
-    },
-    "U:ADJ": {
-     "tp": 23,
-     "fp": 11,
      "fn": 2
     },
     "M:VERB": {
@@ -4413,45 +4363,90 @@
      "fp": 8,
      "fn": 5
     },
-    "U:DET": {
-     "tp": 36,
-     "fp": 61,
-     "fn": 4
+    "U:PREP": {
+     "tp": 33,
+     "fp": 42,
+     "fn": 1
     },
-    "R:PREP": {
-     "tp": 93,
-     "fp": 5,
-     "fn": 21
-    },
-    "R:NOUN": {
-     "tp": 394,
-     "fp": 258,
-     "fn": 371
-    },
-    "R:PRON": {
+    "R:MORPH": {
      "tp": 23,
-     "fp": 5,
-     "fn": 18
+     "fp": 7,
+     "fn": 12
+    },
+    "R:SPELL": {
+     "tp": 1446,
+     "fp": 118,
+     "fn": 205
+    },
+    "U:VERB": {
+     "tp": 36,
+     "fp": 36,
+     "fn": 4
     },
     "R:DET": {
      "tp": 28,
      "fp": 16,
      "fn": 33
     },
-    "U:PREP": {
-     "tp": 33,
-     "fp": 42,
-     "fn": 1
+    "R:NOUN": {
+     "tp": 394,
+     "fp": 258,
+     "fn": 371
     },
-    "U:PART": {
-     "tp": 11,
-     "fp": 4,
+    "R:ORTH": {
+     "tp": 275,
+     "fp": 250,
+     "fn": 213
+    },
+    "R:PRON": {
+     "tp": 23,
+     "fp": 5,
+     "fn": 18
+    },
+    "M:DET": {
+     "tp": 178,
+     "fp": 20,
+     "fn": 10
+    },
+    "U:DET": {
+     "tp": 36,
+     "fp": 61,
+     "fn": 4
+    },
+    "M:PRON": {
+     "tp": 99,
+     "fp": 18,
+     "fn": 20
+    },
+    "R:ADJ": {
+     "tp": 24,
+     "fp": 15,
+     "fn": 8
+    },
+    "U:VERB:TENSE": {
+     "tp": 23,
+     "fp": 15,
      "fn": 0
     },
-    "U:NOUN": {
-     "tp": 62,
-     "fp": 44,
-     "fn": 7
+    "R:VERB:TENSE": {
+     "tp": 27,
+     "fp": 11,
+     "fn": 21
+    },
+    "R:OTHER": {
+     "tp": 537,
+     "fp": 456,
+     "fn": 472
+    },
+    "M:PREP": {
+     "tp": 134,
+     "fp": 15,
+     "fn": 16
+    },
+    "U:ADJ": {
+     "tp": 23,
+     "fp": 11,
+     "fn": 2
     },
     "U:ADV": {
      "tp": 34,
@@ -4463,6 +4458,16 @@
      "fp": 2,
      "fn": 0
     },
+    "U:NOUN": {
+     "tp": 62,
+     "fp": 44,
+     "fn": 7
+    },
+    "M:ADV": {
+     "tp": 35,
+     "fp": 12,
+     "fn": 4
+    },
     "M:NOUN": {
      "tp": 1,
      "fp": 8,
@@ -4473,30 +4478,25 @@
      "fp": 10,
      "fn": 3
     },
-    "M:ADV": {
-     "tp": 35,
-     "fp": 12,
-     "fn": 4
-    },
-    "M:OTHER": {
-     "tp": 9,
-     "fp": 12,
-     "fn": 1
-    },
-    "U:CONJ": {
-     "tp": 14,
-     "fp": 25,
-     "fn": 2
+    "U:PRON": {
+     "tp": 21,
+     "fp": 41,
+     "fn": 3
     },
     "U:OTHER": {
      "tp": 8,
      "fp": 164,
      "fn": 2
     },
-    "U:PRON": {
-     "tp": 21,
-     "fp": 41,
-     "fn": 3
+    "U:CONJ": {
+     "tp": 14,
+     "fp": 25,
+     "fn": 2
+    },
+    "M:OTHER": {
+     "tp": 9,
+     "fp": 12,
+     "fn": 1
     },
     "R:ADV": {
      "tp": 16,
@@ -4508,30 +4508,30 @@
      "fp": 2,
      "fn": 2
     },
-    "M:VERB:FORM": {
-     "tp": 32,
-     "fp": 1,
-     "fn": 1
-    },
     "R:NOUN:POSS": {
      "tp": 0,
      "fp": 1,
      "fn": 1
     },
-    "R:CONJ": {
+    "R:VERB:SVA": {
      "tp": 1,
      "fp": 1,
-     "fn": 0
+     "fn": 3
+    },
+    "M:VERB:FORM": {
+     "tp": 32,
+     "fp": 1,
+     "fn": 1
     },
     "R:NOUN:NUM": {
      "tp": 12,
      "fp": 4,
      "fn": 12
     },
-    "R:VERB:SVA": {
+    "R:CONJ": {
      "tp": 1,
      "fp": 1,
-     "fn": 3
+     "fn": 0
     },
     "R:VERB:FORM": {
      "tp": 7,
@@ -4548,9 +4548,9 @@
      "fp": 0,
      "fn": 3
     },
-    "U:PUNCT": {
-     "tp": 0,
-     "fp": 1,
+    "R:NOUN:INFL": {
+     "tp": 1,
+     "fp": 0,
      "fn": 0
     },
     "U:VERB:FORM": {
@@ -4558,9 +4558,9 @@
      "fp": 3,
      "fn": 0
     },
-    "R:NOUN:INFL": {
-     "tp": 1,
-     "fp": 0,
+    "U:PUNCT": {
+     "tp": 0,
+     "fp": 1,
      "fn": 0
     },
     "R:ADJ:FORM": {
@@ -4610,7 +4610,7 @@
    "fmt_gap_ok": 0.5694879832810867,
    "fmt_all_ok": 0.14113181504485853,
    "n_cues": 2898,
-   "rtf": 0.031207637639199825,
+   "rtf": 0.031198659619607966,
    "recall_by_type": {
     "asr": {
      "fixed": 516,
@@ -4645,79 +4645,49 @@
    }
   }
  },
- "ours": {
+ "ours_rule": {
   "libri-test-clean": {
    "n_files": 8,
    "wer": 0.021638054363376253,
    "cer": 0.009940357852882704,
    "sub": 94,
-   "del": 13,
-   "ins": 14,
+   "del": 12,
+   "ins": 15,
    "n_ref_words": 5592,
-   "edit_p": 0.8864,
-   "edit_r": 0.8483920367534457,
-   "edit_f05": 0.8785283856644464,
-   "edit_tp": 554,
-   "edit_fp": 71,
-   "edit_fn": 99,
-   "overcorrection": 0.006700507614213198,
-   "errant_p": 0.7299484915378955,
-   "errant_r": 0.7005649717514124,
-   "errant_f05": 0.7238762405137187,
+   "edit_p": 0.888,
+   "edit_r": 0.8499234303215927,
+   "edit_f05": 0.8801141769743102,
+   "edit_tp": 555,
+   "edit_fp": 70,
+   "edit_fn": 98,
+   "overcorrection": 0.00649746192893401,
+   "errant_p": 0.7300073367571533,
+   "errant_r": 0.702683615819209,
+   "errant_f05": 0.7243739079790332,
    "errant_types": {
-    "M:PRON": {
-     "tp": 19,
-     "fp": 4,
-     "fn": 5
-    },
-    "R:PRON": {
-     "tp": 2,
-     "fp": 0,
-     "fn": 1
-    },
-    "R:MORPH": {
-     "tp": 4,
-     "fp": 0,
-     "fn": 1
-    },
-    "U:VERB:TENSE": {
-     "tp": 6,
-     "fp": 0,
-     "fn": 0
-    },
     "R:VERB": {
      "tp": 27,
      "fp": 13,
      "fn": 17
     },
-    "M:VERB:TENSE": {
-     "tp": 3,
+    "U:PART": {
+     "tp": 1,
      "fp": 0,
-     "fn": 2
+     "fn": 0
     },
-    "R:OTHER": {
-     "tp": 194,
-     "fp": 108,
-     "fn": 128
+    "R:PREP": {
+     "tp": 11,
+     "fp": 0,
+     "fn": 1
     },
-    "R:ORTH": {
-     "tp": 233,
-     "fp": 57,
-     "fn": 67
+    "M:VERB:TENSE": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 1
     },
-    "M:DET": {
-     "tp": 27,
-     "fp": 6,
-     "fn": 2
-    },
-    "M:PREP": {
-     "tp": 26,
-     "fp": 2,
-     "fn": 3
-    },
-    "U:VERB": {
-     "tp": 7,
-     "fp": 1,
+    "M:VERB": {
+     "tp": 2,
+     "fp": 0,
      "fn": 0
     },
     "R:NOUN:INFL": {
@@ -4725,65 +4695,90 @@
      "fp": 1,
      "fn": 0
     },
-    "R:ADJ": {
-     "tp": 7,
-     "fp": 3,
-     "fn": 4
+    "U:PREP": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 0
     },
-    "R:VERB:TENSE": {
-     "tp": 11,
-     "fp": 5,
-     "fn": 3
+    "R:MORPH": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 1
     },
     "R:SPELL": {
      "tp": 212,
      "fp": 55,
      "fn": 58
     },
-    "U:ADJ": {
-     "tp": 6,
-     "fp": 0,
-     "fn": 0
-    },
-    "M:VERB": {
-     "tp": 2,
-     "fp": 0,
-     "fn": 0
-    },
-    "U:PREP": {
-     "tp": 5,
+    "U:VERB": {
+     "tp": 7,
      "fp": 1,
      "fn": 0
-    },
-    "U:DET": {
-     "tp": 5,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:NOUN": {
-     "tp": 158,
-     "fp": 89,
-     "fn": 122
-    },
-    "R:PREP": {
-     "tp": 11,
-     "fp": 0,
-     "fn": 1
     },
     "R:DET": {
      "tp": 2,
      "fp": 0,
      "fn": 4
     },
-    "U:PART": {
-     "tp": 1,
+    "R:NOUN": {
+     "tp": 159,
+     "fp": 87,
+     "fn": 121
+    },
+    "R:ORTH": {
+     "tp": 234,
+     "fp": 57,
+     "fn": 66
+    },
+    "R:PRON": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 1
+    },
+    "M:DET": {
+     "tp": 27,
+     "fp": 6,
+     "fn": 2
+    },
+    "U:DET": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:PRON": {
+     "tp": 19,
+     "fp": 4,
+     "fn": 5
+    },
+    "R:ADJ": {
+     "tp": 7,
+     "fp": 3,
+     "fn": 4
+    },
+    "U:VERB:TENSE": {
+     "tp": 6,
      "fp": 0,
      "fn": 0
     },
-    "U:NOUN": {
-     "tp": 3,
+    "R:VERB:TENSE": {
+     "tp": 11,
+     "fp": 5,
+     "fn": 3
+    },
+    "R:OTHER": {
+     "tp": 194,
+     "fp": 111,
+     "fn": 128
+    },
+    "M:PREP": {
+     "tp": 26,
      "fp": 2,
-     "fn": 1
+     "fn": 3
+    },
+    "U:ADJ": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
     },
     "U:ADV": {
      "tp": 4,
@@ -4795,7 +4790,7 @@
      "fp": 0,
      "fn": 0
     },
-    "M:CONJ": {
+    "U:NOUN": {
      "tp": 3,
      "fp": 2,
      "fn": 1
@@ -4805,14 +4800,14 @@
      "fp": 2,
      "fn": 0
     },
-    "M:OTHER": {
-     "tp": 1,
-     "fp": 1,
-     "fn": 0
+    "M:CONJ": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 1
     },
-    "U:CONJ": {
-     "tp": 2,
-     "fp": 0,
+    "U:PRON": {
+     "tp": 1,
+     "fp": 3,
      "fn": 0
     },
     "U:OTHER": {
@@ -4820,9 +4815,14 @@
      "fp": 2,
      "fn": 0
     },
-    "U:PRON": {
+    "U:CONJ": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:OTHER": {
      "tp": 1,
-     "fp": 3,
+     "fp": 1,
      "fn": 0
     },
     "R:ADV": {
@@ -4835,20 +4835,20 @@
      "fp": 1,
      "fn": 1
     },
-    "M:NOUN": {
+    "R:VERB:SVA": {
      "tp": 0,
-     "fp": 3,
-     "fn": 0
+     "fp": 0,
+     "fn": 1
     },
     "R:NOUN:NUM": {
      "tp": 0,
      "fp": 1,
      "fn": 1
     },
-    "R:VERB:SVA": {
+    "M:NOUN": {
      "tp": 0,
-     "fp": 0,
-     "fn": 1
+     "fp": 3,
+     "fn": 0
     },
     "R:VERB:FORM": {
      "tp": 1,
@@ -4856,43 +4856,43 @@
      "fn": 0
     }
    },
-   "punct_._p": 0.8687258687258688,
+   "punct_._p": 0.872093023255814,
    "punct_._r": 0.6901840490797546,
-   "punct_._f1": 0.7692307692307693,
-   "punct_,_p": 0.654911838790932,
+   "punct_._f1": 0.7705479452054795,
+   "punct_,_p": 0.6516290726817042,
    "punct_,_r": 0.7365439093484419,
-   "punct_,_f1": 0.6933333333333334,
-   "punct_?_p": 0.6923076923076923,
-   "punct_?_r": 0.8181818181818182,
-   "punct_?_f1": 0.7500000000000001,
-   "punct_macro_f1": 0.7375213675213675,
-   "casing_acc": 0.9748148148148148,
+   "punct_,_f1": 0.6914893617021277,
+   "punct_?_p": 0.7037037037037037,
+   "punct_?_r": 0.8636363636363636,
+   "punct_?_f1": 0.7755102040816326,
+   "punct_macro_f1": 0.7458491703297466,
+   "casing_acc": 0.9750092558311736,
    "cue_match_rate": 0.611439842209073,
-   "pair_mean_ms": 107.02580645161302,
-   "pair_median_ms": 32.500000000027285,
-   "pair_within_100": 0.7032258064516129,
-   "pair_within_250": 0.9354838709677419,
-   "t_mean_ms": 25.03252032520324,
+   "pair_mean_ms": 104.79354838709685,
+   "pair_median_ms": 33.00000000000125,
+   "pair_within_100": 0.7048387096774194,
+   "pair_within_250": 0.9387096774193548,
+   "t_mean_ms": 24.397148676171202,
    "t_median_ms": 21.99999999999136,
-   "t_within_100": 0.9898373983739838,
-   "t_within_250": 0.9959349593495935,
+   "t_within_100": 0.9918533604887984,
+   "t_within_250": 0.9959266802443992,
    "onset_bias_ms": -16.999999999995907,
-   "drift_ms_per_min": 0.5098402610856817,
-   "w_start_mean_ms": 24.747888888888706,
-   "w_start_median_ms": 18.299999999999983,
-   "w_start_within_50": 0.8957407407407407,
-   "w_start_within_100": 0.9879629629629629,
-   "w_boundary_mean_ms": 49.98503703703692,
-   "w_aligned": 5400,
+   "drift_ms_per_min": 1.0465909902456718,
+   "w_start_mean_ms": 24.743354313217143,
+   "w_start_median_ms": 18.299999999998207,
+   "w_start_within_50": 0.8957793409848205,
+   "w_start_within_100": 0.9879674194742688,
+   "w_boundary_mean_ms": 49.98443169196583,
+   "w_aligned": 5402,
    "fmt_lines_ok": 1.0,
    "fmt_nlines_ok": 1.0,
-   "fmt_cps17_ok": 0.9898373983739838,
+   "fmt_cps17_ok": 0.9898167006109979,
    "fmt_cps20_ok": 1.0,
    "fmt_dur_ok": 1.0,
    "fmt_gap_ok": 1.0,
-   "fmt_all_ok": 0.9898373983739838,
-   "n_cues": 492,
-   "rtf": 0.05347320311258437,
+   "fmt_all_ok": 0.9898167006109979,
+   "n_cues": 491,
+   "rtf": 0.04883876698813383,
    "recall_by_type": {
     "asr": {
      "fixed": 73,
@@ -4900,9 +4900,9 @@
      "recall": 0.4899328859060403
     },
     "drop": {
-     "fixed": 106,
+     "fixed": 107,
      "total": 112,
-     "recall": 0.9464285714285714
+     "recall": 0.9553571428571429
     },
     "dup": {
      "fixed": 44,
@@ -4928,31 +4928,56 @@
   },
   "libri-test-other": {
    "n_files": 8,
-   "wer": 0.024757014487438108,
-   "cer": 0.010958997644327608,
+   "wer": 0.024390243902439025,
+   "cer": 0.010685876207708852,
    "sub": 114,
-   "del": 14,
+   "del": 12,
    "ins": 7,
    "n_ref_words": 5453,
-   "edit_p": 0.8605341246290801,
-   "edit_r": 0.8841463414634146,
-   "edit_f05": 0.8651551312649163,
-   "edit_tp": 580,
+   "edit_p": 0.8609467455621301,
+   "edit_r": 0.8871951219512195,
+   "edit_f05": 0.8660714285714285,
+   "edit_tp": 582,
    "edit_fp": 94,
-   "edit_fn": 76,
+   "edit_fn": 74,
    "overcorrection": 0.012650352550808793,
-   "errant_p": 0.7345399698340875,
-   "errant_r": 0.710948905109489,
-   "errant_f05": 0.7296973329337729,
+   "errant_p": 0.7338345864661654,
+   "errant_r": 0.7124087591240876,
+   "errant_f05": 0.7294469357249626,
    "errant_types": {
+    "R:VERB": {
+     "tp": 26,
+     "fp": 8,
+     "fn": 15
+    },
+    "U:ADV": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 21,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:VERB:TENSE": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:VERB": {
+     "tp": 9,
+     "fp": 1,
+     "fn": 0
+    },
     "U:NOUN": {
      "tp": 5,
      "fp": 3,
      "fn": 1
     },
-    "U:ADV": {
-     "tp": 2,
-     "fp": 0,
+    "U:PREP": {
+     "tp": 8,
+     "fp": 1,
      "fn": 0
     },
     "R:MORPH": {
@@ -4960,25 +4985,15 @@
      "fp": 3,
      "fn": 2
     },
-    "R:VERB": {
-     "tp": 26,
-     "fp": 8,
-     "fn": 15
+    "R:SPELL": {
+     "tp": 220,
+     "fp": 57,
+     "fn": 50
     },
-    "M:OTHER": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 1
-    },
-    "M:VERB:TENSE": {
-     "tp": 5,
-     "fp": 0,
-     "fn": 1
-    },
-    "M:CONJ": {
-     "tp": 6,
-     "fp": 0,
-     "fn": 0
+    "R:NOUN": {
+     "tp": 217,
+     "fp": 117,
+     "fn": 143
     },
     "R:ORTH": {
      "tp": 146,
@@ -4987,38 +5002,18 @@
     },
     "M:DET": {
      "tp": 24,
-     "fp": 5,
+     "fp": 6,
      "fn": 4
-    },
-    "M:PREP": {
-     "tp": 25,
-     "fp": 1,
-     "fn": 3
     },
     "R:ADJ": {
      "tp": 9,
      "fp": 2,
      "fn": 4
     },
-    "M:VERB": {
-     "tp": 9,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:SPELL": {
-     "tp": 220,
-     "fp": 57,
-     "fn": 50
-    },
-    "U:PREP": {
-     "tp": 8,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:PREP": {
-     "tp": 21,
-     "fp": 1,
-     "fn": 0
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 1
     },
     "R:VERB:TENSE": {
      "tp": 4,
@@ -5030,55 +5025,55 @@
      "fp": 89,
      "fn": 113
     },
-    "R:NOUN": {
-     "tp": 216,
-     "fp": 116,
-     "fn": 144
+    "M:PREP": {
+     "tp": 25,
+     "fp": 1,
+     "fn": 3
+    },
+    "M:CONJ": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
     },
     "U:ADJ": {
      "tp": 3,
      "fp": 2,
      "fn": 2
     },
-    "M:PRON": {
-     "tp": 11,
-     "fp": 1,
-     "fn": 1
-    },
-    "U:CONJ": {
-     "tp": 5,
-     "fp": 0,
-     "fn": 0
-    },
     "U:PRON": {
      "tp": 2,
      "fp": 0,
      "fn": 0
-    },
-    "U:DET": {
-     "tp": 6,
-     "fp": 2,
-     "fn": 0
-    },
-    "R:PRON": {
-     "tp": 4,
-     "fp": 0,
-     "fn": 2
     },
     "R:DET": {
      "tp": 7,
      "fp": 2,
      "fn": 4
     },
+    "R:PRON": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:DET": {
+     "tp": 6,
+     "fp": 2,
+     "fn": 0
+    },
+    "U:CONJ": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:PRON": {
+     "tp": 11,
+     "fp": 1,
+     "fn": 1
+    },
     "R:ADV": {
      "tp": 5,
      "fp": 0,
      "fn": 2
-    },
-    "R:CONJ": {
-     "tp": 1,
-     "fp": 0,
-     "fn": 0
     },
     "R:VERB:FORM": {
      "tp": 1,
@@ -5088,6 +5083,11 @@
     "M:PART": {
      "tp": 1,
      "fp": 1,
+     "fn": 0
+    },
+    "R:CONJ": {
+     "tp": 1,
+     "fp": 0,
      "fn": 0
     },
     "M:NOUN": {
@@ -5100,28 +5100,18 @@
      "fp": 0,
      "fn": 0
     },
-    "M:PUNCT": {
-     "tp": 0,
-     "fp": 1,
-     "fn": 0
+    "M:ADV": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 1
     },
     "U:VERB:TENSE": {
      "tp": 1,
      "fp": 0,
      "fn": 0
     },
-    "M:ADV": {
-     "tp": 1,
-     "fp": 0,
-     "fn": 1
-    },
-    "R:NOUN:NUM": {
-     "tp": 2,
-     "fp": 1,
-     "fn": 1
-    },
-    "U:OTHER": {
-     "tp": 1,
+    "M:PUNCT": {
+     "tp": 0,
      "fp": 1,
      "fn": 0
     },
@@ -5134,6 +5124,16 @@
      "tp": 1,
      "fp": 0,
      "fn": 0
+    },
+    "U:OTHER": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:NOUN:NUM": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 1
     },
     "U:PART": {
      "tp": 1,
@@ -5149,31 +5149,31 @@
    "punct_._p": 0.8226600985221675,
    "punct_._r": 0.7046413502109705,
    "punct_._f1": 0.7590909090909091,
-   "punct_,_p": 0.6767955801104972,
+   "punct_,_p": 0.6730769230769231,
    "punct_,_r": 0.667574931880109,
-   "punct_,_f1": 0.6721536351165981,
+   "punct_,_f1": 0.6703146374829001,
    "punct_?_p": 0.72,
    "punct_?_r": 0.4864864864864865,
    "punct_?_f1": 0.5806451612903226,
-   "punct_macro_f1": 0.67062990183261,
-   "casing_acc": 0.9805513595166163,
-   "cue_match_rate": 0.6051080550098232,
-   "pair_mean_ms": 100.0584415584421,
+   "punct_macro_f1": 0.6700169026213773,
+   "casing_acc": 0.9805587013967535,
+   "cue_match_rate": 0.6031434184675835,
+   "pair_mean_ms": 99.98697068403962,
    "pair_median_ms": 31.999999999998252,
-   "pair_within_100": 0.7402597402597403,
-   "pair_within_250": 0.9448051948051948,
-   "t_mean_ms": 26.86652977412784,
+   "pair_within_100": 0.741042345276873,
+   "pair_within_250": 0.9446254071661238,
+   "t_mean_ms": 26.3860369609862,
    "t_median_ms": 18.000000000000682,
-   "t_within_100": 0.9774127310061602,
+   "t_within_100": 0.9794661190965093,
    "t_within_250": 0.997946611909651,
    "onset_bias_ms": -12.000000000000455,
-   "drift_ms_per_min": 0.7124009812897698,
-   "w_start_mean_ms": 26.056203832714598,
+   "drift_ms_per_min": 0.9173909530654859,
+   "w_start_mean_ms": 25.95199235523906,
    "w_start_median_ms": 21.69999999996719,
-   "w_start_within_50": 0.883119335347432,
-   "w_start_within_100": 0.9831948640483383,
-   "w_boundary_mean_ms": 51.333321647538014,
-   "w_aligned": 5296,
+   "w_start_within_50": 0.8831634579086448,
+   "w_start_within_100": 0.9833899584748962,
+   "w_boundary_mean_ms": 51.26079113728979,
+   "w_aligned": 5298,
    "fmt_lines_ok": 1.0,
    "fmt_nlines_ok": 1.0,
    "fmt_cps17_ok": 0.9159836065573771,
@@ -5182,17 +5182,17 @@
    "fmt_gap_ok": 1.0,
    "fmt_all_ok": 0.9159836065573771,
    "n_cues": 488,
-   "rtf": 0.0508249780890582,
+   "rtf": 0.04827445856887326,
    "recall_by_type": {
     "asr": {
-     "fixed": 109,
+     "fixed": 110,
      "total": 162,
-     "recall": 0.6728395061728395
+     "recall": 0.6790123456790124
     },
     "drop": {
-     "fixed": 103,
+     "fixed": 104,
      "total": 107,
-     "recall": 0.9626168224299065
+     "recall": 0.9719626168224299
     },
     "dup": {
      "fixed": 43,
@@ -5218,137 +5218,27 @@
   },
   "ted-test": {
    "n_files": 11,
-   "wer": 0.029343164547438117,
-   "cer": 0.01766794801391177,
-   "sub": 349,
-   "del": 332,
-   "ins": 99,
+   "wer": 0.029004589571890754,
+   "cer": 0.01753615229727256,
+   "sub": 346,
+   "del": 317,
+   "ins": 108,
    "n_ref_words": 26582,
-   "edit_p": 0.8006744098913451,
-   "edit_r": 0.7842201834862386,
-   "edit_f05": 0.7973285575703306,
-   "edit_tp": 2137,
-   "edit_fp": 532,
-   "edit_fn": 588,
-   "overcorrection": 0.01600922131147541,
-   "errant_p": 0.8233242929097249,
-   "errant_r": 0.7896692679301375,
-   "errant_f05": 0.8163657318478678,
+   "edit_p": 0.8010451661067562,
+   "edit_r": 0.7875229357798165,
+   "edit_f05": 0.7983036976415446,
+   "edit_tp": 2146,
+   "edit_fp": 533,
+   "edit_fn": 579,
+   "overcorrection": 0.015710382513661202,
+   "errant_p": 0.8248936992655586,
+   "errant_r": 0.7930137495354886,
+   "errant_f05": 0.8183142879055142,
    "errant_types": {
-    "M:VERB:FORM": {
-     "tp": 28,
-     "fp": 1,
-     "fn": 2
-    },
-    "M:PRON": {
-     "tp": 65,
-     "fp": 3,
-     "fn": 18
-    },
-    "M:PART": {
-     "tp": 7,
-     "fp": 0,
-     "fn": 0
-    },
-    "M:NOUN": {
-     "tp": 1,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:MORPH": {
-     "tp": 17,
-     "fp": 1,
-     "fn": 8
-    },
-    "U:VERB:TENSE": {
-     "tp": 16,
-     "fp": 11,
-     "fn": 0
-    },
     "R:VERB": {
      "tp": 46,
      "fp": 2,
      "fn": 16
-    },
-    "R:NOUN:NUM": {
-     "tp": 8,
-     "fp": 0,
-     "fn": 12
-    },
-    "M:PREP": {
-     "tp": 79,
-     "fp": 6,
-     "fn": 14
-    },
-    "M:DET": {
-     "tp": 114,
-     "fp": 9,
-     "fn": 17
-    },
-    "U:PRON": {
-     "tp": 19,
-     "fp": 24,
-     "fn": 2
-    },
-    "U:VERB": {
-     "tp": 25,
-     "fp": 18,
-     "fn": 1
-    },
-    "U:OTHER": {
-     "tp": 8,
-     "fp": 75,
-     "fn": 1
-    },
-    "M:ADV": {
-     "tp": 31,
-     "fp": 4,
-     "fn": 2
-    },
-    "M:VERB": {
-     "tp": 40,
-     "fp": 3,
-     "fn": 3
-    },
-    "R:SPELL": {
-     "tp": 1031,
-     "fp": 33,
-     "fn": 80
-    },
-    "R:VERB:TENSE": {
-     "tp": 13,
-     "fp": 2,
-     "fn": 16
-    },
-    "U:ADJ": {
-     "tp": 14,
-     "fp": 8,
-     "fn": 0
-    },
-    "R:NOUN": {
-     "tp": 50,
-     "fp": 8,
-     "fn": 75
-    },
-    "R:DET": {
-     "tp": 14,
-     "fp": 4,
-     "fn": 30
-    },
-    "R:PUNCT": {
-     "tp": 2,
-     "fp": 1,
-     "fn": 0
-    },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 3
-    },
-    "U:NOUN": {
-     "tp": 55,
-     "fp": 36,
-     "fn": 4
     },
     "U:ADV": {
      "tp": 28,
@@ -5360,74 +5250,169 @@
      "fp": 1,
      "fn": 0
     },
-    "M:CONJ": {
-     "tp": 25,
-     "fp": 4,
-     "fn": 7
+    "R:PREP": {
+     "tp": 62,
+     "fp": 2,
+     "fn": 19
     },
-    "U:CONJ": {
-     "tp": 8,
-     "fp": 17,
-     "fn": 1
+    "U:PRON": {
+     "tp": 19,
+     "fp": 24,
+     "fn": 2
+    },
+    "U:NOUN": {
+     "tp": 55,
+     "fp": 34,
+     "fn": 4
+    },
+    "R:MORPH": {
+     "tp": 17,
+     "fp": 1,
+     "fn": 8
+    },
+    "R:SPELL": {
+     "tp": 1031,
+     "fp": 33,
+     "fn": 80
+    },
+    "R:DET": {
+     "tp": 14,
+     "fp": 5,
+     "fn": 30
+    },
+    "M:VERB:FORM": {
+     "tp": 28,
+     "fp": 1,
+     "fn": 2
     },
     "R:PART": {
      "tp": 5,
      "fp": 0,
      "fn": 2
     },
-    "R:ADJ": {
-     "tp": 4,
-     "fp": 2,
-     "fn": 4
+    "M:DET": {
+     "tp": 115,
+     "fp": 10,
+     "fn": 16
+    },
+    "U:OTHER": {
+     "tp": 8,
+     "fp": 75,
+     "fn": 1
     },
     "U:DET": {
      "tp": 26,
-     "fp": 45,
+     "fp": 44,
      "fn": 3
     },
-    "R:PREP": {
-     "tp": 62,
-     "fp": 2,
-     "fn": 19
+    "U:CONJ": {
+     "tp": 8,
+     "fp": 17,
+     "fn": 1
     },
-    "R:OTHER": {
-     "tp": 192,
-     "fp": 73,
-     "fn": 199
-    },
-    "R:PRON": {
-     "tp": 17,
-     "fp": 4,
-     "fn": 15
+    "M:PRON": {
+     "tp": 67,
+     "fp": 3,
+     "fn": 16
     },
     "R:ADV": {
      "tp": 10,
      "fp": 4,
      "fn": 4
     },
-    "R:NOUN:POSS": {
-     "tp": 0,
+    "R:NOUN:NUM": {
+     "tp": 8,
      "fp": 0,
-     "fn": 1
+     "fn": 12
     },
-    "M:OTHER": {
-     "tp": 7,
-     "fp": 3,
-     "fn": 1
-    },
-    "M:VERB:TENSE": {
-     "tp": 18,
-     "fp": 3,
-     "fn": 2
-    },
-    "U:PREP": {
-     "tp": 21,
-     "fp": 30,
+    "U:VERB:TENSE": {
+     "tp": 16,
+     "fp": 11,
      "fn": 0
     },
-    "U:PUNCT": {
-     "tp": 0,
+    "M:NOUN": {
+     "tp": 1,
+     "fp": 2,
+     "fn": 0
+    },
+    "R:PUNCT": {
+     "tp": 2,
      "fp": 1,
+     "fn": 0
+    },
+    "U:ADJ": {
+     "tp": 14,
+     "fp": 7,
+     "fn": 0
+    },
+    "M:PART": {
+     "tp": 7,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:VERB": {
+     "tp": 40,
+     "fp": 3,
+     "fn": 3
+    },
+    "M:VERB:TENSE": {
+     "tp": 19,
+     "fp": 4,
+     "fn": 1
+    },
+    "U:VERB": {
+     "tp": 25,
+     "fp": 18,
+     "fn": 1
+    },
+    "R:NOUN": {
+     "tp": 50,
+     "fp": 8,
+     "fn": 75
+    },
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 3
+    },
+    "R:PRON": {
+     "tp": 17,
+     "fp": 2,
+     "fn": 15
+    },
+    "R:ADJ": {
+     "tp": 4,
+     "fp": 2,
+     "fn": 4
+    },
+    "M:ADV": {
+     "tp": 32,
+     "fp": 4,
+     "fn": 1
+    },
+    "R:VERB:TENSE": {
+     "tp": 13,
+     "fp": 2,
+     "fn": 16
+    },
+    "R:OTHER": {
+     "tp": 194,
+     "fp": 71,
+     "fn": 197
+    },
+    "M:PREP": {
+     "tp": 80,
+     "fp": 7,
+     "fn": 13
+    },
+    "M:CONJ": {
+     "tp": 25,
+     "fp": 5,
+     "fn": 7
+    },
+    "R:NOUN:INFL": {
+     "tp": 1,
+     "fp": 0,
      "fn": 0
     },
     "U:VERB:FORM": {
@@ -5435,10 +5420,25 @@
      "fp": 1,
      "fn": 0
     },
-    "R:NOUN:INFL": {
-     "tp": 1,
-     "fp": 0,
+    "U:PUNCT": {
+     "tp": 0,
+     "fp": 1,
      "fn": 0
+    },
+    "M:OTHER": {
+     "tp": 8,
+     "fp": 3,
+     "fn": 0
+    },
+    "U:PREP": {
+     "tp": 21,
+     "fp": 29,
+     "fn": 0
+    },
+    "R:NOUN:POSS": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
     },
     "U:PART": {
      "tp": 9,
@@ -5466,42 +5466,42 @@
      "fn": 0
     }
    },
-   "cue_match_rate": 0.3615423134702053,
-   "pair_mean_ms": 183.38365650969453,
+   "cue_match_rate": 0.3520280420630946,
+   "pair_mean_ms": 184.44452347083825,
    "pair_median_ms": 33.00000000001546,
-   "pair_within_100": 0.6613573407202216,
-   "pair_within_250": 0.7929362880886427,
-   "t_mean_ms": 45.601301115240425,
+   "pair_within_100": 0.6600284495021337,
+   "pair_within_250": 0.7908961593172119,
+   "t_mean_ms": 45.72051996285838,
    "t_median_ms": 17.00000000005275,
-   "t_within_100": 0.9442379182156134,
-   "t_within_250": 0.9693308550185874,
+   "t_within_100": 0.9442896935933147,
+   "t_within_250": 0.968895078922934,
    "onset_bias_ms": -16.999999999939064,
-   "drift_ms_per_min": 1.9063136973256247,
-   "w_start_mean_ms": 34.28657991317654,
+   "drift_ms_per_min": 2.0823241695601764,
+   "w_start_mean_ms": 34.258863075130066,
    "w_start_median_ms": 16.70000000001437,
-   "w_start_within_50": 0.874745050989802,
-   "w_start_within_100": 0.9630473905218956,
-   "w_boundary_mean_ms": 58.16550660368818,
-   "w_aligned": 25005,
+   "w_start_within_50": 0.874635335491348,
+   "w_start_within_100": 0.963034008711985,
+   "w_boundary_mean_ms": 58.14266845003489,
+   "w_aligned": 25023,
    "fmt_lines_ok": 1.0,
    "fmt_nlines_ok": 1.0,
-   "fmt_cps17_ok": 0.91415313225058,
-   "fmt_cps20_ok": 0.9981438515081207,
+   "fmt_cps17_ok": 0.91241890639481,
+   "fmt_cps20_ok": 0.9981464318813716,
    "fmt_dur_ok": 1.0,
    "fmt_gap_ok": 1.0,
-   "fmt_all_ok": 0.91415313225058,
-   "n_cues": 2155,
-   "rtf": 0.06192382296752188,
+   "fmt_all_ok": 0.91241890639481,
+   "n_cues": 2158,
+   "rtf": 0.06626768584366846,
    "recall_by_type": {
     "asr": {
-     "fixed": 238,
+     "fixed": 240,
      "total": 667,
-     "recall": 0.3568215892053973
+     "recall": 0.3598200899550225
     },
     "drop": {
-     "fixed": 470,
+     "fixed": 477,
      "total": 517,
-     "recall": 0.9090909090909091
+     "recall": 0.9226305609284333
     },
     "dup": {
      "fixed": 226,
@@ -5514,109 +5514,49 @@
      "recall": 0.9574468085106383
     },
     "spelling": {
-     "fixed": 752,
+     "fixed": 753,
      "total": 776,
-     "recall": 0.9690721649484536
+     "recall": 0.970360824742268
     }
    }
   },
   "ALL": {
    "n_files": 27,
-   "wer": 0.0275334201504239,
-   "cer": 0.01551889871849571,
-   "sub": 557,
-   "del": 359,
-   "ins": 120,
+   "wer": 0.02724107688627847,
+   "cer": 0.01538524805049939,
+   "sub": 554,
+   "del": 341,
+   "ins": 130,
    "n_ref_words": 37627,
-   "edit_p": 0.8243447580645161,
-   "edit_r": 0.8108577094695092,
-   "edit_f05": 0.8216115743996785,
-   "edit_tp": 3271,
+   "edit_p": 0.8248743718592965,
+   "edit_r": 0.8138324243926623,
+   "edit_f05": 0.8226420767765861,
+   "edit_tp": 3283,
    "edit_fp": 697,
-   "edit_fn": 763,
-   "overcorrection": 0.014138856229839318,
-   "errant_p": 0.7768704899354348,
-   "errant_r": 0.7469417564360051,
-   "errant_f05": 0.7706943973475001,
+   "edit_fn": 751,
+   "overcorrection": 0.013897681709927346,
+   "errant_p": 0.7774621212121212,
+   "errant_r": 0.7494979003103889,
+   "errant_f05": 0.771703575591232,
    "errant_types": {
-    "M:PRON": {
-     "tp": 95,
-     "fp": 8,
-     "fn": 24
-    },
-    "R:PRON": {
-     "tp": 23,
-     "fp": 4,
-     "fn": 18
-    },
-    "R:MORPH": {
-     "tp": 24,
-     "fp": 4,
-     "fn": 11
-    },
-    "U:VERB:TENSE": {
-     "tp": 23,
-     "fp": 11,
-     "fn": 0
-    },
     "R:VERB": {
      "tp": 99,
      "fp": 23,
      "fn": 48
     },
-    "M:VERB:TENSE": {
-     "tp": 26,
-     "fp": 3,
-     "fn": 5
-    },
-    "R:OTHER": {
-     "tp": 569,
-     "fp": 270,
-     "fn": 440
-    },
-    "R:ORTH": {
-     "tp": 379,
-     "fp": 105,
-     "fn": 109
-    },
-    "M:DET": {
-     "tp": 165,
-     "fp": 20,
-     "fn": 23
-    },
-    "M:PREP": {
-     "tp": 130,
-     "fp": 9,
-     "fn": 20
-    },
-    "U:VERB": {
-     "tp": 38,
-     "fp": 19,
-     "fn": 2
-    },
-    "R:NOUN:INFL": {
-     "tp": 1,
-     "fp": 1,
+    "U:PART": {
+     "tp": 11,
+     "fp": 2,
      "fn": 0
     },
-    "R:ADJ": {
-     "tp": 20,
-     "fp": 7,
-     "fn": 12
-    },
-    "R:VERB:TENSE": {
-     "tp": 28,
-     "fp": 8,
+    "R:PREP": {
+     "tp": 94,
+     "fp": 3,
      "fn": 20
     },
-    "R:SPELL": {
-     "tp": 1463,
-     "fp": 145,
-     "fn": 188
-    },
-    "U:ADJ": {
-     "tp": 23,
-     "fp": 10,
+    "M:VERB:TENSE": {
+     "tp": 29,
+     "fp": 4,
      "fn": 2
     },
     "M:VERB": {
@@ -5624,40 +5564,95 @@
      "fp": 4,
      "fn": 3
     },
-    "U:PREP": {
-     "tp": 34,
-     "fp": 32,
+    "R:NOUN:INFL": {
+     "tp": 1,
+     "fp": 1,
      "fn": 0
     },
-    "U:DET": {
-     "tp": 37,
-     "fp": 48,
-     "fn": 3
+    "U:PREP": {
+     "tp": 34,
+     "fp": 31,
+     "fn": 0
     },
-    "R:NOUN": {
-     "tp": 424,
-     "fp": 213,
-     "fn": 341
+    "R:MORPH": {
+     "tp": 24,
+     "fp": 4,
+     "fn": 11
     },
-    "R:PREP": {
-     "tp": 94,
-     "fp": 3,
-     "fn": 20
+    "R:SPELL": {
+     "tp": 1463,
+     "fp": 145,
+     "fn": 188
+    },
+    "U:VERB": {
+     "tp": 38,
+     "fp": 19,
+     "fn": 2
     },
     "R:DET": {
      "tp": 23,
-     "fp": 6,
+     "fp": 7,
      "fn": 38
     },
-    "U:PART": {
-     "tp": 11,
+    "R:NOUN": {
+     "tp": 426,
+     "fp": 212,
+     "fn": 339
+    },
+    "R:ORTH": {
+     "tp": 380,
+     "fp": 105,
+     "fn": 108
+    },
+    "R:PRON": {
+     "tp": 23,
      "fp": 2,
+     "fn": 18
+    },
+    "M:DET": {
+     "tp": 166,
+     "fp": 22,
+     "fn": 22
+    },
+    "U:DET": {
+     "tp": 37,
+     "fp": 47,
+     "fn": 3
+    },
+    "M:PRON": {
+     "tp": 97,
+     "fp": 8,
+     "fn": 22
+    },
+    "R:ADJ": {
+     "tp": 20,
+     "fp": 7,
+     "fn": 12
+    },
+    "U:VERB:TENSE": {
+     "tp": 23,
+     "fp": 11,
      "fn": 0
     },
-    "U:NOUN": {
-     "tp": 63,
-     "fp": 41,
-     "fn": 6
+    "R:VERB:TENSE": {
+     "tp": 28,
+     "fp": 8,
+     "fn": 20
+    },
+    "R:OTHER": {
+     "tp": 571,
+     "fp": 271,
+     "fn": 438
+    },
+    "M:PREP": {
+     "tp": 131,
+     "fp": 10,
+     "fn": 19
+    },
+    "U:ADJ": {
+     "tp": 23,
+     "fp": 9,
+     "fn": 2
     },
     "U:ADV": {
      "tp": 34,
@@ -5669,35 +5664,40 @@
      "fp": 1,
      "fn": 0
     },
-    "M:CONJ": {
-     "tp": 34,
-     "fp": 6,
-     "fn": 8
+    "U:NOUN": {
+     "tp": 63,
+     "fp": 39,
+     "fn": 6
     },
     "M:ADV": {
-     "tp": 36,
-     "fp": 6,
-     "fn": 3
-    },
-    "M:OTHER": {
-     "tp": 8,
+     "tp": 37,
      "fp": 6,
      "fn": 2
     },
-    "U:CONJ": {
-     "tp": 15,
-     "fp": 17,
-     "fn": 1
+    "M:CONJ": {
+     "tp": 34,
+     "fp": 7,
+     "fn": 8
+    },
+    "U:PRON": {
+     "tp": 22,
+     "fp": 27,
+     "fn": 2
     },
     "U:OTHER": {
      "tp": 9,
      "fp": 78,
      "fn": 1
     },
-    "U:PRON": {
-     "tp": 22,
-     "fp": 27,
-     "fn": 2
+    "U:CONJ": {
+     "tp": 15,
+     "fp": 17,
+     "fn": 1
+    },
+    "M:OTHER": {
+     "tp": 9,
+     "fp": 6,
+     "fn": 1
     },
     "R:ADV": {
      "tp": 16,
@@ -5709,20 +5709,20 @@
      "fp": 3,
      "fn": 1
     },
-    "M:NOUN": {
-     "tp": 1,
-     "fp": 7,
-     "fn": 0
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 4
     },
     "R:NOUN:NUM": {
      "tp": 10,
      "fp": 2,
      "fn": 14
     },
-    "R:VERB:SVA": {
-     "tp": 0,
-     "fp": 2,
-     "fn": 4
+    "M:NOUN": {
+     "tp": 1,
+     "fp": 8,
+     "fn": 0
     },
     "R:VERB:FORM": {
      "tp": 9,
@@ -5749,20 +5749,20 @@
      "fp": 0,
      "fn": 2
     },
-    "R:NOUN:POSS": {
-     "tp": 0,
-     "fp": 0,
-     "fn": 1
+    "U:VERB:FORM": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 0
     },
     "U:PUNCT": {
      "tp": 0,
      "fp": 1,
      "fn": 0
     },
-    "U:VERB:FORM": {
-     "tp": 2,
-     "fp": 1,
-     "fn": 0
+    "R:NOUN:POSS": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
     },
     "R:ADJ:FORM": {
      "tp": 0,
@@ -5780,53 +5780,53 @@
      "fn": 1
     }
    },
-   "punct_._p": 0.8484848484848485,
+   "punct_._p": 0.8503253796095445,
    "punct_._r": 0.6962699822380106,
-   "punct_._f1": 0.7648780487804878,
-   "punct_,_p": 0.6653491436100132,
+   "punct_._f1": 0.765625,
+   "punct_,_p": 0.6618610747051114,
    "punct_,_r": 0.7013888888888888,
-   "punct_,_f1": 0.68289384719405,
-   "punct_?_p": 0.7058823529411765,
-   "punct_?_r": 0.6101694915254238,
-   "punct_?_f1": 0.6545454545454547,
-   "punct_macro_f1": 0.7007724501733308,
-   "casing_acc": 0.9776551982049364,
-   "cue_match_rate": 0.44473946232990375,
-   "pair_mean_ms": 146.5664179104475,
-   "pair_median_ms": 32.999999999901775,
-   "pair_within_100": 0.689179104477612,
-   "pair_within_250": 0.860820895522388,
-   "t_mean_ms": 39.45512615777632,
-   "t_median_ms": 18.000000000000682,
-   "t_within_100": 0.9565633982753114,
-   "t_within_250": 0.9779623123602683,
+   "punct_,_f1": 0.6810519217801753,
+   "punct_?_p": 0.7115384615384616,
+   "punct_?_r": 0.6271186440677966,
+   "punct_?_f1": 0.6666666666666666,
+   "punct_macro_f1": 0.704447862815614,
+   "casing_acc": 0.9777570093457943,
+   "cue_match_rate": 0.4381015599070694,
+   "pair_mean_ms": 146.09583333333296,
+   "pair_median_ms": 32.00000000003911,
+   "pair_within_100": 0.6893939393939394,
+   "pair_within_250": 0.8613636363636363,
+   "t_mean_ms": 39.37132822477563,
+   "t_median_ms": 17.00000000005275,
+   "t_within_100": 0.9572158365261814,
+   "t_within_250": 0.9776500638569604,
    "onset_bias_ms": -16.999999999939064,
-   "drift_ms_per_min": 0.9173909530654859,
-   "w_start_mean_ms": 31.622872923084362,
+   "drift_ms_per_min": 1.5644053155733428,
+   "w_start_mean_ms": 31.587962551494417,
    "w_start_median_ms": 16.700000000128057,
-   "w_start_within_50": 0.8791630486540993,
-   "w_start_within_100": 0.9698047673734629,
-   "w_boundary_mean_ms": 55.9146512442392,
-   "w_aligned": 35701,
+   "w_start_within_50": 0.8790975002099488,
+   "w_start_within_100": 0.9698233630994038,
+   "w_boundary_mean_ms": 55.888351036323485,
+   "w_aligned": 35723,
    "fmt_lines_ok": 1.0,
    "fmt_nlines_ok": 1.0,
-   "fmt_cps17_ok": 0.9263157894736842,
-   "fmt_cps20_ok": 0.9987240829346092,
-   "fmt_dur_ok": 0.999043062200957,
+   "fmt_cps17_ok": 0.925087663372649,
+   "fmt_cps20_ok": 0.9987248963978324,
+   "fmt_dur_ok": 0.9990436722983742,
    "fmt_gap_ok": 1.0,
-   "fmt_all_ok": 0.9263157894736842,
-   "n_cues": 3135,
-   "rtf": 0.05613138897244003,
+   "fmt_all_ok": 0.925087663372649,
+   "n_cues": 3137,
+   "rtf": 0.05577223513838554,
    "recall_by_type": {
     "asr": {
-     "fixed": 420,
+     "fixed": 423,
      "total": 978,
-     "recall": 0.4294478527607362
+     "recall": 0.4325153374233129
     },
     "drop": {
-     "fixed": 679,
+     "fixed": 688,
      "total": 736,
-     "recall": 0.9225543478260869
+     "recall": 0.9347826086956522
     },
     "dup": {
      "fixed": 313,
@@ -5844,9 +5844,1185 @@
      "recall": 0.967391304347826
     },
     "spelling": {
-     "fixed": 1073,
+     "fixed": 1074,
      "total": 1102,
-     "recall": 0.9736842105263158
+     "recall": 0.9745916515426497
+    }
+   }
+  }
+ },
+ "ours": {
+  "libri-test-clean": {
+   "n_files": 8,
+   "wer": 0.022174535050071532,
+   "cer": 0.010219385441735552,
+   "sub": 97,
+   "del": 10,
+   "ins": 17,
+   "n_ref_words": 5592,
+   "edit_p": 0.8975609756097561,
+   "edit_r": 0.8453292496171516,
+   "edit_f05": 0.8866045615162224,
+   "edit_tp": 552,
+   "edit_fp": 63,
+   "edit_fn": 101,
+   "overcorrection": 0.005279187817258883,
+   "errant_p": 0.7319054652880355,
+   "errant_r": 0.6998587570621468,
+   "errant_f05": 0.7252634660421545,
+   "errant_types": {
+    "R:VERB": {
+     "tp": 27,
+     "fp": 12,
+     "fn": 17
+    },
+    "U:PART": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 11,
+     "fp": 0,
+     "fn": 1
+    },
+    "M:VERB:TENSE": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 1
+    },
+    "M:VERB": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:NOUN:INFL": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 0
+    },
+    "U:PREP": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:MORPH": {
+     "tp": 3,
+     "fp": 0,
+     "fn": 2
+    },
+    "R:SPELL": {
+     "tp": 213,
+     "fp": 56,
+     "fn": 57
+    },
+    "U:VERB": {
+     "tp": 7,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:DET": {
+     "tp": 2,
+     "fp": 2,
+     "fn": 4
+    },
+    "R:NOUN": {
+     "tp": 154,
+     "fp": 86,
+     "fn": 126
+    },
+    "R:ORTH": {
+     "tp": 233,
+     "fp": 58,
+     "fn": 67
+    },
+    "R:PRON": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 1
+    },
+    "M:DET": {
+     "tp": 27,
+     "fp": 6,
+     "fn": 2
+    },
+    "U:DET": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:PRON": {
+     "tp": 20,
+     "fp": 4,
+     "fn": 4
+    },
+    "R:ADJ": {
+     "tp": 7,
+     "fp": 2,
+     "fn": 4
+    },
+    "U:VERB:TENSE": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:VERB:TENSE": {
+     "tp": 10,
+     "fp": 6,
+     "fn": 4
+    },
+    "R:OTHER": {
+     "tp": 193,
+     "fp": 114,
+     "fn": 129
+    },
+    "M:PREP": {
+     "tp": 28,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:ADJ": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    },
+    "U:ADV": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:PART": {
+     "tp": 3,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:ADV": {
+     "tp": 4,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:CONJ": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:CONJ": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:OTHER": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:ADV": {
+     "tp": 1,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:PRON": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:PUNCT": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 1
+    },
+    "U:NOUN": {
+     "tp": 3,
+     "fp": 1,
+     "fn": 1
+    },
+    "R:VERB:SVA": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:NOUN:NUM": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1
+    },
+    "M:NOUN": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 0
+    },
+    "R:VERB:FORM": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    }
+   },
+   "punct_._p": 0.8615384615384616,
+   "punct_._r": 0.6850152905198776,
+   "punct_._f1": 0.7632027257240204,
+   "punct_,_p": 0.6531645569620254,
+   "punct_,_r": 0.7392550143266475,
+   "punct_,_f1": 0.6935483870967742,
+   "punct_?_p": 0.8,
+   "punct_?_r": 0.9090909090909091,
+   "punct_?_f1": 0.8510638297872342,
+   "punct_macro_f1": 0.7692716475360095,
+   "casing_acc": 0.9746577876433592,
+   "cue_match_rate": 0.6291913214990138,
+   "pair_mean_ms": 103.29780564263332,
+   "pair_median_ms": 32.00000000001069,
+   "pair_within_100": 0.7115987460815048,
+   "pair_within_250": 0.9404388714733543,
+   "t_mean_ms": 23.90427698574333,
+   "t_median_ms": 21.99999999999136,
+   "t_within_100": 0.9938900203665988,
+   "t_within_250": 0.9979633401221996,
+   "onset_bias_ms": -16.999999999995907,
+   "drift_ms_per_min": 1.3242641761239031,
+   "w_start_mean_ms": 24.732778394376396,
+   "w_start_median_ms": 18.29999999999643,
+   "w_start_within_50": 0.8951165371809101,
+   "w_start_within_100": 0.9879763226045135,
+   "w_boundary_mean_ms": 49.9918793932668,
+   "w_aligned": 5406,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9877800407331976,
+   "fmt_cps20_ok": 1.0,
+   "fmt_dur_ok": 1.0,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.9877800407331976,
+   "n_cues": 491,
+   "rtf": 0.0748622355071415,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 70,
+     "total": 149,
+     "recall": 0.4697986577181208
+    },
+    "drop": {
+     "fixed": 108,
+     "total": 112,
+     "recall": 0.9642857142857143
+    },
+    "dup": {
+     "fixed": 45,
+     "total": 54,
+     "recall": 0.8333333333333334
+    },
+    "entity": {
+     "fixed": 54,
+     "total": 64,
+     "recall": 0.84375
+    },
+    "homophone": {
+     "fixed": 110,
+     "total": 112,
+     "recall": 0.9821428571428571
+    },
+    "spelling": {
+     "fixed": 162,
+     "total": 164,
+     "recall": 0.9878048780487805
+    }
+   }
+  },
+  "libri-test-other": {
+   "n_files": 8,
+   "wer": 0.020172382174949568,
+   "cer": 0.008261923457717387,
+   "sub": 96,
+   "del": 8,
+   "ins": 6,
+   "n_ref_words": 5453,
+   "edit_p": 0.901386748844376,
+   "edit_r": 0.8917682926829268,
+   "edit_f05": 0.8994464944649446,
+   "edit_tp": 585,
+   "edit_fp": 64,
+   "edit_fn": 71,
+   "overcorrection": 0.00829531314807134,
+   "errant_p": 0.7484848484848485,
+   "errant_r": 0.7211678832116788,
+   "errant_f05": 0.7428571428571429,
+   "errant_types": {
+    "R:VERB": {
+     "tp": 25,
+     "fp": 8,
+     "fn": 16
+    },
+    "U:ADV": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 20,
+     "fp": 2,
+     "fn": 1
+    },
+    "M:VERB:TENSE": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:VERB": {
+     "tp": 7,
+     "fp": 1,
+     "fn": 2
+    },
+    "U:NOUN": {
+     "tp": 5,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:PREP": {
+     "tp": 8,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:MORPH": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 2
+    },
+    "R:SPELL": {
+     "tp": 223,
+     "fp": 54,
+     "fn": 47
+    },
+    "R:NOUN": {
+     "tp": 219,
+     "fp": 112,
+     "fn": 141
+    },
+    "R:ORTH": {
+     "tp": 150,
+     "fp": 48,
+     "fn": 38
+    },
+    "M:DET": {
+     "tp": 25,
+     "fp": 4,
+     "fn": 3
+    },
+    "R:ADJ": {
+     "tp": 10,
+     "fp": 1,
+     "fn": 3
+    },
+    "M:OTHER": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1
+    },
+    "R:VERB:TENSE": {
+     "tp": 2,
+     "fp": 2,
+     "fn": 3
+    },
+    "R:OTHER": {
+     "tp": 190,
+     "fp": 80,
+     "fn": 106
+    },
+    "M:PREP": {
+     "tp": 26,
+     "fp": 1,
+     "fn": 2
+    },
+    "M:CONJ": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 1
+    },
+    "U:ADJ": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 2
+    },
+    "U:PRON": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:DET": {
+     "tp": 7,
+     "fp": 3,
+     "fn": 4
+    },
+    "R:PRON": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 1
+    },
+    "U:DET": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    },
+    "U:CONJ": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:PRON": {
+     "tp": 10,
+     "fp": 2,
+     "fn": 2
+    },
+    "R:ADV": {
+     "tp": 5,
+     "fp": 1,
+     "fn": 2
+    },
+    "R:NOUN:NUM": {
+     "tp": 2,
+     "fp": 2,
+     "fn": 1
+    },
+    "R:VERB:FORM": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 1
+    },
+    "M:PART": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:CONJ": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:VERB:FORM": {
+     "tp": 3,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:ADV": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 1
+    },
+    "U:VERB:TENSE": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "U:VERB": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:PART": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "U:PART": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "U:OTHER": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:NOUN": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 0
+    },
+    "R:PUNCT": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 0
+    }
+   },
+   "punct_._p": 0.8308457711442786,
+   "punct_._r": 0.698744769874477,
+   "punct_._f1": 0.759090909090909,
+   "punct_,_p": 0.6793478260869565,
+   "punct_,_r": 0.6720430107526881,
+   "punct_,_f1": 0.6756756756756758,
+   "punct_?_p": 0.7307692307692307,
+   "punct_?_r": 0.5135135135135135,
+   "punct_?_f1": 0.6031746031746031,
+   "punct_macro_f1": 0.6793137293137294,
+   "casing_acc": 0.9797145003756574,
+   "cue_match_rate": 0.618860510805501,
+   "pair_mean_ms": 101.25714285714328,
+   "pair_median_ms": 31.999999999998252,
+   "pair_within_100": 0.7476190476190476,
+   "pair_within_250": 0.9428571428571428,
+   "t_mean_ms": 24.467213114754667,
+   "t_median_ms": 17.00000000002433,
+   "t_within_100": 0.985655737704918,
+   "t_within_250": 1.0,
+   "onset_bias_ms": -12.000000000000455,
+   "drift_ms_per_min": 1.1283890639830219,
+   "w_start_mean_ms": 25.996194560269934,
+   "w_start_median_ms": 21.6999999999814,
+   "w_start_within_50": 0.8829827197595793,
+   "w_start_within_100": 0.9832832456799399,
+   "w_boundary_mean_ms": 51.04527719500039,
+   "w_aligned": 5324,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.918200408997955,
+   "fmt_cps20_ok": 1.0,
+   "fmt_dur_ok": 0.9938650306748467,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.918200408997955,
+   "n_cues": 489,
+   "rtf": 0.07769617066089919,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 118,
+     "total": 162,
+     "recall": 0.7283950617283951
+    },
+    "drop": {
+     "fixed": 101,
+     "total": 107,
+     "recall": 0.9439252336448598
+    },
+    "dup": {
+     "fixed": 42,
+     "total": 54,
+     "recall": 0.7777777777777778
+    },
+    "entity": {
+     "fixed": 55,
+     "total": 68,
+     "recall": 0.8088235294117647
+    },
+    "homophone": {
+     "fixed": 106,
+     "total": 107,
+     "recall": 0.9906542056074766
+    },
+    "spelling": {
+     "fixed": 159,
+     "total": 162,
+     "recall": 0.9814814814814815
+    }
+   }
+  },
+  "ted-test": {
+   "n_files": 11,
+   "wer": 0.027198856368971486,
+   "cer": 0.014856306058941973,
+   "sub": 377,
+   "del": 204,
+   "ins": 142,
+   "n_ref_words": 26582,
+   "edit_p": 0.8805848903330625,
+   "edit_r": 0.7955963302752294,
+   "edit_f05": 0.8621649566531457,
+   "edit_tp": 2168,
+   "edit_fp": 294,
+   "edit_fn": 557,
+   "overcorrection": 0.007129439890710383,
+   "errant_p": 0.8887050062060405,
+   "errant_r": 0.798216276477146,
+   "errant_f05": 0.8690023464681608,
+   "errant_types": {
+    "R:VERB": {
+     "tp": 47,
+     "fp": 1,
+     "fn": 15
+    },
+    "U:ADV": {
+     "tp": 28,
+     "fp": 3,
+     "fn": 1
+    },
+    "R:VERB:FORM": {
+     "tp": 7,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 63,
+     "fp": 2,
+     "fn": 18
+    },
+    "U:PRON": {
+     "tp": 19,
+     "fp": 11,
+     "fn": 2
+    },
+    "U:NOUN": {
+     "tp": 56,
+     "fp": 21,
+     "fn": 3
+    },
+    "R:MORPH": {
+     "tp": 16,
+     "fp": 0,
+     "fn": 9
+    },
+    "R:SPELL": {
+     "tp": 1036,
+     "fp": 46,
+     "fn": 75
+    },
+    "R:DET": {
+     "tp": 17,
+     "fp": 8,
+     "fn": 27
+    },
+    "M:VERB:FORM": {
+     "tp": 29,
+     "fp": 1,
+     "fn": 1
+    },
+    "R:PART": {
+     "tp": 5,
+     "fp": 0,
+     "fn": 2
+    },
+    "M:DET": {
+     "tp": 118,
+     "fp": 10,
+     "fn": 13
+    },
+    "U:OTHER": {
+     "tp": 9,
+     "fp": 11,
+     "fn": 0
+    },
+    "U:DET": {
+     "tp": 26,
+     "fp": 25,
+     "fn": 3
+    },
+    "U:CONJ": {
+     "tp": 8,
+     "fp": 5,
+     "fn": 1
+    },
+    "M:PRON": {
+     "tp": 68,
+     "fp": 2,
+     "fn": 15
+    },
+    "R:ADV": {
+     "tp": 11,
+     "fp": 5,
+     "fn": 3
+    },
+    "R:NOUN:NUM": {
+     "tp": 8,
+     "fp": 0,
+     "fn": 12
+    },
+    "U:VERB:TENSE": {
+     "tp": 16,
+     "fp": 4,
+     "fn": 0
+    },
+    "M:NOUN": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:PUNCT": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "U:ADJ": {
+     "tp": 14,
+     "fp": 2,
+     "fn": 0
+    },
+    "M:PART": {
+     "tp": 7,
+     "fp": 0,
+     "fn": 0
+    },
+    "M:VERB": {
+     "tp": 38,
+     "fp": 3,
+     "fn": 5
+    },
+    "U:VERB": {
+     "tp": 25,
+     "fp": 1,
+     "fn": 1
+    },
+    "R:NOUN": {
+     "tp": 49,
+     "fp": 6,
+     "fn": 76
+    },
+    "R:VERB:SVA": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 3
+    },
+    "R:PRON": {
+     "tp": 16,
+     "fp": 2,
+     "fn": 16
+    },
+    "R:ADJ": {
+     "tp": 6,
+     "fp": 1,
+     "fn": 2
+    },
+    "M:ADV": {
+     "tp": 31,
+     "fp": 1,
+     "fn": 2
+    },
+    "R:VERB:TENSE": {
+     "tp": 13,
+     "fp": 3,
+     "fn": 16
+    },
+    "R:OTHER": {
+     "tp": 194,
+     "fp": 49,
+     "fn": 197
+    },
+    "M:PREP": {
+     "tp": 79,
+     "fp": 9,
+     "fn": 14
+    },
+    "M:CONJ": {
+     "tp": 29,
+     "fp": 8,
+     "fn": 3
+    },
+    "R:NOUN:INFL": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "U:VERB:FORM": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:OTHER": {
+     "tp": 5,
+     "fp": 2,
+     "fn": 3
+    },
+    "M:VERB:TENSE": {
+     "tp": 20,
+     "fp": 3,
+     "fn": 0
+    },
+    "U:PREP": {
+     "tp": 21,
+     "fp": 14,
+     "fn": 0
+    },
+    "R:NOUN:POSS": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:WO": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:PART": {
+     "tp": 9,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:ADJ:FORM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "R:ORTH": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 0
+    },
+    "R:CONJ": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 0
+    }
+   },
+   "cue_match_rate": 0.37356034051076614,
+   "pair_mean_ms": 181.39544235924922,
+   "pair_median_ms": 33.00000000000125,
+   "pair_within_100": 0.6635388739946381,
+   "pair_within_250": 0.7935656836461126,
+   "t_mean_ms": 40.87788018433071,
+   "t_median_ms": 17.00000000005275,
+   "t_within_100": 0.9520737327188941,
+   "t_within_250": 0.976036866359447,
+   "onset_bias_ms": -16.999999999939064,
+   "drift_ms_per_min": 1.345187251300788,
+   "w_start_mean_ms": 32.4258117888161,
+   "w_start_median_ms": 16.70000000001437,
+   "w_start_within_50": 0.8763131813676908,
+   "w_start_within_100": 0.9648761149653122,
+   "w_boundary_mean_ms": 56.55052040357276,
+   "w_aligned": 25225,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9024390243902439,
+   "fmt_cps20_ok": 0.9972388403129314,
+   "fmt_dur_ok": 1.0,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.9024390243902439,
+   "n_cues": 2173,
+   "rtf": 0.08702258173969844,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 234,
+     "total": 667,
+     "recall": 0.35082458770614694
+    },
+    "drop": {
+     "fixed": 477,
+     "total": 517,
+     "recall": 0.9226305609284333
+    },
+    "dup": {
+     "fixed": 223,
+     "total": 259,
+     "recall": 0.861003861003861
+    },
+    "homophone": {
+     "fixed": 499,
+     "total": 517,
+     "recall": 0.965183752417795
+    },
+    "spelling": {
+     "fixed": 760,
+     "total": 776,
+     "recall": 0.979381443298969
+    }
+   }
+  },
+  "ALL": {
+   "n_files": 27,
+   "wer": 0.025433863980652192,
+   "cer": 0.01318001202856012,
+   "sub": 570,
+   "del": 222,
+   "ins": 165,
+   "n_ref_words": 37627,
+   "edit_p": 0.8870101986044016,
+   "edit_r": 0.8192860684184432,
+   "edit_f05": 0.8725842221987539,
+   "edit_tp": 3305,
+   "edit_fp": 421,
+   "edit_fn": 729,
+   "overcorrection": 0.007024207892436164,
+   "errant_p": 0.8106462384600275,
+   "errant_r": 0.7535146978272778,
+   "errant_f05": 0.7985372083123717,
+   "errant_types": {
+    "R:VERB": {
+     "tp": 99,
+     "fp": 21,
+     "fn": 48
+    },
+    "U:PART": {
+     "tp": 11,
+     "fp": 0,
+     "fn": 0
+    },
+    "R:PREP": {
+     "tp": 94,
+     "fp": 4,
+     "fn": 20
+    },
+    "M:VERB:TENSE": {
+     "tp": 30,
+     "fp": 3,
+     "fn": 1
+    },
+    "M:VERB": {
+     "tp": 47,
+     "fp": 4,
+     "fn": 7
+    },
+    "R:NOUN:INFL": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1
+    },
+    "U:PREP": {
+     "tp": 34,
+     "fp": 15,
+     "fn": 0
+    },
+    "R:MORPH": {
+     "tp": 22,
+     "fp": 2,
+     "fn": 13
+    },
+    "R:SPELL": {
+     "tp": 1472,
+     "fp": 156,
+     "fn": 179
+    },
+    "U:VERB": {
+     "tp": 38,
+     "fp": 2,
+     "fn": 2
+    },
+    "R:DET": {
+     "tp": 26,
+     "fp": 13,
+     "fn": 35
+    },
+    "R:NOUN": {
+     "tp": 422,
+     "fp": 204,
+     "fn": 343
+    },
+    "R:ORTH": {
+     "tp": 383,
+     "fp": 108,
+     "fn": 105
+    },
+    "R:PRON": {
+     "tp": 23,
+     "fp": 2,
+     "fn": 18
+    },
+    "M:DET": {
+     "tp": 170,
+     "fp": 20,
+     "fn": 18
+    },
+    "U:DET": {
+     "tp": 37,
+     "fp": 25,
+     "fn": 3
+    },
+    "M:PRON": {
+     "tp": 98,
+     "fp": 8,
+     "fn": 21
+    },
+    "R:ADJ": {
+     "tp": 23,
+     "fp": 4,
+     "fn": 9
+    },
+    "U:VERB:TENSE": {
+     "tp": 23,
+     "fp": 4,
+     "fn": 0
+    },
+    "R:VERB:TENSE": {
+     "tp": 25,
+     "fp": 11,
+     "fn": 23
+    },
+    "R:OTHER": {
+     "tp": 577,
+     "fp": 243,
+     "fn": 432
+    },
+    "M:PREP": {
+     "tp": 133,
+     "fp": 12,
+     "fn": 17
+    },
+    "U:ADJ": {
+     "tp": 23,
+     "fp": 4,
+     "fn": 2
+    },
+    "U:ADV": {
+     "tp": 34,
+     "fp": 3,
+     "fn": 1
+    },
+    "M:PART": {
+     "tp": 11,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:ADV": {
+     "tp": 36,
+     "fp": 2,
+     "fn": 3
+    },
+    "M:CONJ": {
+     "tp": 37,
+     "fp": 10,
+     "fn": 5
+    },
+    "U:CONJ": {
+     "tp": 15,
+     "fp": 5,
+     "fn": 1
+    },
+    "M:OTHER": {
+     "tp": 6,
+     "fp": 4,
+     "fn": 4
+    },
+    "R:ADV": {
+     "tp": 17,
+     "fp": 8,
+     "fn": 6
+    },
+    "U:PRON": {
+     "tp": 22,
+     "fp": 12,
+     "fn": 2
+    },
+    "R:PUNCT": {
+     "tp": 3,
+     "fp": 2,
+     "fn": 1
+    },
+    "U:NOUN": {
+     "tp": 64,
+     "fp": 24,
+     "fn": 5
+    },
+    "R:VERB:SVA": {
+     "tp": 1,
+     "fp": 2,
+     "fn": 3
+    },
+    "R:NOUN:NUM": {
+     "tp": 10,
+     "fp": 3,
+     "fn": 14
+    },
+    "M:NOUN": {
+     "tp": 1,
+     "fp": 5,
+     "fn": 0
+    },
+    "R:VERB:FORM": {
+     "tp": 9,
+     "fp": 1,
+     "fn": 1
+    },
+    "R:CONJ": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0
+    },
+    "M:VERB:FORM": {
+     "tp": 32,
+     "fp": 1,
+     "fn": 1
+    },
+    "R:PART": {
+     "tp": 6,
+     "fp": 0,
+     "fn": 2
+    },
+    "U:OTHER": {
+     "tp": 10,
+     "fp": 11,
+     "fn": 0
+    },
+    "U:VERB:FORM": {
+     "tp": 2,
+     "fp": 1,
+     "fn": 0
+    },
+    "R:NOUN:POSS": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "R:WO": {
+     "tp": 0,
+     "fp": 2,
+     "fn": 1
+    },
+    "R:ADJ:FORM": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    }
+   },
+   "punct_._p": 0.8481561822125814,
+   "punct_._r": 0.6908127208480566,
+   "punct_._f1": 0.7614410905550146,
+   "punct_,_p": 0.6657929226736566,
+   "punct_,_r": 0.7045769764216366,
+   "punct_,_f1": 0.6846361185983828,
+   "punct_?_p": 0.7647058823529411,
+   "punct_?_r": 0.6610169491525424,
+   "punct_?_f1": 0.7090909090909091,
+   "punct_macro_f1": 0.7183893727481022,
+   "casing_acc": 0.9771668219944082,
+   "cue_match_rate": 0.4580152671755725,
+   "pair_mean_ms": 145.05000000000007,
+   "pair_median_ms": 32.00000000001069,
+   "pair_within_100": 0.6938405797101449,
+   "pair_within_250": 0.8615942028985507,
+   "t_mean_ms": 35.688154969831025,
+   "t_median_ms": 17.00000000005275,
+   "t_within_100": 0.9637980311209908,
+   "t_within_250": 0.9831692600825659,
+   "onset_bias_ms": -16.999999999939064,
+   "drift_ms_per_min": 1.2152361924865007,
+   "w_start_mean_ms": 30.317069731936087,
+   "w_start_median_ms": 16.930296774035014,
+   "w_start_within_50": 0.8801279376999026,
+   "w_start_within_100": 0.9710749548046169,
+   "w_boundary_mean_ms": 54.749215212524135,
+   "w_aligned": 35955,
+   "fmt_lines_ok": 1.0,
+   "fmt_nlines_ok": 1.0,
+   "fmt_cps17_ok": 0.9181731684110371,
+   "fmt_cps20_ok": 0.9980970504281637,
+   "fmt_dur_ok": 0.9990485252140818,
+   "fmt_gap_ok": 1.0,
+   "fmt_all_ok": 0.9181731684110371,
+   "n_cues": 3153,
+   "rtf": 0.08065613512892623,
+   "recall_by_type": {
+    "asr": {
+     "fixed": 422,
+     "total": 978,
+     "recall": 0.43149284253578735
+    },
+    "drop": {
+     "fixed": 686,
+     "total": 736,
+     "recall": 0.9320652173913043
+    },
+    "dup": {
+     "fixed": 310,
+     "total": 367,
+     "recall": 0.8446866485013624
+    },
+    "entity": {
+     "fixed": 109,
+     "total": 132,
+     "recall": 0.8257575757575758
+    },
+    "homophone": {
+     "fixed": 715,
+     "total": 736,
+     "recall": 0.9714673913043478
+    },
+    "spelling": {
+     "fixed": 1081,
+     "total": 1102,
+     "recall": 0.9809437386569873
     }
    }
   }
@@ -5896,7 +7072,7 @@
    "fmt_gap_ok": 0.5833333333333334,
    "fmt_all_ok": 0.16847826086956522,
    "n_cues": 368,
-   "rtf": 0.028650244092417832
+   "rtf": 0.028646515077097305
   },
   "libri-test-other": {
    "n_files": 8,
@@ -5942,7 +7118,7 @@
    "fmt_gap_ok": 0.6666666666666666,
    "fmt_all_ok": 0.15730337078651685,
    "n_cues": 356,
-   "rtf": 0.028431831593216793
+   "rtf": 0.02844130616733614
   },
   "ted-test": {
    "n_files": 11,
@@ -5977,7 +7153,7 @@
    "fmt_gap_ok": 0.5515487748497457,
    "fmt_all_ok": 0.13385464581416742,
    "n_cues": 2174,
-   "rtf": 0.03509338239311557
+   "rtf": 0.035087662782247495
   },
   "ALL": {
    "n_files": 27,
@@ -6023,7 +7199,7 @@
    "fmt_gap_ok": 0.5694879832810867,
    "fmt_all_ok": 0.14113181504485853,
    "n_cues": 2898,
-   "rtf": 0.031210511548494385
+   "rtf": 0.03120988372445148
   }
  },
  "modeb_ours": {
@@ -6071,7 +7247,7 @@
    "fmt_gap_ok": 1.0,
    "fmt_all_ok": 0.976,
    "n_cues": 500,
-   "rtf": 0.049629396864326686
+   "rtf": 0.05591914024537107
   },
   "libri-test-other": {
    "n_files": 8,
@@ -6117,7 +7293,7 @@
    "fmt_gap_ok": 1.0,
    "fmt_all_ok": 0.9184890656063618,
    "n_cues": 503,
-   "rtf": 0.04893733678902021
+   "rtf": 0.058387999169985196
   },
   "ted-test": {
    "n_files": 11,
@@ -6152,7 +7328,7 @@
    "fmt_gap_ok": 1.0,
    "fmt_all_ok": 0.9095840867992767,
    "n_cues": 2212,
-   "rtf": 0.059218832152391765
+   "rtf": 0.06553416221855274
   },
   "ALL": {
    "n_files": 27,
@@ -6198,7 +7374,7 @@
    "fmt_gap_ok": 1.0,
    "fmt_all_ok": 0.9213063763608087,
    "n_cues": 3215,
-   "rtf": 0.053331148996410525
+   "rtf": 0.06056788517507149
   }
  }
 }

@@ -378,6 +378,15 @@ def test_plain_job_has_no_speaker_data(make_client):
     assert c.get(f"/api/jobs/{job['id']}/files/rttm").status_code == 404
 
 
+def test_fusion_method_option_maps_to_the_config():
+    cfg = Config.load()
+    assert option_defaults(cfg)["fusion_method"] == "neural"
+    assert to_overrides(JobOptions(fusion_method="rule"), cfg) == {"fusion.method": "rule"}
+    assert cfg.override({"fusion.method": "rule"}).fusion.method == "rule"
+    with pytest.raises(ValueError):
+        JobOptions(fusion_method="magic")
+
+
 def test_chapter_options_map_to_the_config():
     cfg = Config.load()
     d = option_defaults(cfg)

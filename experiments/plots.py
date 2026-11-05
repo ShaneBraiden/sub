@@ -28,7 +28,8 @@ def pick(res: dict, metric: str, dataset: str = "ALL") -> dict[str, float]:
         m = by_ds.get(dataset) or next(iter(by_ds.values()))
         v = m.get(metric)
         label = sysname
-        for abl in ("fusion_signals", "gec_model", "asr_size", "timing_source", "segmenter", "audio_guard"):
+        for abl in ("fusion_signals", "fusion_method", "gec_model", "asr_size", "timing_source", "segmenter",
+                    "audio_guard"):
             if sysname.startswith(f"abl_{abl}_"):
                 label = sysname[len(f"abl_{abl}_"):]
         if v is not None and not (isinstance(v, float) and math.isnan(v)):
@@ -71,6 +72,7 @@ def main() -> None:
     for name, metric, title, ylabel, scale, fmt in (
             ("asr_size", "wer", "WER by ASR size", "WER (%)", 100, "{:.2f}"),
             ("fusion_signals", "edit_f05", "Edit F0.5 without each fusion signal", "F0.5 (%)", 100, "{:.1f}"),
+            ("fusion_method", "wer", "WER by who decides each edit", "WER (%)", 100, "{:.2f}"),
             ("segmenter", "fmt_all_ok", "Cues meeting all format rules", "%", 100, "{:.1f}"),
             ("audio_guard", "overcorrection", "Over-correction with/without audio guard", "% correct words changed",
              100, "{:.2f}")):
@@ -81,17 +83,37 @@ def main() -> None:
             fig.tight_layout()
             fig.savefig(OUT / f"{name}.png", dpi=150)
             made.append(f"{name}.png")
+    variants = ROOT / "results" / "fusion" / "variants.json"
+    if variants.exists():
+        v = json.loads(variants.read_text(encoding="utf-8"))
+        fig, ax = plt.subplots(figsize=(5.4, 3.6))
+        for k, (name, label) in enumerate((("bilstm", "BiLSTM (shipped)"), ("mlp", "MLP, no context"),
+                                           ("logistic", "logistic regression"), ("no_ctc", "BiLSTM, no CTC evidence"))):
+            curve = {float(c) * 100: e["mean"] for c, e in v["variants"][name]["wer_at_precision"].items() if e}
+            ax.plot(list(curve), list(curve.values()), "o-", color=COLORS[k], label=label)
+        rule = v["rule"]["all"]
+        ax.plot([rule["precision"] * 100], [rule["wer"]], "s", color=COLORS[5], label="linear rule")
+        ax.set_xlabel("precision of the accepted edits (%)")
+        ax.set_ylabel("WER after fusion (%), dev clips")
+        ax.set_title("What each fusion model can reach", fontsize=10)
+        ax.legend(frameon=False, fontsize=8)
+        ax.spines[["top", "right"]].set_visible(False)
+        fig.tight_layout()
+        fig.savefig(OUT / "fusion_tradeoff.png", dpi=150)
+        made.append("fusion_tradeoff.png")
     rates = sorted(ABL.glob("corruption_rate_*/metrics.json"))
     if rates:
-        xs, noop, ours = [], [], []
+        xs, noop, ours, rule = [], [], [], []
         for p in rates:
             res = json.loads(p.read_text(encoding="utf-8"))
             xs.append(float(p.parent.name.split("_")[-1]) * 100)
             noop.append(pick(res, "wer").get("noop", float("nan")) * 100)
             ours.append(pick(res, "wer").get("ours", float("nan")) * 100)
+            rule.append(pick(res, "wer").get("ours_rule", float("nan")) * 100)
         fig, ax = plt.subplots(figsize=(5, 3.4))
         ax.plot(xs, noop, "o-", color=COLORS[1], label="corrupted input")
-        ax.plot(xs, ours, "o-", color=COLORS[0], label="ours")
+        ax.plot(xs, rule, "o-", color=COLORS[2], label="ours, linear rule")
+        ax.plot(xs, ours, "o-", color=COLORS[0], label="ours, network")
         ax.set_xlabel("injected word error rate (%)")
         ax.set_ylabel("WER (%)")
         ax.set_title("Corruption-rate sweep", fontsize=10)

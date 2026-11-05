@@ -333,7 +333,7 @@ def main() -> None:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     if args.sweep:
-        systems = {"noop": SYSTEMS["systems"]["noop"], "ours": SYSTEMS["systems"]["ours"]}
+        systems = {k: SYSTEMS["systems"][k] for k in ("noop", "ours", "ours_rule")}
         for rate in args.sweep:
             name = f"test_rate{rate:.2f}"
             evaluate(name, systems, args.datasets, args.limit, False, args.force,
@@ -345,7 +345,7 @@ def main() -> None:
         systems = {}
         for vname, ov in variants.items():
             ov = dict(base, **(ov or {}))
-            if args.ablation == "fusion_signals":
+            if args.ablation == "fusion_signals" or vname == "rule_f05":
                 ov.update(ablation_tuned(vname))
             systems[f"abl_{args.ablation}_{vname}"] = {"type": "pipeline", "label": vname, "overrides": ov}
         evaluate(args.manifest, systems, args.datasets, args.limit, not args.no_errant, args.force,

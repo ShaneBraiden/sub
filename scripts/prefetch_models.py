@@ -9,6 +9,7 @@ Our models are trained locally (see README "Self-trained models"):
   models/corrector/model.pt         experiments/train_corrector.py
   models/pos/perceptron.json.gz     experiments/train_pos.py
   models/aligner/model.pt           experiments/train_aligner.py  (needs LibriSpeech train-clean-100)
+  models/fusion/model.pt            experiments/fusion_data.py + train_fusion.py  (needs the aligner and the LM)
 """
 from __future__ import annotations
 
@@ -28,6 +29,7 @@ OWN_MODELS = {
     "models/corrector/model.pt": "experiments/train_corrector.py",
     "models/pos/perceptron.json.gz": "experiments/train_pos.py",
     "models/aligner/model.pt": "experiments/train_aligner.py",
+    "models/fusion/model.pt": "experiments/fusion_data.py + experiments/train_fusion.py",
 }
 
 

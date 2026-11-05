@@ -21,6 +21,8 @@ def main() -> None:
     ap.add_argument("--data-dir", help="jobs + history (default: cache/server)")
     ap.add_argument("--max-upload-mb", type=int)
     ap.add_argument("--retention-days", type=float, help="delete finished jobs older than this at start-up (0 = keep)")
+    ap.add_argument("--degrade-whisper", type=float, metavar="RATE",
+                    help="corrupt this share of Whisper's words on purpose and strip its punctuation and casing, for every job")
     ap.add_argument("--no-browser", action="store_true", help="do not open the page automatically")
     ap.add_argument("--reload", action="store_true", help="restart on code changes (development)")
     args = ap.parse_args()
@@ -34,7 +36,7 @@ def main() -> None:
 
     # the settings are read again inside create_app (also in --reload workers), so pass CLI values via env
     for flag, env in (("data_dir", "DATA_DIR"), ("max_upload_mb", "MAX_UPLOAD_MB"),
-                      ("retention_days", "RETENTION_DAYS")):
+                      ("retention_days", "RETENTION_DAYS"), ("degrade_whisper", "DEGRADE_WHISPER")):
         value = getattr(args, flag)
         if value is not None:
             os.environ[f"SUBFIX_SERVER_{env}"] = str(value)

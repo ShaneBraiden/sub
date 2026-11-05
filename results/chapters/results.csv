@@ -17,5 +17,5 @@ ablation,abl_content_ALL,topic words = every word (no POS filter),200,0.1125,0.1
 ablation,abl_min_30,shortest chapter 30 s,200,0.1207,0.1211,0.7667,0.698,0.7307,4.46,4.15,0.39
 ablation,abl_min_90,shortest chapter 90 s,200,0.1207,0.1211,0.7667,0.698,0.7307,4.46,4.15,0.39
 source,modeb,Mode B output (audio only),200,0.1207,0.1211,0.7667,0.698,0.7307,4.46,4.15,0.39
-source,modea,Mode A output (corrected subtitles),200,0.1219,0.1223,0.7572,0.685,0.7193,4.46,4.13,0.41
+source,modea,Mode A output (corrected subtitles),200,0.1223,0.1229,0.756,0.685,0.7187,4.46,4.135,0.425
 source,ref,Reference transcripts (MFA timings),200,0.1127,0.1133,0.773,0.7038,0.7368,4.46,4.15,0.41

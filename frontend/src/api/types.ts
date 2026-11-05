@@ -12,6 +12,8 @@ export interface JobOptions {
   segmentation?: "dp" | "greedy" | "keep";
   sync?: boolean;
   fusion?: boolean;
+  /** neural: our network checks each edit against the audio; rule: the linear rule. */
+  fusion_method?: "neural" | "rule";
   punctuation?: boolean;
   truecase?: boolean;
   spelling?: boolean;

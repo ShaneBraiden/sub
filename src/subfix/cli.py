@@ -40,6 +40,8 @@ def cmd_correct(args) -> int:
         overrides["diarize.num_speakers"] = args.speakers
     if args.labels:
         overrides["diarize.label"] = args.labels
+    if args.fusion_method:
+        overrides["fusion.method"] = args.fusion_method
     if args.no_chapters:
         overrides["chapters.enabled"] = False
     else:
@@ -94,6 +96,9 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--set", nargs="*", help="dotted overrides, e.g. segment.max_cps=20 gec.enabled=false")
     c.add_argument("--lexicon", default=None, help="comma-separated domain terms or a text file")
     c.add_argument("--no-tuned", action="store_true", help="ignore configs/tuned.yaml")
+    c.add_argument("--fusion-method", choices=["neural", "rule"], default=None,
+                   help="who decides each word change: our network, which also checks the audio (default, "
+                        "see experiments/train_fusion.py), or the linear rule")
     c.add_argument("--diarize", action="store_true",
                    help="label speakers with our own speaker model (models/speaker, see experiments/train_speaker.py)")
     c.add_argument("--speakers", type=int, default=None, metavar="N",

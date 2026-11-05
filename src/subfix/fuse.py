@@ -14,6 +14,9 @@ because professional subtitles are often condensed rather than verbatim:
 
 Merged/split spellings ("alot" vs "a lot", "25" vs "twenty five") are detected as units and only
 changed when the subtitle side is out-of-vocabulary.
+
+With cfg.fusion.method = neural, our network (subfix.fusenet) replaces these sub / ins / del
+decisions; the hard rules (sound events, fillers, split/merge) stay.
 """
 from __future__ import annotations
 
@@ -79,12 +82,14 @@ def _insert_form(a_text: str, spell=None) -> str:
 
 
 class Fuser:
-    def __init__(self, cfg, lm=None, spell=None, lexicon=None):
+    def __init__(self, cfg, lm=None, spell=None, lexicon=None, neural=None, evidence=None):
         self.f = cfg.fusion if hasattr(cfg, "fusion") else cfg
         self.lm = lm
         self.has_lm = lm is not None
         self.spell = spell
         self.lexicon = {T.canon(x) for x in (lexicon or []) if T.canon(x)}
+        self.neural = neural          # fusenet.NeuralFusion (None = the linear rule)
+        self.evidence = evidence      # fusenet.CtcEvidence for the network's audio input
 
     # ------------------------------------------------------------ grouping
     @staticmethod
@@ -228,6 +233,8 @@ class Fuser:
     def fuse(self, sub: list[Word], asr: list[Word], ops: list[Op], caseless: bool = False) -> FusionResult:
         units = self.units(ops, sub, asr)
         cands = [self.decide(c) for c in self.featurize(units, sub, asr)]
+        if self.neural is not None:
+            self.neural.decide(cands, units, sub, asr, self.spell, caseless, self.evidence)
         by_key = {(c.kind, c.i, c.j): c for c in cands}
         out: list[Word] = []
         edits: list[dict] = []

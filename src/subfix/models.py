@@ -42,6 +42,20 @@ class Models:
         from .lm import LMScorer
         return self._get("lm", cfg.fusion.lm_model, lambda: LMScorer(cfg.fusion.lm_model))
 
+    def fusion(self, cfg=None):
+        """Our neural fusion network, or None (the linear rule) if it is not trained."""
+        cfg = cfg or self.cfg
+        f = cfg.fusion
+
+        def load():
+            from .fusenet import NeuralFusion
+            return NeuralFusion(f.model, self.device, f.threshold)
+        try:
+            return self._get("fusion", (f.model, f.threshold), load)
+        except FileNotFoundError as exc:
+            log.warning("%s; using the linear fusion rule", exc)
+            return None
+
     def spell(self, cfg=None):
         cfg = cfg or self.cfg
         from .textfix.spell import SpellChecker

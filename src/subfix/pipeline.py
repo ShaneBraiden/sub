@@ -1,6 +1,6 @@
 """Mode A / Mode B orchestration — imp.md 2 / 8.8.
 
-Mode A: media + faulty subtitles -> ASR -> coarse sync -> alignment -> evidence fusion
+Mode A: media + faulty subtitles -> ASR -> coarse sync -> alignment -> evidence fusion (our network)
 Mode B: media only               -> ASR draft
 then (both): punctuation -> truecasing -> SymSpell/LanguageTool -> our corrector (guarded)
           -> forced alignment of the corrected words -> [speaker diarization, opt-in]
@@ -17,7 +17,7 @@ from typing import Callable
 
 from . import text as T
 from .align import align_words
-from .asr import AsrResult, transcribe
+from .asr import AsrResult, degrade, transcribe
 from .config import Config
 from .diarize import Diarization
 from .fuse import Fuser, passthrough
@@ -169,6 +169,8 @@ def run(media_path: str | Path, sub_path: str | Path | None = None, cfg: Config 
             asr_result = transcribe(wav, cfg.asr.model, cfg.device, cfg.asr.compute_type, cfg.asr.beam_size,
                                     cfg.asr.vad_filter, cfg.asr.language, hot,
                                     initial_prompt=cfg.asr.initial_prompt or None)
+        if cfg.asr.degrade > 0:
+            asr_result = degrade(asr_result, cfg.asr.degrade)
         asr_words = [w.copy() for w in asr_result.words]
 
     mode = "A" if sub_path else "B"
@@ -181,8 +183,12 @@ def run(media_path: str | Path, sub_path: str | Path | None = None, cfg: Config 
     from .paths import cache_dir
     from .utils.cache import file_hash, load_json, save_json, text_hash
     cfg_d = cfg.to_dict()
-    tkey = text_hash(file_hash(wav), file_hash(sub_path) if sub_path else None,
-                     {k: cfg_d[k] for k in TEXT_SECTIONS}, terms, asr_result.info.get("model"))
+    neural = models.fusion() if (sub_path and cfg.fusion.enabled and cfg.fusion.method == "neural") else None
+    text_cfg = {k: cfg_d[k] for k in TEXT_SECTIONS}
+    if not cfg.asr.degrade:  # off: keep the keys of the existing benchmark caches
+        text_cfg["asr"] = {k: v for k, v in text_cfg["asr"].items() if k != "degrade"}
+    tkey = text_hash(file_hash(wav), file_hash(sub_path) if sub_path else None, text_cfg, terms, asr_result.info.get("model"),
+                     *([file_hash(neural.path)] if neural is not None else []))
     tcache = cache_dir("text") / f"{Path(wav).stem}-{tkey}.json"
     if mode == "A":
         orig_cues = read_subs(sub_path)
@@ -210,11 +216,18 @@ def run(media_path: str | Path, sub_path: str | Path | None = None, cfg: Config 
             if cfg.fusion.enabled:
                 use_time = sync_res is not None and sync_res.method != "none"
                 ops = align_words(sub_words, asr_words, cfg, use_time=use_time)
-                lm = models.lm() if cfg.fusion.w_lm != 0 else None
-                spell = models.spell() if (cfg.fusion.w_oov != 0 or cfg.spell.symspell) else None
-                fz = Fuser(cfg, lm=lm, spell=spell, lexicon=terms).fuse(sub_words, asr_words, ops, caseless)
+                lm = models.lm() if (cfg.fusion.w_lm != 0 or neural is not None) else None
+                spell = models.spell() if (cfg.fusion.w_oov != 0 or cfg.spell.symspell or neural is not None) else None
+                evidence = None
+                if neural is not None and neural.uses_ctc:
+                    from .fusenet import CtcEvidence
+                    evidence = CtcEvidence(models.aligner("ctc"), load_audio(wav))
+                fz = Fuser(cfg, lm=lm, spell=spell, lexicon=terms, neural=neural,
+                           evidence=evidence).fuse(sub_words, asr_words, ops, caseless)
                 words = fz.words
                 edits.extend(fz.edits)
+                if neural is not None and not cfg.keep_models_loaded:
+                    models.release("fusion")
             else:
                 words = passthrough(sub_words)
     else:

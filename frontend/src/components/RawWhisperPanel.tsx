@@ -28,6 +28,7 @@ export default function RawWhisperPanel({ result, onSeek }: Props) {
   const final = (result.edited_cues ?? result.cues).map((c) => c.text.replace(/\s*\n\s*/g, " ")).join(" ");
   const words = raw.split(/\s+/).filter(Boolean).length;
   const model = result.asr.model as string | undefined;
+  const degraded = Boolean(result.asr.degraded);
 
   const copy = () => {
     navigator.clipboard?.writeText(raw).then(
@@ -92,10 +93,12 @@ export default function RawWhisperPanel({ result, onSeek }: Props) {
           ))}
         </ol>
       )}
-      <p className="small muted raw-note">
-        Exactly as Whisper decoded it, before any of our models touched it (punctuation, casing, spelling, grammar, timing, speakers and cue
-        splitting).
-      </p>
+      {!degraded && (
+        <p className="small muted raw-note">
+          Exactly as Whisper decoded it, before any of our models touched it (punctuation, casing, spelling, grammar, timing, speakers and cue
+          splitting).
+        </p>
+      )}
     </div>
   );
 }

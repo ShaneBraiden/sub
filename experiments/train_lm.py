@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "experiments"))
 
-from corpus import sentences  # noqa: E402
+from corpus import TRAIN_SPLITS, sentences  # noqa: E402
 from subfix.lm import lm_words  # noqa: E402
 from subfix.ngram import KneserNeyLM  # noqa: E402
 from subfix.paths import MODELS_DIR  # noqa: E402
@@ -33,9 +33,10 @@ def main() -> None:
     ap.add_argument("--order", type=int, default=4)
     ap.add_argument("--min-count", type=int, default=2)
     ap.add_argument("--out", default=str(MODELS_DIR / "lm" / "kn4.npz"))
+    ap.add_argument("--exclude", nargs="*", default=[], help="leave these splits out of the training text")
     args = ap.parse_args()
     t0 = time.time()
-    train = sentences()
+    train = sentences(tuple(s for s in TRAIN_SPLITS if s not in args.exclude))
     lm = KneserNeyLM.train(lambda: (to_words(s) for s in train), order=args.order, min_count=args.min_count)
     lm.save(args.out)
     print(f"[lm] trained + saved in {time.time() - t0:.0f}s -> {args.out}", flush=True)

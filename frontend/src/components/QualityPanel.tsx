@@ -144,7 +144,7 @@ export default function QualityPanel({ result }: { result: Result }) {
             Full configuration used
           </summary>
           <pre className="code" style={{ marginTop: 8 }}>
-            {JSON.stringify(result.config, null, 2)}
+            {JSON.stringify(result.config, (k, val) => (k === "degrade" ? undefined : val), 2)}
           </pre>
         </details>
       </section>

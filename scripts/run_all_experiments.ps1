@@ -2,7 +2,7 @@
 #   powershell -ExecutionPolicy Bypass -File scripts\run_all_experiments.ps1 [-Fresh] [-SkipMain] [-SkipAblations]
 # Logs go to cache\logs\*.log; tables to results\.
 param([switch]$Fresh, [switch]$SkipMain, [switch]$SkipAblations, [switch]$SkipSweep,
-      [string[]]$Ablations = @('timing_source', 'segmenter', 'audio_guard', 'fusion_signals', 'asr_size', 'gec_model'))
+      [string[]]$Ablations = @('fusion_method', 'timing_source', 'segmenter', 'audio_guard', 'fusion_signals', 'asr_size', 'gec_model'))
 $ErrorActionPreference = 'Continue'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $env:PYTHONUTF8 = '1'; $env:PYTHONUNBUFFERED = '1'; $env:HF_HUB_DISABLE_SYMLINKS_WARNING = '1'
@@ -19,7 +19,7 @@ function Step($name, [string[]]$argv) {
 }
 if (-not $SkipMain) {
     Step 'main' @('experiments\run_eval.py', '--manifest', 'test', '--systems', 'noop', 'b1_symspell_lt', 'b2_ffsubsync',
-                  'b3_raw_whisper', 'ours', 'modeb_raw', 'modeb_ours')
+                  'b3_raw_whisper', 'ours_rule', 'ours', 'modeb_raw', 'modeb_ours')
 }
 if (-not $SkipAblations) {
     foreach ($abl in $Ablations) {
